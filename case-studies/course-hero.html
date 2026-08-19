@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redesigning How Students Study Across a Semester · Mandip Randhawa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/case-study.css" />
+  <style>
+    /* Page-specific: hero gradient colors for this case study */
+    :root {
+      --hero-gradient: linear-gradient(135deg, #f9fafa 0%, #eeeff1 100%);
+      --hero-placeholder-gradient: linear-gradient(135deg, #e3e6e8 0%, #d4d8dd 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="../index.html" class="logo">Mandip Randhawa</a>
+      <nav>
+        <a href="../index.html#work">Work</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+        <a href="../assets/mandip-randhawa-resume-2026.pdf" target="_blank">Resume <svg style="display:inline-block; vertical-align:middle; margin-left:3px; position:relative; top:-1px;" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </nav>
+    </div>
+    <div class="reading-progress" aria-hidden="true">
+      <div class="reading-progress-fill"></div>
+    </div>
+  </header>
+
+  <!-- ── SIDE NAV ── -->
+  <nav class="sidenav" aria-label="Page sections">
+    <div class="sidenav-track"></div>
+    <a class="sidenav-item" href="#top">Overview</a>
+    <a class="sidenav-item" href="#context">Context</a>
+    <a class="sidenav-item" href="#key-insights">Key Insights</a>
+    <a class="sidenav-item" href="#validation">How We Validated</a>
+    <a class="sidenav-item" href="#solution">Solution</a>
+    <a class="sidenav-item" href="#role-impact">My Role &amp; Impact</a>
+    <a class="sidenav-item" href="#reflection">Reflection</a>
+  </nav>
+
+
+  <section id="top" class="cs-hero">
+    <div class="cs-hero-inner">
+      <div class="cs-nav">
+        <a href="shopify-marketing.html" class="cs-nav-link">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10L12 16" stroke="#6a7282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="cs-nav-next-stack cs-nav-stack-left">
+            <span class="cs-nav-next-label">Back</span>
+            <span class="cs-nav-next-name">Building Shopify's Merchant Marketing Platform</span>
+          </span>
+        </a>
+        <a href="kinetic.html" class="cs-nav-link">
+          <span class="cs-nav-next-stack">
+            <span class="cs-nav-next-label">Next</span>
+            <span class="cs-nav-next-name">Retail Associate App</span>
+          </span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L14 10L8 16" stroke="#6a7282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="cs-intro">
+        <h1 class="fraunces cs-title">Redesigning How Students Study Across a Semester</h1>
+        <p class="cs-meta">8 min read | Course Hero (Learneo) (2024–2025) · Staff Product Designer · Course Experience Pod</p>
+        <p class="cs-subtitle">Course Hero was good at answering questions in the moment, but students needed more than a search engine. I designed two generations of AI-native study products: an AI flashcard and practice-test generator, then a semester-long AI study companion that auto-builds itself from a course's existing content. I validated both with KANO surveys and painted-door tests before a line of code was written.</p>
+      </div>
+
+      <div class="cs-hero-image-frame">
+        <img class="cs-hero-image"
+          src="../images/case-studies/course-hero/screen2_studyspace.png"
+          alt="Course Hero Study Space dashboard, showing a student's active courses and study progress"
+          onerror="this.style.display='none'; this.closest('.cs-hero-image-frame').style.background='var(--hero-placeholder-gradient)';" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEXT -->
+  <section id="context" class="section-white">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">Context</h2>
+      <div class="card-grid">
+        <div class="callout">
+          <p class="fraunces callout-label">Key Finding</p>
+          <p class="fraunces callout-text callout-text-lg">Unaided brand awareness sat at just 4%, against a competitor like Quizlet at&nbsp;56%.</p>
+        </div>
+        <div class="context-copy">
+          <p class="cs-body">Course Hero had built its business on being a great answer to a narrow question: a student is stuck on a specific problem, searches, finds a solution, leaves. It worked at scale (<strong>1.8 million unique visitors a day</strong>), but the relationship was transactional. Students treated Course Hero as a last resort, not a study habit.</p>
+          <p class="cs-body">Our research team had already mapped the full student study journey before this project started. It surfaced a clear, unmet need: students weren't struggling to find content, they were struggling to prepare, <strong>to turn content into confidence before a test</strong>. That insight became the starting brief for Study Tools.</p>
+          <p class="cs-body">A year later, a second round of research surfaced a related but distinct gap: even once a student had tools to prepare, <strong>they had nowhere to live across a semester</strong>. Course Hero had no concept of "your course" or "your semester"; every visit started from zero. That became the brief for Study Space.</p>
+        </div>
+      </div>
+      <div class="inline-image-group">
+        <div>
+          <img class="inline-image" src="../images/case-studies/course-hero/screenshot-2024-01-12-course-planner.png" alt="Research Roadshow slide highlighting Prepare as a massive unmet need, with Quizlet named as the prominent player in that space" onerror="this.style.display='none';" />
+          <p class="inline-image-caption">From the research roadshow that kicked off this work: "Prepare" surfaced as a massive unmet need, and Quizlet owned it, not Course Hero.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 40px;">
+        <p class="cs-body"><strong>Study Tools problem:</strong> students were already going elsewhere to prepare for exams (study groups, Quizlet, Anki) because Course Hero had no tools for active practice, only documents to read. The fix required AI, which introduced a problem to design around as much as build: <strong>trust</strong>. Some students didn't trust AI-generated study material at all; others trusted it uncritically.</p>
+        <p class="cs-body"><strong>Study Space problem:</strong> even with good tools, Course Hero had no "place" for a student to return to. Every session started cold, and <strong>the tools built for Study Tools had no real home</strong> in the existing IA either.</p>
+        <div class="callout">
+          <p class="fraunces callout-label">Core Tension</p>
+          <p class="callout-text">AI lowers the barrier to "feeling done" studying, but effortless studying doesn't produce learning, and AI-generated answers that are wrong but confident can cost a student a real grade. The design had to use AI to lower friction without removing the cognitive effort that builds retention, and without ever letting a student over-trust an output that hadn't earned it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY INSIGHTS -->
+  <section id="key-insights" class="section-grey">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">Key Insights</h2>
+      <div class="card-grid">
+        <div class="callout">
+          <p class="fraunces callout-label">Research Foundation</p>
+          <p class="fraunces callout-text callout-text-lg">Two rounds of research, a year apart, reshaped the product direction&nbsp;twice.</p>
+        </div>
+        <div class="insights-list">
+          <div class="insight-item">
+            <p class="insight-finding">Students needed to prepare, and getting unstuck in the moment wasn't enough: it was the biggest unmet need in the market</p>
+            <p class="insight-change">Study Tools was scoped around practice and active recall: flashcards and practice tests, rather than more answers</p>
+          </div>
+          <div class="insight-item">
+            <p class="insight-finding">Trust in AI output was bimodal rather than uniformly low; some students distrusted it outright, others trusted it blindly</p>
+            <p class="insight-change">Designed for both ends: visible sourcing and explanations for the skeptical, explicit hallucination disclaimers for the overconfident</p>
+          </div>
+          <div class="insight-item">
+            <p class="insight-finding">Course Hero already had the documents needed to power a semester-long product; it just had no structure to use them</p>
+            <p class="insight-change">Study Space auto-populates a course from content already on file the moment a student adds their school and course</p>
+          </div>
+          <div class="insight-item">
+            <p class="insight-finding">Neither Study Tools nor Study Space had a natural home in the existing product</p>
+            <p class="insight-change">Designed new entry points for Study Tools, then overhauled navigation, the dashboard, and the course-add flow for Study Space</p>
+          </div>
+          <div class="insight-item">
+            <p class="insight-finding">Usage and data quality reinforced each other</p>
+            <p class="insight-change">More students engaging with a course meant more uploaded material, which made every generation more accurate: a flywheel that rewarded discoverability investment</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALIDATION -->
+  <section id="validation" class="section-grey">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">How We Validated: KANO &amp; Painted-Door Testing</h2>
+      <p class="cs-body">Course Hero's product culture ran on <strong>fast, cheap validation before committing engineering time</strong>, and this project leaned on that heavily given how much of the surface area was new.</p>
+      <p class="cs-body">For Study Tools, we ran <strong>KANO-model surveys</strong> against the candidate feature set (flashcard generation, practice-test generation, AI "teach me" explanations, source comparison) to separate must-haves from delighters from features students were indifferent to. That prioritization is what put the practice-test generator and flashcard generator ahead of other candidates competing for the same engineering quarter.</p>
+      <p class="cs-body">We paired that with <strong>painted-door and smoke tests</strong>: real entry points placed in the live product, measuring actual click-through and intent on a feature before a single generation pipeline existed. It validated that "create from your own course material," rather than generic content, was the version worth building, <strong>before we wrote a prompt or a line of production code</strong>.</p>
+      <p class="cs-body">We used the same approach for Study Space, painted-door testing the "add your course, get a semester of material" concept against alternative framings before committing to the auto-population model.</p>
+      <div class="inline-image-group">
+        <div>
+          <img class="inline-image" src="../images/case-studies/course-hero/journey_raw.png" alt="Student journey map swimlane diagram with yellow TEST badges marking painted-door validation points across the discovery, mapping, study session, and reflection stages" onerror="this.style.display='none';" />
+          <p class="inline-image-caption">The student journey map this work was built on. Yellow "TEST" badges mark every point we validated with a painted-door or smoke test before building.</p>
+        </div>
+        <div>
+          <img class="inline-image" src="../images/case-studies/course-hero/mvp_notes_raw.png" alt="Sticky notes scoping the MVP practice tool and results/learn mode feature sets, with a next step to review painted-door test results" onerror="this.style.display='none';" />
+          <p class="inline-image-caption">MVP scoping notes from that map; the "next step" called out is reviewing results from the painted-door tests before locking scope.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section id="solution" class="section-white">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">Solution</h2>
+      <div class="phases-list">
+
+        <!-- Phase 1 -->
+        <div class="phase">
+          <div class="phase-content">
+          <div class="phase-copy">
+          <h3 class="fraunces phase-title">Study Tools</h3>
+          <p class="phase-body">An <strong>AI flashcard generator and AI practice-test generator</strong> built from a student's own course material: upload, URL, or pasted text in, multiple question formats out (multiple choice, free response, true/false, matching). Every result included explanations, source citations, and a side-by-side comparison to the original material.</p>
+          <p class="phase-body">A "Learn Mode" added matching, flashcard review, and an AI "Teach Me" conversational explainer, with <strong>test history to track weak points over time</strong>.</p>
+          </div>
+          <div class="phase-visual">
+          <div class="solution-img">
+            <img src="../images/case-studies/course-hero/screen1_practicetests.png" alt="Study Tools practice-test dashboard with course mastery cards and progress charts" onerror="this.parentElement.style.background='#e5e7eb';" />
+          </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase">
+          <div class="phase-content">
+          <div class="phase-copy">
+          <h3 class="fraunces phase-title">Study Space</h3>
+          <p class="phase-body">A course-level workspace: add your school and course, and Study Space <strong>auto-populates from existing assignments, labs, tests, and exams</strong> already on file for that course, with no manual upload required.</p>
+          <p class="phase-body">From that base, it generates a semester-long study guide, flashcards organized by topic and theory, mock tests and exams a student can actually take, and <strong>a condensed cram sheet for last-minute review</strong>.</p>
+          </div>
+          <div class="phase-visual">
+          <div class="solution-img">
+            <img src="../images/case-studies/course-hero/screen2_studyspace.png" alt="Study Space dashboard with course cards for Flashcards, Materials, Upload, and Teach Me" onerror="this.parentElement.style.background='#e5e7eb';" />
+          </div>
+          </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase">
+          <div class="phase-content">
+          <div class="phase-copy">
+          <h3 class="fraunces phase-title">Navigation, Dashboard &amp; Course-Add Overhaul</h3>
+          <p class="phase-body">Giving Study Space a real home required structural changes beyond the feature itself: <strong>a redesigned course-add flow</strong>, a dashboard reorganized around a student's active courses rather than past searches, and navigation changes to make the new semester-long surface discoverable rather than buried under search.</p>
+          </div>
+          <div class="phase-visual">
+          <div class="solution-img">
+            <img src="../images/case-studies/course-hero/entrypoints_tight.png" alt="Course Hero dashboard with new entry points highlighted in red, including a Create a Practice Test card" onerror="this.parentElement.style.background='#e5e7eb';" />
+          </div>
+          </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MY ROLE & IMPACT -->
+  <section id="role-impact" class="section-grey">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">My Role &amp; Impact</h2>
+
+      <p class="role-intro">I joined as staff designer for the Course Experience pod, designing two generations of AI-native study products end to end: <strong>Study Tools</strong> and <strong>Study Space</strong>, including the trust and disclosure patterns for AI output and the navigation, dashboard, and course-add redesign needed to give Study Space a real home. I ran the <strong>KANO surveys and painted-door tests</strong> that validated both products before a line of code was written, partnering closely with PM, engineering, UX research, data science, and the AI/ML team throughout.</p>
+
+      <p class="outcomes-label">Product Impact</p>
+      <div class="stat-banner">
+        <div class="stat-card">
+          <p class="stat-number">2</p>
+          <p class="stat-label">generations of AI-native study products shipped in 18 months</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number">5</p>
+          <p class="stat-label">KANO-validated features prioritized ahead of the roadmap</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-number">100%</p>
+          <p class="stat-label">of AI-generated results shipped with source citations and explanations</p>
+        </div>
+      </div>
+      <p class="stat-source">Placeholder metrics; swap in real numbers once available.</p>
+
+      <p class="outcomes-label" style="margin-top: 48px;">Also Drove</p>
+      <div class="impact-list">
+        <p class="impact-item">Study Tools shipped anchored to each student's own course material, directly addressing the trust gap generic AI study tools hadn't solved</p>
+        <p class="impact-item">Study Space shipped as Course Hero's first semester-long product surface, generating study guides, flashcards, mock exams, and cram sheets with no added upload friction</p>
+        <p class="impact-item">The trust and disclosure patterns built for Study Tools became the reference pattern for surfacing AI-generated content elsewhere in the product</p>
+        <p class="impact-item">The navigation, dashboard, and course-add redesign fed the data flywheel that made every subsequent generation more accurate</p>
+      </div>
+
+      <p class="outcomes-label" style="margin-top: 48px;">Strategic Decisions</p>
+      <div class="measure-list" style="margin-bottom: 0;">
+        <div class="measure-item">
+          <h3 class="fraunces measure-title">Let AI generate the starting material, not the final answer</h3>
+          <p class="measure-body">AI lowers the activation energy to start studying; the student still does the work. The practice-test generator created questions from an upload, URL, or pasted text, but every result shipped with <strong>explanations, source citations, and a side-by-side comparison</strong> back to the original material, so a student could verify rather than just accept.</p>
+        </div>
+        <div class="measure-item">
+          <h3 class="fraunces measure-title">Design explicitly for both ends of the trust spectrum</h3>
+          <p class="measure-body">We couldn't assume one mental model for how students would relate to AI-generated content. For the skeptical, we surfaced exactly how an answer was generated. For the overconfident, <strong>we built in hallucination messaging</strong> rather than letting a clean results screen imply more confidence than the model actually had.</p>
+        </div>
+        <div class="measure-item">
+          <h3 class="fraunces measure-title">Build entry points before there's a place for them, then build the place</h3>
+          <p class="measure-body">Study Tools shipped before Course Hero had any concept of "your course" or "your semester," so the first job was creating entry points that didn't feel bolted on. Study Space then solved the structural problem, justifying <strong>a real navigation and dashboard overhaul</strong>.</p>
+        </div>
+        <div class="measure-item">
+          <h3 class="fraunces measure-title">Auto-populate from data we already had</h3>
+          <p class="measure-body">The most efficient decision in Study Space wasn't a new feature; it was using what Course Hero already had. The moment a student added their school and course, Study Space populated itself from existing assignments, labs, tests, and exams, with <strong>zero additional upload effort</strong>.</p>
+        </div>
+        <div class="measure-item">
+          <h3 class="fraunces measure-title">Designing the feature was the easy half; the flywheel was the real job</h3>
+          <p class="measure-body">Because generation quality depended on the volume of course material on file, every additional student who engaged with a course made the experience better for the next. We treated <strong>discoverability and activation as core to the AI product</strong> rather than growth work bolted on afterward.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFLECTION -->
+  <section id="reflection" class="section-white">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">Reflection</h2>
+      <div class="measure-list" style="margin-bottom: 0;">
+        <div class="measure-item">
+          <h3 class="fraunces measure-title">What worked</h3>
+          <p class="measure-body">Letting research lead twice, a year apart, rather than treating Study Tools as the end state. The second research pass is what surfaced <strong>the deeper need for a semester-long home</strong>; without it, we'd have kept building point tools with no structure underneath them. Validating with KANO and painted-door tests before building also meant the team's appetite for AI investment was grounded in real signal rather than enthusiasm.</p>
+        </div>
+        <div class="measure-item">
+          <h3 class="fraunces measure-title">What I'd do differently</h3>
+          <p class="measure-body">We designed the trust messaging for AI outputs reactively, in response to early user concerns, rather than <strong>building a single trust framework upfront</strong> that could flex across both products. It would have saved rework when Study Space introduced new AI-generated formats that needed the same kind of disclosure but didn't automatically inherit the patterns built for Study Tools.</p>
+        </div>
+        <div class="measure-item">
+          <h3 class="fraunces measure-title">What I learned</h3>
+          <p class="measure-body">Designing for AI output is <strong>a trust design problem before it's an interface design problem</strong>. The hardest decisions weren't about layout; they were about how much confidence an interface should project given a model's actual reliability, and how to design for users who fall on opposite ends of trusting that output too little or too much.</p>
+        </div>
+        <div class="measure-item">
+          <h3 class="fraunces measure-title">What came next</h3>
+          <p class="measure-body">The data flywheel built into Study Space (usage driving uploads driving better generations) became the team's argument for why <strong>discoverability and activation work isn't separate from the AI work itself</strong>. They compound the same system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM NAV -->
+  <section class="section-white bottom-nav-section">
+    <div class="bottom-nav">
+      <a href="shopify-marketing.html" class="cs-nav-link">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10L12 16" stroke="#6a7282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="cs-nav-next-stack cs-nav-stack-left">
+          <span class="cs-nav-next-label">Back</span>
+          <span class="cs-nav-next-name">Building Shopify's Merchant Marketing Platform</span>
+        </span>
+      </a>
+      <a href="kinetic.html" class="cs-nav-link">
+        <span class="cs-nav-next-stack">
+          <span class="cs-nav-next-label">Next</span>
+          <span class="cs-nav-next-name">Retail Associate App</span>
+        </span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L14 10L8 16" stroke="#6a7282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <p class="contact-label">Get in Touch</p>
+    <h2 class="fraunces contact-heading">Let's work together</h2>
+    <p class="contact-sub">I'm currently open to new opportunities. If you're looking for a Staff Product Designer who brings clarity to complex problems, let's talk.</p>
+    <div class="contact-actions">
+      <a href="mailto:hello.mandip@gmail.com" class="btn-primary">Email Me</a>
+      <a href="https://www.linkedin.com/in/mandiprandhawa/" target="_blank" class="btn-secondary">LinkedIn ↗</a>
+    </div>
+    <div class="contact-info">
+      <span>hello.mandip@gmail.com</span><span>·</span><span>Toronto, Canada</span>
+    </div>
+  </section>
+
+  <footer><p>© 2026 Mandip Randhawa. Built with care.</p></footer>
+
+  <script>
+    // Align sidenav top with the page h1 (use document-relative offset so this is
+    // correct even if the browser restores a scrolled-down position on refresh)
+    const sidenav = document.querySelector('.sidenav');
+    const pageTitle = document.querySelector('.cs-title');
+    if (sidenav && pageTitle) {
+      const titleTop = pageTitle.getBoundingClientRect().top + window.scrollY;
+      sidenav.style.top = titleTop + 'px';
+    }
+
+    // Count the stat numbers up from 0 the first time each one scrolls into view.
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const animateStat = (el) => {
+      const match = el.textContent.trim().match(/^(\d+)(.*)$/);
+      if (!match) return;
+      const target = parseInt(match[1], 10);
+      const suffix = match[2];
+      const duration = 900;
+      const start = performance.now();
+      const step = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateStat(entry.target);
+          statObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    statNumbers.forEach(el => statObserver.observe(el));
+
+    const sections = document.querySelectorAll('section[id]');
+    const navItems = document.querySelectorAll('.sidenav-item');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navItems.forEach(item => item.classList.remove('active'));
+          const activeItems = document.querySelectorAll(`.sidenav-item[href="#${entry.target.id}"]`);
+          activeItems.forEach(item => item.classList.add('active'));
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -70% 0px'
+    });
+
+    sections.forEach(section => observer.observe(section));
+  </script>
+  <script src="../js/reading-progress.js"></script>
+</body>
+</html>
