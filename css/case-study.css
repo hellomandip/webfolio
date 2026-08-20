@@ -60,7 +60,7 @@ nav { display: flex; gap: 24px; }
 .cs-hero-inner { max-width: var(--max-width); width: 100%; display: flex; flex-direction: column; gap: 36px; }
 /* align-items: flex-start on both the row and each link so "Back"/"Next" line up at the
    same top edge even when one side's title wraps to more lines than the other. */
-.cs-nav { display: flex; justify-content: space-between; align-items: flex-start; }
+.cs-nav { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
 .cs-nav-link {
   display: flex; align-items: flex-start; gap: 8px;
   font-size: 14px; color: var(--grey-mid); text-decoration: none;
@@ -158,7 +158,7 @@ nav { display: flex; gap: 24px; }
 /* ── PHASES / SOLUTION (two-column, alternating) ── */
 .phases-list { display: flex; flex-direction: column; gap: 80px; }
 
-.phase { display: flex; flex-direction: column; gap: 32px; padding-bottom: 80px; border-bottom: 1px solid var(--border); }
+.phase { display: flex; flex-direction: column; gap: 32px; padding-bottom: 80px; border-bottom: 1px solid var(--border); min-width: 0; }
 .phase:last-child { border-bottom: none; padding-bottom: 0; }
 
 .phase-header { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
@@ -167,9 +167,23 @@ nav { display: flex; gap: 24px; }
 .phase-body { font-size: 16px; line-height: 1.7; color: var(--black); letter-spacing: -0.31px; margin-bottom: 16px; }
 .phase-body:last-child { margin-bottom: 0; }
 
-.phase-content { display: flex; gap: 48px; align-items: flex-start; }
+/* min-width: 0 here matters as much as on .phase-copy/.phase-visual below: without it,
+   this flex item (itself nested inside the column-direction .phase/.phases-list chain
+   on mobile, where .phase-content also switches to column) inherits flexbox's default
+   "automatic minimum size" behavior and stretches to fit its widest descendant — one of
+   the hand-built phase mockups — which then forced .phase-visual (and the whole page)
+   wider than the viewport even though .phase-visual itself already had min-width: 0. */
+.phase-content { display: flex; gap: 48px; align-items: flex-start; min-width: 0; }
 .phase-copy { flex: 1; min-width: 0; }
-.phase-visual { flex: 1.1; min-width: 0; }
+/* overflow: hidden + the inner wrapper's top-left transform-origin support
+   phase-visual-scale.js's shrink-to-fit. These are unconditional (not just
+   mobile) because several of the hand-built mockups are wider than even the
+   ~500px desktop column and get scaled down there too — scoping them to a
+   mobile media query left desktop scaling using the browser's default center
+   transform-origin, which shrinks toward the middle instead of the top-left
+   and visibly shifts/misaligns the mockup within its column. */
+.phase-visual { flex: 1.1; min-width: 0; overflow: hidden; }
+.phase-visual-scale-inner { transform-origin: top left; }
 .phase:nth-child(even) .phase-copy { order: 2; }
 .phase:nth-child(even) .phase-visual { order: 1; }
 
@@ -185,6 +199,54 @@ nav { display: flex; gap: 24px; }
 @media (max-width: 640px) {
   .phase-transition { margin: 56px 0; padding: 40px 0; }
   .phase-transition-text { font-size: 19px; }
+}
+
+/* ── TIMELINE (Evolution timeline, "Building the Platform") ──
+   Desktop: horizontal row of nodes with a horizontal connecting line, min-width
+   isn't fixed — it just lays out at its natural width and lets .timeline-wrap
+   scroll in the rare case a desktop viewport is narrower than that (≥641px this
+   essentially never triggers). Mobile (≤640px, below): stays horizontal — nodes
+   shrink to equal-width flex columns (flex: 1 1 0, no min-width row) so all 7 fit
+   the viewport with no scroll, rather than switching to a vertical stack. */
+.timeline-wrap { margin-bottom: 56px; overflow-x: auto; }
+.timeline { position: relative; min-width: 760px; }
+.timeline-line {
+  position: absolute; top: 24px; left: 44px; right: 44px; height: 2px;
+  background: linear-gradient(90deg,#003d2b 0%,#008060 35%,#38b88a 60%,#5297c8 100%);
+}
+.timeline-nodes { display: flex; justify-content: space-between; position: relative; z-index: 1; }
+.timeline-node { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100px; }
+.timeline-node-icon {
+  width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 4px var(--grey-light);
+}
+.timeline-node-label { text-align: center; font-size: 11px; font-weight: 500; color: var(--black); line-height: 1.4; }
+.timeline-caption { margin-top: 24px; font-size: 12px; color: var(--grey-mid); text-align: center; letter-spacing: -0.1px; }
+
+@media (max-width: 640px) {
+  .timeline-wrap { overflow-x: visible; }
+  .timeline { min-width: 0; }
+  /* Inset as a fraction (1/14 = half of one equal-width column) rather than a
+     fixed px value, so the line's ends stay aligned with the first/last icon's
+     center at every mobile width instead of just one tested size. */
+  .timeline-line { top: 12px; left: calc(100% / 14); right: calc(100% / 14); }
+  .timeline-node { width: auto; flex: 1 1 0; min-width: 0; gap: 5px; }
+  .timeline-node-icon { width: 24px; height: 24px; box-shadow: 0 0 0 3px var(--grey-light); }
+  .timeline-node-icon svg { width: 11px; height: 11px; }
+  .timeline-node-label {
+    font-size: 7.5px; line-height: 1.25; letter-spacing: -0.1px; padding: 0 1px;
+    /* At this size every label (including single long words like
+       "Automations") fits its ~41px column at the narrowest supported
+       width (320px) without needing a mid-word break. hyphens: auto is a
+       belt-and-suspenders fallback for anything that still doesn't fit
+       (a longer label added later, a narrower device) — it hyphenates at
+       syllable boundaries where the browser has a dictionary, and
+       overflow-wrap/word-break: break-word guarantees no overflow even
+       where it doesn't. */
+    overflow-wrap: break-word; word-break: break-word;
+    hyphens: auto; -webkit-hyphens: auto;
+  }
 }
 
 /* ── VISUAL PLACEHOLDER ── */
@@ -259,7 +321,7 @@ nav { display: flex; gap: 24px; }
    on mobile like everything else. align-items: flex-start (not center) so "Back"/"Next"
    line up with the top nav, not just with each other. */
 .bottom-nav-section { padding: 32px 24px 40px; }
-.bottom-nav { display: flex; justify-content: space-between; align-items: flex-start; max-width: var(--max-width); margin: 0 auto; }
+.bottom-nav { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; max-width: var(--max-width); margin: 0 auto; }
 
 /* Contact */
 .contact-section { border-top: 1px solid var(--border); text-align: center; padding: 80px 24px; }
@@ -365,11 +427,32 @@ footer p { font-size: 14px; color: var(--grey); letter-spacing: -0.15px; }
   .phase-content { flex-direction: column; }
   .phase-copy, .phase:nth-child(even) .phase-copy { order: 0; }
   .phase-visual, .phase:nth-child(even) .phase-visual { order: 0; }
+  /* .phase-content uses align-items: flex-start for the desktop row layout (so the
+     copy/visual columns don't stretch to match each other's height). Stacked in a
+     column here, flex-start instead sizes each child to its own content's max-content
+     width — for .phase-visual that's the mockup's natural (unshrunk) width, which
+     overflows the viewport. align-self: stretch makes them fill the column's full
+     width like every other stacked element on the page. */
+  .phase-copy, .phase-visual { align-self: stretch; }
+  /* .phase-visual's desktop `flex: 1.1` (flex-basis: 0%, flex-grow: 1.1) is only
+     meaningful for the row layout's *width* distribution. Once .phase-content stacks
+     into a column here, height becomes the flex main axis, and that same flex-basis/
+     grow combination pulls .phase-visual's height back up to its unscaled content
+     size (the phase-visual-scale-inner wrapper's transform:scale doesn't shrink its
+     contribution to layout, only its rendered appearance) — silently overriding the
+     explicit height phase-visual-scale.js sets, and leaving a block of empty space
+     below the visibly-smaller scaled mockup. `flex: none` takes it out of flex
+     grow/shrink entirely on mobile, so its own explicit height (or natural height,
+     when unscaled) is what's actually rendered. */
+  .phase-visual { flex: none; }
 }
 @media (max-width: 640px) {
-  header { padding: 0 16px; } .header-inner { padding: 0; } nav { gap: 16px; }
+  header { padding: 0 16px; } .header-inner { padding: 0; }
+  .logo { font-size: 12px; letter-spacing: 1px; }
+  nav { gap: 11px; }
+  .header-inner nav a { font-size: 13px; }
   .cs-hero { padding: 60px 16px; } .cs-title { font-size: 36px; } .cs-subtitle { font-size: 18px; }
-  .cs-hero-image-frame { height: 240px; }
+  .cs-hero-image-frame { height: auto; }
   .section-white, .section-grey { padding: 60px 16px; } .cs-section-title { font-size: 26px; }
   .bottom-nav-section { padding: 32px 16px 40px; }
   .contact-actions { flex-direction: column; align-items: center; }
@@ -378,6 +461,14 @@ footer p { font-size: 14px; color: var(--grey); letter-spacing: -0.15px; }
   .measure-title { flex-basis: auto; }
   .measure-body { max-width: none; }
   .closing-line p { font-size: 24px; }
+  /* Back/Next case-study titles: truncate to one line instead of wrapping,
+     which was pushing the icon/label out of alignment and eating vertical space.
+     Gap is also reduced from the desktop 24px here (still enough to keep the two
+     titles from visually running into each other, without eating too much of the
+     ~343px row). */
+  .cs-nav, .bottom-nav { gap: 16px; }
+  .cs-nav-next-stack { width: 100%; min-width: 0; }
+  .cs-nav-next-name { display: block; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
 
 /* ── PROJECT-SPECIFIC (used by course-hero.html) ── */

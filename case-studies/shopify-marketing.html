@@ -57,10 +57,10 @@
             <span class="cs-nav-next-name">Selected Work</span>
           </span>
         </a>
-        <a href="course-hero.html" class="cs-nav-link">
+        <a href="kinetic.html" class="cs-nav-link">
           <span class="cs-nav-next-stack">
             <span class="cs-nav-next-label">Next</span>
-            <span class="cs-nav-next-name">Redesigning How Students Study Across a Semester</span>
+            <span class="cs-nav-next-name">Retail Associate App</span>
           </span>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L14 10L8 16" stroke="#6a7282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
@@ -142,56 +142,59 @@
     <div class="section-inner">
       <h2 class="fraunces cs-section-title">Building the Platform</h2>
 
-      <!-- VISUAL: Evolution timeline -->
-      <div style="margin-bottom:56px;overflow-x:auto;">
-        <div style="min-width:760px;position:relative;">
-          <div style="position:absolute;top:24px;left:44px;right:44px;height:2px;background:linear-gradient(90deg,#003d2b 0%,#008060 35%,#38b88a 60%,#5297c8 100%);"></div>
-          <div style="display:flex;justify-content:space-between;position:relative;z-index:1;">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100px;">
-              <div style="width:48px;height:48px;border-radius:50%;background:#003d2b;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #f9fafb;">
+      <!-- VISUAL: Evolution timeline. Horizontal row of 7 nodes on desktop; on
+           mobile (≤640px) case-study.css switches this to a vertical stack via
+           .timeline/.timeline-nodes/.timeline-node — see the "TIMELINE" section
+           there. No JS involved, pure CSS reflow. -->
+      <div class="timeline-wrap">
+        <div class="timeline">
+          <div class="timeline-line"></div>
+          <div class="timeline-nodes">
+            <div class="timeline-node">
+              <div class="timeline-node-icon" style="background:#003d2b;">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="6" width="6" height="8" rx="1" fill="white" opacity="0.9"/><rect x="11" y="4" width="6" height="10" rx="1" fill="white" opacity="0.6"/></svg>
               </div>
-              <div style="text-align:center;"><div style="font-size:11px;font-weight:500;color:#0e0e0e;line-height:1.4;">Ad Integrations</div></div>
+              <div class="timeline-node-label">Ad Integrations</div>
             </div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100px;">
-              <div style="width:48px;height:48px;border-radius:50%;background:#005237;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #f9fafb;">
+            <div class="timeline-node">
+              <div class="timeline-node-icon" style="background:#005237;">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="11" rx="2" stroke="white" stroke-width="1.5"/><path d="M2 8l8 5 8-5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
               </div>
-              <div style="text-align:center;"><div style="font-size:11px;font-weight:500;color:#0e0e0e;line-height:1.4;">Shopify Email</div></div>
+              <div class="timeline-node-label">Shopify Email</div>
             </div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100px;">
-              <div style="width:48px;height:48px;border-radius:50%;background:#008060;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #f9fafb;">
+            <div class="timeline-node">
+              <div class="timeline-node-icon" style="background:#008060;">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="2" stroke="white" stroke-width="1.5"/><path d="M6 7h8M6 10h8M6 13h5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
               </div>
-              <div style="text-align:center;"><div style="font-size:11px;font-weight:500;color:#0e0e0e;line-height:1.4;">Campaigns</div></div>
+              <div class="timeline-node-label">Campaigns</div>
             </div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100px;">
-              <div style="width:48px;height:48px;border-radius:50%;background:#1a9b72;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #f9fafb;">
+            <div class="timeline-node">
+              <div class="timeline-node-icon" style="background:#1a9b72;">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2.5" y="2.5" width="7" height="7" rx="1.5" stroke="white" stroke-width="1.5"/><rect x="10.5" y="2.5" width="7" height="7" rx="1.5" stroke="white" stroke-width="1.5"/><rect x="2.5" y="10.5" width="7" height="7" rx="1.5" stroke="white" stroke-width="1.5"/><rect x="10.5" y="10.5" width="7" height="7" rx="1.5" stroke="white" stroke-width="1.5"/></svg>
               </div>
-              <div style="text-align:center;"><div style="font-size:11px;font-weight:500;color:#0e0e0e;line-height:1.4;">Templates</div></div>
+              <div class="timeline-node-label">Templates</div>
             </div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100px;">
-              <div style="width:48px;height:48px;border-radius:50%;background:#38b88a;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #f9fafb;">
+            <div class="timeline-node">
+              <div class="timeline-node-icon" style="background:#38b88a;">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="5" cy="5" r="2" stroke="white" stroke-width="1.5"/><circle cx="15" cy="10" r="2" stroke="white" stroke-width="1.5"/><circle cx="5" cy="15" r="2" stroke="white" stroke-width="1.5"/><path d="M7 5h4a2 2 0 012 2v1M7 15h4a2 2 0 002-2v-1" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
               </div>
-              <div style="text-align:center;"><div style="font-size:11px;font-weight:500;color:#0e0e0e;line-height:1.4;">Automations</div></div>
+              <div class="timeline-node-label">Automations</div>
             </div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100px;">
-              <div style="width:48px;height:48px;border-radius:50%;background:#52b0c8;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #f9fafb;">
+            <div class="timeline-node">
+              <div class="timeline-node-icon" style="background:#52b0c8;">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 16V10M9.5 16V5M15 16V12" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M3 16h14" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
               </div>
-              <div style="text-align:center;"><div style="font-size:11px;font-weight:500;color:#0e0e0e;line-height:1.4;">Campaign Reports</div></div>
+              <div class="timeline-node-label">Campaign Reports</div>
             </div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100px;">
-              <div style="width:48px;height:48px;border-radius:50%;background:#5297c8;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px #f9fafb;">
+            <div class="timeline-node">
+              <div class="timeline-node-icon" style="background:#5297c8;">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2.5" y="4" width="15" height="12" rx="1.2" stroke="white" stroke-width="1.5"/><path d="M2.5 8.5h15M8 8.5V16" stroke="white" stroke-width="1.5"/></svg>
               </div>
-              <div style="text-align:center;"><div style="font-size:11px;font-weight:500;color:#0e0e0e;line-height:1.4;">Unified View</div></div>
+              <div class="timeline-node-label">Unified View</div>
             </div>
           </div>
         </div>
-        <p style="margin-top:24px;font-size:12px;color:#6a7282;text-align:center;letter-spacing:-0.1px;">Early ad integrations → a full marketing and analytics platform · Lead designer across all seven phases</p>
+        <p class="timeline-caption">Early ad integrations → a full marketing and analytics platform · Lead designer across all seven phases</p>
       </div>
 
       <div class="phases-list">
@@ -949,10 +952,10 @@
           <span class="cs-nav-next-name">Selected Work</span>
         </span>
       </a>
-      <a href="course-hero.html" class="cs-nav-link">
+      <a href="kinetic.html" class="cs-nav-link">
         <span class="cs-nav-next-stack">
           <span class="cs-nav-next-label">Next</span>
-          <span class="cs-nav-next-name">Redesigning How Students Study Across a Semester</span>
+          <span class="cs-nav-next-name">Retail Associate App</span>
         </span>
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L14 10L8 16" stroke="#6a7282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -1035,5 +1038,6 @@
     sections.forEach(section => observer.observe(section));
   </script>
   <script src="../js/reading-progress.js"></script>
+  <script src="../js/phase-visual-scale.js"></script>
 </body>
 </html>
