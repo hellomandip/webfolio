@@ -21,7 +21,12 @@
   <header>
     <div class="header-inner">
       <a href="../index.html" class="logo">Mandip Randhawa</a>
-      <nav>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav id="site-nav">
         <a href="../index.html#work">Work</a>
         <a href="../index.html#about">About</a>
         <a href="../index.html#contact">Contact</a>
@@ -281,7 +286,7 @@
     <p class="contact-sub">I'm currently open to new opportunities. If you're looking for a Staff Product Designer who brings clarity to complex problems, let's talk.</p>
     <div class="contact-actions">
       <a href="mailto:hello.mandip@gmail.com" class="btn-primary">Email Me</a>
-      <a href="https://www.linkedin.com/in/mandiprandhawa/" target="_blank" class="btn-secondary">LinkedIn ↗</a>
+      <a href="https://www.linkedin.com/in/mandiprandhawa/" target="_blank" class="btn-secondary">LinkedIn <svg style="display:inline-block; vertical-align:middle; margin-left:3px; position:relative; top:-1px;" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <div class="contact-info">
       <span>hello.mandip@gmail.com</span>
@@ -296,6 +301,7 @@
 
   <script src="../js/lightbox.js"></script>
   <script src="../js/reading-progress.js"></script>
+  <script src="../js/nav-toggle.js"></script>
 
 </body>
 </html>

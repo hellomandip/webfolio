@@ -92,6 +92,37 @@
 
     nav a:hover::after { width: 100%; }
 
+    /* Hamburger toggle — hidden by default (desktop shows the inline nav);
+       switched on in the 640px block below, where nav itself becomes a
+       hidden dropdown that this button opens/closes. */
+    .nav-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      /* 44px hit area (WCAG tap-target guidance) even though the visible
+         icon is smaller — fits inside the 53px header with room to spare. */
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .nav-toggle-bar {
+      display: block;
+      width: 20px;
+      height: 2px;
+      border-radius: 1px;
+      background: var(--black);
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+    /* Animates the three bars into an X when open. */
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     /* ── HERO ────────────────────────────────────── */
     .hero {
       position: relative;
@@ -670,8 +701,45 @@
       header { padding: 0 16px; }
       .header-inner { padding: 0; }
       .logo { font-size: 12px; letter-spacing: 1px; }
-      nav { gap: 11px; }
-      nav a { font-size: 13px; }
+      /* Hamburger menu: nav collapses into a toggled dropdown instead of
+         squeezing 4 links + the logo into one row. Fixed-positioned (not
+         absolute) so it isn't clipped by any ancestor's overflow, and
+         top: 53px matches header's fixed height (unchanged at this
+         breakpoint — only its horizontal padding changes above). */
+      .nav-toggle { display: flex; }
+      nav {
+        position: fixed;
+        top: 53px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        padding: 4px 16px 12px;
+        max-height: calc(100vh - 53px);
+        overflow-y: auto;
+        transform: translateY(-8px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+      }
+      nav.nav-open {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+      nav a {
+        width: 100%;
+        padding: 14px 0;
+        font-size: 15px;
+        border-bottom: 1px solid var(--border);
+      }
+      nav a:last-child { border-bottom: none; }
       .hero { padding: 80px 16px; }
       .hero-heading { font-size: 32px; }
       .hero-heading .pronunciation { font-size: 18px; }
@@ -888,7 +956,12 @@
   <header>
     <div class="header-inner">
       <a href="#" class="logo" id="logo-link">Mandip Randhawa</a>
-      <nav>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav id="site-nav">
         <a href="#work">Work</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
@@ -1230,7 +1303,7 @@
       <p class="contact-sub">I'm currently open to new opportunities. If you're looking for a Staff Product Designer who brings clarity to complex problems, let's talk.</p>
       <div class="contact-actions">
         <a href="mailto:hello.mandip@gmail.com" class="btn-primary">Email Me</a>
-        <a href="https://www.linkedin.com/in/mandiprandhawa/" target="_blank" class="btn-secondary">LinkedIn ↗</a>
+        <a href="https://www.linkedin.com/in/mandiprandhawa/" target="_blank" class="btn-secondary">LinkedIn <svg style="display:inline-block; vertical-align:middle; margin-left:3px; position:relative; top:-1px;" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
       <div class="contact-info">
         <span>hello.mandip@gmail.com</span>
@@ -1246,6 +1319,63 @@
   </footer>
 
   <script>
+    // ── MOBILE NAV TOGGLE (hamburger) ────────────────
+    (function() {
+      var toggle = document.getElementById('nav-toggle');
+      var nav = document.getElementById('site-nav');
+      if (!toggle || !nav) return;
+
+      function isOpen() { return nav.classList.contains('nav-open'); }
+
+      function openMenu() {
+        nav.classList.add('nav-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', 'Close menu');
+      }
+
+      function closeMenu() {
+        nav.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Open menu');
+      }
+
+      toggle.addEventListener('click', function () {
+        if (isOpen()) { closeMenu(); } else { openMenu(); }
+      });
+
+      // Close after choosing a link, so the dropdown doesn't linger over
+      // the destination section/page.
+      nav.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Escape closes and returns focus to the toggle button.
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && isOpen()) {
+          closeMenu();
+          toggle.focus();
+        }
+      });
+
+      // Tapping/clicking outside the open menu closes it.
+      document.addEventListener('click', function (e) {
+        if (isOpen() && !nav.contains(e.target) && !toggle.contains(e.target)) {
+          closeMenu();
+        }
+      });
+
+      // If the viewport grows past the mobile breakpoint while open (e.g.
+      // rotating a tablet), reset so nav doesn't get stuck mid-transition
+      // when the media query stops applying the dropdown styles.
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          if (window.innerWidth > 640 && isOpen()) closeMenu();
+        }, 150);
+      });
+    })();
+
     // ── HERO ANIMATION ──────────────────────────────
     (function() {
       const typedName      = document.getElementById('typed-name');

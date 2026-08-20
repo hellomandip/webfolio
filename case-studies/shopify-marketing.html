@@ -22,7 +22,12 @@
   <header>
     <div class="header-inner">
       <a href="../index.html" class="logo">Mandip Randhawa</a>
-      <nav>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav id="site-nav">
         <a href="../index.html#work">Work</a>
         <a href="../index.html#about">About</a>
         <a href="../index.html#contact">Contact</a>
@@ -211,64 +216,14 @@
           <p class="phase-body">The design challenge was creating <strong>a coherent, Shopify-native surface</strong> on top of very different underlying systems, each with its own data model, terminology, and edge cases.</p>
           </div>
           <div class="phase-visual">
-          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+          <div class="phase-visual-frame" data-lightbox-group="shopify-phase-visuals">
             <div style="background:#f3f4f6;border-bottom:1px solid #e5e7eb;height:34px;display:flex;align-items:center;padding:0 14px;gap:5px;">
               <div style="width:10px;height:10px;border-radius:50%;background:#f87171;"></div>
               <div style="width:10px;height:10px;border-radius:50%;background:#fbbf24;"></div>
               <div style="width:10px;height:10px;border-radius:50%;background:#34d399;"></div>
               <div style="margin-left:12px;height:20px;flex:1;max-width:280px;background:#e5e7eb;border-radius:4px;display:flex;align-items:center;padding:0 10px;"><span style="font-size:10px;color:#9ca3af;font-family:monospace;">admin.shopify.com/marketing/integrations</span></div>
             </div>
-            <div style="display:flex;background:white;min-height:280px;">
-              <div style="width:176px;background:#1a1a1a;flex-shrink:0;">
-                <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.06);"><div style="font-size:12px;font-weight:600;color:white;">Marketing</div></div>
-                <div style="padding:4px 8px;">
-                  <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Overview</div>
-                  <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Campaigns</div>
-                  <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Automations</div>
-                  <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Email</div>
-                  <div style="padding:7px 10px;border-radius:5px;background:rgba(0,128,96,0.2);color:#52c89b;font-size:12px;">Integrations</div>
-                </div>
-              </div>
-              <div style="flex:1;padding:20px 22px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;">
-                  <div style="font-size:15px;font-weight:600;color:#0e0e0e;min-width:0;">Marketing Integrations</div>
-                  <div style="background:#008060;color:white;font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;flex-shrink:0;white-space:nowrap;">Add integration</div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr;gap:10px;">
-                  <div style="border:1px solid #e5e7eb;border-radius:8px;padding:14px;">
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                      <div style="width:28px;height:28px;border-radius:5px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#854d0e;flex-shrink:0;">G</div>
-                      <div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:600;color:#0e0e0e;">Google Ads</div><div style="font-size:10px;color:#6a7282;">Smart Shopping · Connected</div></div>
-                      <div style="background:#f0faf5;color:#008060;font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;flex-shrink:0;">Active</div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:220px;">
-                      <div style="background:#f9fafb;border-radius:5px;padding:8px 10px;"><div style="font-size:10px;color:#6a7282;margin-bottom:2px;">Spend</div><div style="font-size:13px;font-weight:600;color:#0e0e0e;">$1,240</div></div>
-                      <div style="background:#f9fafb;border-radius:5px;padding:8px 10px;"><div style="font-size:10px;color:#6a7282;margin-bottom:2px;">Revenue</div><div style="font-size:13px;font-weight:600;color:#0e0e0e;">$4,820</div></div>
-                    </div>
-                  </div>
-                  <div style="border:1px solid #e5e7eb;border-radius:8px;padding:14px;">
-                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                      <div style="width:28px;height:28px;border-radius:5px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1d4ed8;flex-shrink:0;">f</div>
-                      <div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:600;color:#0e0e0e;">Facebook &amp; Instagram</div><div style="font-size:10px;color:#6a7282;">Advantage+ · Connected</div></div>
-                      <div style="background:#f0faf5;color:#008060;font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;flex-shrink:0;">Active</div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:220px;">
-                      <div style="background:#f9fafb;border-radius:5px;padding:8px 10px;"><div style="font-size:10px;color:#6a7282;margin-bottom:2px;">Spend</div><div style="font-size:13px;font-weight:600;color:#0e0e0e;">$890</div></div>
-                      <div style="background:#f9fafb;border-radius:5px;padding:8px 10px;"><div style="font-size:10px;color:#6a7282;margin-bottom:2px;">Reach</div><div style="font-size:13px;font-weight:600;color:#0e0e0e;">12.4k</div></div>
-                    </div>
-                  </div>
-                  <div style="border:1.5px dashed #e5e7eb;border-radius:8px;padding:14px;display:flex;align-items:center;justify-content:center;opacity:0.7;cursor:pointer;">
-                    <div style="text-align:center;color:#9ca3af;"><div style="font-size:20px;margin-bottom:4px;">+</div><div style="font-size:11px;">Add channel</div></div>
-                  </div>
-                  <div style="border:1px solid #e5e7eb;border-radius:8px;padding:14px;opacity:0.5;">
-                    <div style="display:flex;align-items:center;gap:8px;">
-                      <div style="width:28px;height:28px;border-radius:5px;background:#fce7f3;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#be185d;flex-shrink:0;">P</div>
-                      <div style="min-width:0;"><div style="font-size:12px;font-weight:600;color:#0e0e0e;">Pinterest</div><div style="font-size:10px;color:#6a7282;">Not connected</div></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <img src="../images/case-studies/shopify/ad-integrations-demo.gif" alt="Demo of the Ad Integrations flow in Shopify's Marketing Tab: connecting and monitoring Google and Facebook ad accounts" style="display:block;" onerror="this.parentElement.style.background='#e5e7eb';" />
           </div>
           </div>
           </div>
@@ -286,56 +241,14 @@
           <p class="phase-body">I was part of the initial discovery work for Shopify Email, then handed it off to a new team who would go on to lead the product. The partnership between our two teams continued to shape several patterns on the Marketing Tab side: <strong>richer, responsive-aware previews of email content</strong>, and a visual-editor step in the integration creation flow.</p>
           </div>
           <div class="phase-visual">
-          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+          <div class="phase-visual-frame" data-lightbox-group="shopify-phase-visuals">
             <div style="background:#f3f4f6;border-bottom:1px solid #e5e7eb;height:34px;display:flex;align-items:center;padding:0 14px;gap:5px;">
               <div style="width:10px;height:10px;border-radius:50%;background:#f87171;"></div>
               <div style="width:10px;height:10px;border-radius:50%;background:#fbbf24;"></div>
               <div style="width:10px;height:10px;border-radius:50%;background:#34d399;"></div>
               <div style="margin-left:12px;height:20px;flex:1;max-width:320px;background:#e5e7eb;border-radius:4px;display:flex;align-items:center;padding:0 10px;"><span style="font-size:10px;color:#9ca3af;font-family:monospace;">admin.shopify.com/marketing/email/new</span></div>
             </div>
-            <div style="display:flex;background:white;min-height:300px;">
-              <div style="width:176px;background:#1a1a1a;flex-shrink:0;">
-                <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.06);"><div style="font-size:12px;font-weight:600;color:white;">Marketing</div></div>
-                <div style="padding:4px 8px;">
-                  <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Overview</div>
-                  <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Campaigns</div>
-                  <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Automations</div>
-                  <div style="padding:7px 10px;border-radius:5px;background:rgba(0,128,96,0.2);color:#52c89b;font-size:12px;">Email</div>
-                  <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Integrations</div>
-                </div>
-              </div>
-              <div style="flex:1;display:flex;flex-direction:column;min-width:0;">
-                <div style="padding:20px 22px;border-bottom:1px solid #e5e7eb;">
-                  <div style="font-size:15px;font-weight:600;color:#0e0e0e;margin-bottom:16px;">New email campaign</div>
-                  <div style="margin-bottom:12px;"><div style="font-size:11px;color:#6a7282;margin-bottom:4px;">Campaign name</div><div style="border:1px solid #e5e7eb;border-radius:5px;padding:8px 10px;font-size:12px;color:#0e0e0e;">Summer Sale — August 2019</div></div>
-                  <div style="margin-bottom:12px;"><div style="font-size:11px;color:#6a7282;margin-bottom:4px;">To</div><div style="border:1px solid #e5e7eb;border-radius:5px;padding:8px 10px;font-size:12px;color:#0e0e0e;display:flex;align-items:center;justify-content:space-between;gap:8px;"><span style="min-width:0;">All subscribers (14,280)</span><span style="color:#008060;font-size:10px;flex-shrink:0;">Change ›</span></div></div>
-                  <div style="margin-bottom:12px;"><div style="font-size:11px;color:#6a7282;margin-bottom:4px;">Subject line</div><div style="border:1.5px solid #008060;border-radius:5px;padding:8px 10px;font-size:12px;color:#0e0e0e;">☀️ Our biggest sale of the year starts now</div></div>
-                  <div style="margin-bottom:16px;">
-                    <div style="font-size:11px;color:#6a7282;margin-bottom:6px;">Template</div>
-                    <div style="display:flex;gap:8px;">
-                      <div style="flex:1;min-width:0;border:2px solid #008060;border-radius:6px;padding:6px;text-align:center;"><div style="height:32px;background:#f0faf5;border-radius:3px;margin-bottom:4px;"></div><div style="font-size:10px;color:#008060;font-weight:500;">Sale promo</div></div>
-                      <div style="flex:1;min-width:0;border:1px solid #e5e7eb;border-radius:6px;padding:6px;text-align:center;opacity:0.55;"><div style="height:32px;background:#f9fafb;border-radius:3px;margin-bottom:4px;"></div><div style="font-size:10px;color:#6a7282;">Product highlight</div></div>
-                      <div style="flex:1;min-width:0;border:1px solid #e5e7eb;border-radius:6px;padding:6px;text-align:center;opacity:0.55;"><div style="height:32px;background:#f9fafb;border-radius:3px;margin-bottom:4px;"></div><div style="font-size:10px;color:#6a7282;">Newsletter</div></div>
-                    </div>
-                  </div>
-                  <div style="display:flex;gap:8px;flex-wrap:wrap;"><div style="background:#008060;color:white;font-size:11px;font-weight:500;padding:8px 14px;border-radius:6px;">Review &amp; send</div><div style="border:1px solid #e5e7eb;color:#0e0e0e;font-size:11px;padding:8px 14px;border-radius:6px;">Save draft</div></div>
-                </div>
-                <div style="padding:16px 22px;background:#f9fafb;">
-                  <div style="font-size:10px;color:#6a7282;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Preview</div>
-                  <div style="max-width:280px;background:white;border-radius:6px;overflow:hidden;border:1px solid #e5e7eb;">
-                    <div style="height:72px;background:linear-gradient(135deg,#008060,#1a9b72);display:flex;align-items:center;justify-content:center;">
-                      <div style="text-align:center;"><div style="font-size:14px;font-weight:700;color:white;">SUMMER SALE</div><div style="font-size:11px;color:rgba(255,255,255,0.8);">Up to 40% off</div></div>
-                    </div>
-                    <div style="padding:10px;">
-                      <div style="height:5px;background:#f3f4f6;border-radius:3px;margin-bottom:5px;width:90%;"></div>
-                      <div style="height:5px;background:#f3f4f6;border-radius:3px;margin-bottom:5px;width:75%;"></div>
-                      <div style="height:5px;background:#f3f4f6;border-radius:3px;margin-bottom:10px;width:60%;"></div>
-                      <div style="background:#008060;color:white;text-align:center;font-size:10px;font-weight:600;padding:5px;border-radius:4px;">Shop the sale</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <img src="../images/case-studies/shopify/shopify-email-demo.gif" alt="Demo of creating a Shopify Email campaign, including the responsive-aware live preview" style="display:block;" onerror="this.parentElement.style.background='#e5e7eb';" />
           </div>
           </div>
           </div>
@@ -363,147 +276,14 @@
           <p class="phase-body">The design challenge was significant: multiple channels, each with different data models and lifecycle states, all had to <strong>feel coherent inside a single surface</strong>.</p>
           </div>
           <div class="phase-visual">
-          <div style="display:flex;flex-direction:column;gap:18px;">
-            <div>
-              <div style="font-size:10px;color:#6a7282;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;font-weight:600;">Campaign list — grouping related activity</div>
-              <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
-                <div style="background:#f3f4f6;border-bottom:1px solid #e5e7eb;height:34px;display:flex;align-items:center;padding:0 14px;gap:5px;">
-                  <div style="width:10px;height:10px;border-radius:50%;background:#f87171;"></div>
-                  <div style="width:10px;height:10px;border-radius:50%;background:#fbbf24;"></div>
-                  <div style="width:10px;height:10px;border-radius:50%;background:#34d399;"></div>
-                  <div style="margin-left:12px;height:20px;flex:1;max-width:280px;background:#e5e7eb;border-radius:4px;display:flex;align-items:center;padding:0 10px;"><span style="font-size:10px;color:#9ca3af;font-family:monospace;">admin.shopify.com/marketing/campaigns</span></div>
-                </div>
-                <div style="display:flex;background:white;min-height:260px;">
-                  <div style="width:176px;background:#1a1a1a;flex-shrink:0;">
-                    <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.06);"><div style="font-size:12px;font-weight:600;color:white;">Marketing</div></div>
-                    <div style="padding:4px 8px;">
-                      <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Overview</div>
-                      <div style="padding:7px 10px;border-radius:5px;background:rgba(0,128,96,0.2);color:#52c89b;font-size:12px;">Campaigns</div>
-                      <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Automations</div>
-                      <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Email</div>
-                      <div style="padding:7px 10px;color:rgba(255,255,255,0.45);font-size:12px;">Integrations</div>
-                    </div>
-                  </div>
-                  <div style="flex:1;padding:20px 22px;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-                      <div style="font-size:15px;font-weight:600;color:#0e0e0e;">Campaigns</div>
-                      <div style="background:#008060;color:white;font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;">Create campaign</div>
-                    </div>
-                    <div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
-                      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;background:#f9fafb;border-bottom:1px solid #e5e7eb;padding:8px 12px;gap:8px;">
-                        <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Campaign</div>
-                        <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Channels</div>
-                        <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Status</div>
-                        <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Revenue</div>
-                      </div>
-                      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:10px 12px;gap:8px;border-bottom:1px solid #e5e7eb;align-items:center;">
-                        <div><div style="font-size:12px;font-weight:500;color:#0e0e0e;">Father's Day 2020</div><div style="font-size:10px;color:#9ca3af;">Jun 1–21, 2020</div></div>
-                        <div style="display:flex;gap:4px;">
-                          <div style="width:18px;height:18px;border-radius:3px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#854d0e;">G</div>
-                          <div style="width:18px;height:18px;border-radius:3px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#1d4ed8;">f</div>
-                          <div style="width:18px;height:18px;border-radius:3px;background:#f0faf5;display:flex;align-items:center;justify-content:center;font-size:9px;color:#008060;">@</div>
-                        </div>
-                        <div><span style="background:#f0faf5;color:#008060;font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;">Active</span></div>
-                        <div style="font-size:13px;font-weight:600;color:#0e0e0e;">$8,240</div>
-                      </div>
-                      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:10px 12px;gap:8px;border-bottom:1px solid #e5e7eb;align-items:center;">
-                        <div><div style="font-size:12px;font-weight:500;color:#0e0e0e;">Spring Collection Launch</div><div style="font-size:10px;color:#9ca3af;">Apr 10–30, 2020</div></div>
-                        <div style="display:flex;gap:4px;">
-                          <div style="width:18px;height:18px;border-radius:3px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#1d4ed8;">f</div>
-                          <div style="width:18px;height:18px;border-radius:3px;background:#f0faf5;display:flex;align-items:center;justify-content:center;font-size:9px;color:#008060;">@</div>
-                        </div>
-                        <div><span style="background:#f3f4f6;color:#6a7282;font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;">Ended</span></div>
-                        <div style="font-size:13px;font-weight:600;color:#0e0e0e;">$5,180</div>
-                      </div>
-                      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:10px 12px;gap:8px;align-items:center;">
-                        <div><div style="font-size:12px;font-weight:500;color:#0e0e0e;">Back to School</div><div style="font-size:10px;color:#9ca3af;">Aug 1–15, 2020</div></div>
-                        <div style="display:flex;gap:4px;"><div style="width:18px;height:18px;border-radius:3px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#854d0e;">G</div></div>
-                        <div><span style="background:#fef3c7;color:#92400e;font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;">Draft</span></div>
-                        <div style="font-size:13px;font-weight:600;color:#9ca3af;">—</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="phase-visual-frame" data-lightbox-group="shopify-phase-visuals">
+            <div style="background:#f3f4f6;border-bottom:1px solid #e5e7eb;height:34px;display:flex;align-items:center;padding:0 14px;gap:5px;">
+              <div style="width:10px;height:10px;border-radius:50%;background:#f87171;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#fbbf24;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#34d399;"></div>
+              <div style="margin-left:12px;height:20px;flex:1;max-width:280px;background:#e5e7eb;border-radius:4px;display:flex;align-items:center;padding:0 10px;"><span style="font-size:10px;color:#9ca3af;font-family:monospace;">admin.shopify.com/marketing/campaigns</span></div>
             </div>
-            <div>
-              <div style="font-size:10px;color:#6a7282;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;font-weight:600;">Campaign detail — full multi-channel orchestration</div>
-              <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
-                <div style="background:#f3f4f6;border-bottom:1px solid #e5e7eb;height:34px;display:flex;align-items:center;padding:0 14px;gap:5px;">
-                  <div style="width:10px;height:10px;border-radius:50%;background:#f87171;"></div>
-                  <div style="width:10px;height:10px;border-radius:50%;background:#fbbf24;"></div>
-                  <div style="width:10px;height:10px;border-radius:50%;background:#34d399;"></div>
-                  <div style="margin-left:12px;height:20px;flex:1;max-width:340px;background:#e5e7eb;border-radius:4px;display:flex;align-items:center;padding:0 10px;"><span style="font-size:10px;color:#9ca3af;font-family:monospace;">admin.shopify.com/marketing/campaigns/bfcm-2021</span></div>
-                </div>
-                <div style="background:white;padding:20px 22px;">
-                  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;">
-                    <div>
-                      <div style="font-size:10px;color:#6a7282;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.8px;">Campaign · Nov 19 – Nov 30, 2021</div>
-                      <div style="font-size:17px;font-weight:700;color:#0e0e0e;margin-bottom:5px;">Black Friday Cyber Monday 2021</div>
-                      <div style="display:flex;gap:8px;align-items:center;"><span style="background:#f0faf5;color:#008060;font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;">Active</span><span style="font-size:11px;color:#6a7282;">Goal: Drive $12,000 in sales</span></div>
-                    </div>
-                    <div style="display:flex;gap:8px;">
-                      <div style="border:1px solid #e5e7eb;color:#0e0e0e;font-size:11px;padding:6px 12px;border-radius:6px;">Edit</div>
-                      <div style="background:#008060;color:white;font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;">Add tactic</div>
-                    </div>
-                  </div>
-                  <div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
-                    <div style="display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 80px;background:#f9fafb;border-bottom:1px solid #e5e7eb;padding:7px 12px;gap:8px;">
-                      <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Tactic</div>
-                      <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Start</div>
-                      <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Spend</div>
-                      <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Revenue</div>
-                      <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Status</div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 80px;padding:9px 12px;gap:8px;border-bottom:1px solid #e5e7eb;align-items:center;">
-                      <div style="display:flex;align-items:center;gap:7px;">
-                        <div style="width:22px;height:22px;border-radius:4px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#854d0e;flex-shrink:0;">G</div>
-                        <div><div style="font-size:12px;font-weight:500;color:#0e0e0e;">Google — Audience building</div><div style="font-size:10px;color:#9ca3af;">Smart Shopping · $50/day</div></div>
-                      </div>
-                      <div style="font-size:11px;color:#6a7282;">Nov 12</div>
-                      <div style="font-size:12px;font-weight:500;color:#0e0e0e;">$490</div>
-                      <div style="font-size:12px;font-weight:600;color:#0e0e0e;">$2,140</div>
-                      <div><span style="background:#f0faf5;color:#008060;font-size:10px;padding:2px 7px;border-radius:20px;">Active</span></div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 80px;padding:9px 12px;gap:8px;border-bottom:1px solid #e5e7eb;align-items:center;">
-                      <div style="display:flex;align-items:center;gap:7px;">
-                        <div style="width:22px;height:22px;border-radius:4px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#854d0e;flex-shrink:0;">G</div>
-                        <div><div style="font-size:12px;font-weight:500;color:#0e0e0e;">Google — Dynamic retargeting</div><div style="font-size:10px;color:#9ca3af;">Display · $30/day</div></div>
-                      </div>
-                      <div style="font-size:11px;color:#6a7282;">Nov 19</div>
-                      <div style="font-size:12px;font-weight:500;color:#0e0e0e;">$210</div>
-                      <div style="font-size:12px;font-weight:600;color:#0e0e0e;">$1,820</div>
-                      <div><span style="background:#f0faf5;color:#008060;font-size:10px;padding:2px 7px;border-radius:20px;">Active</span></div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 80px;padding:9px 12px;gap:8px;border-bottom:1px solid #e5e7eb;align-items:center;">
-                      <div style="display:flex;align-items:center;gap:7px;">
-                        <div style="width:22px;height:22px;border-radius:4px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1d4ed8;flex-shrink:0;">f</div>
-                        <div><div style="font-size:12px;font-weight:500;color:#0e0e0e;">Facebook — Advantage+ Shopping</div><div style="font-size:10px;color:#9ca3af;">All placements · $60/day</div></div>
-                      </div>
-                      <div style="font-size:11px;color:#6a7282;">Nov 19</div>
-                      <div style="font-size:12px;font-weight:500;color:#0e0e0e;">$660</div>
-                      <div style="font-size:12px;font-weight:600;color:#0e0e0e;">$3,280</div>
-                      <div><span style="background:#f0faf5;color:#008060;font-size:10px;padding:2px 7px;border-radius:20px;">Active</span></div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 80px;padding:9px 12px;gap:8px;align-items:center;">
-                      <div style="display:flex;align-items:center;gap:7px;">
-                        <div style="width:22px;height:22px;border-radius:4px;background:#f0faf5;display:flex;align-items:center;justify-content:center;font-size:10px;color:#008060;flex-shrink:0;">@</div>
-                        <div><div style="font-size:12px;font-weight:500;color:#0e0e0e;">Shopify Email — BFCM announcement</div><div style="font-size:10px;color:#9ca3af;">14,280 subscribers</div></div>
-                      </div>
-                      <div style="font-size:11px;color:#6a7282;">Nov 24</div>
-                      <div style="font-size:12px;color:#9ca3af;">Free</div>
-                      <div style="font-size:12px;font-weight:600;color:#0e0e0e;">$1,940</div>
-                      <div><span style="background:#fef3c7;color:#92400e;font-size:10px;padding:2px 7px;border-radius:20px;">Scheduled</span></div>
-                    </div>
-                  </div>
-                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px;">
-                    <div style="background:#f9fafb;border-radius:6px;padding:10px 12px;"><div style="font-size:10px;color:#6a7282;margin-bottom:3px;">Total spend</div><div style="font-size:15px;font-weight:700;color:#0e0e0e;">$1,360</div></div>
-                    <div style="background:#f9fafb;border-radius:6px;padding:10px 12px;"><div style="font-size:10px;color:#6a7282;margin-bottom:3px;">Total revenue</div><div style="font-size:15px;font-weight:700;color:#0e0e0e;">$9,180</div></div>
-                    <div style="background:#f0faf5;border-radius:6px;padding:10px 12px;"><div style="font-size:10px;color:#6a7282;margin-bottom:3px;">Goal progress</div><div style="font-size:15px;font-weight:700;color:#008060;">76% of $12k</div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <img src="../images/case-studies/shopify/campaigns-demo.gif" alt="Demo of Campaigns: grouping related marketing activity into a campaign, then viewing full multi-channel orchestration and results" style="display:block;" onerror="this.parentElement.style.background='#e5e7eb';" />
           </div>
           </div>
           </div>
@@ -521,87 +301,14 @@
           <p class="phase-body">A merchant launching a Back-to-School campaign could start from a template that included the goal, the recommended channel mix, the suggested timeline, and the key tactics <strong>pre-configured</strong>, then customize from there. The design problem shifted from "how do you create a campaign?" to <strong>"how do you understand a campaign strategy and make it your own?"</strong></p>
           </div>
           <div class="phase-visual">
-          <div style="display:flex;flex-wrap:wrap;gap:20px;">
-            <!-- Template library -->
-            <div style="flex:1;min-width:276px;border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
-              <div style="background:#1a1a1a;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;">
-                <div style="font-size:12px;font-weight:600;color:white;">Campaign Templates</div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.35);">12 available</div>
-              </div>
-              <div style="background:white;padding:14px;">
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                  <div style="border:1.5px solid #008060;border-radius:7px;padding:10px;background:#f0faf5;">
-                    <div style="font-size:9px;color:#008060;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Sale event</div>
-                    <div style="font-size:11px;font-weight:600;color:#0e0e0e;margin-bottom:4px;">Black Friday / Cyber Monday</div>
-                    <div style="font-size:10px;color:#6a7282;margin-bottom:7px;">12 days · 4 tactics</div>
-                    <div style="display:flex;gap:3px;">
-                      <div style="width:16px;height:16px;border-radius:3px;background:#fef9c3;font-size:8px;font-weight:700;color:#854d0e;display:flex;align-items:center;justify-content:center;">G</div>
-                      <div style="width:16px;height:16px;border-radius:3px;background:#dbeafe;font-size:8px;font-weight:700;color:#1d4ed8;display:flex;align-items:center;justify-content:center;">f</div>
-                      <div style="width:16px;height:16px;border-radius:3px;background:#f0faf5;font-size:8px;color:#008060;display:flex;align-items:center;justify-content:center;">@</div>
-                    </div>
-                  </div>
-                  <div style="border:1px solid #e5e7eb;border-radius:7px;padding:10px;">
-                    <div style="font-size:9px;color:#6a7282;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Seasonal</div>
-                    <div style="font-size:11px;font-weight:600;color:#0e0e0e;margin-bottom:4px;">Back to School</div>
-                    <div style="font-size:10px;color:#6a7282;margin-bottom:7px;">14 days · 3 tactics</div>
-                    <div style="display:flex;gap:3px;">
-                      <div style="width:16px;height:16px;border-radius:3px;background:#fef9c3;font-size:8px;font-weight:700;color:#854d0e;display:flex;align-items:center;justify-content:center;">G</div>
-                      <div style="width:16px;height:16px;border-radius:3px;background:#f0faf5;font-size:8px;color:#008060;display:flex;align-items:center;justify-content:center;">@</div>
-                    </div>
-                  </div>
-                  <div style="border:1px solid #e5e7eb;border-radius:7px;padding:10px;">
-                    <div style="font-size:9px;color:#6a7282;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Holiday</div>
-                    <div style="font-size:11px;font-weight:600;color:#0e0e0e;margin-bottom:4px;">Father's Day</div>
-                    <div style="font-size:10px;color:#6a7282;margin-bottom:7px;">7 days · 2 tactics</div>
-                    <div style="display:flex;gap:3px;">
-                      <div style="width:16px;height:16px;border-radius:3px;background:#dbeafe;font-size:8px;font-weight:700;color:#1d4ed8;display:flex;align-items:center;justify-content:center;">f</div>
-                      <div style="width:16px;height:16px;border-radius:3px;background:#f0faf5;font-size:8px;color:#008060;display:flex;align-items:center;justify-content:center;">@</div>
-                    </div>
-                  </div>
-                  <div style="border:1px solid #e5e7eb;border-radius:7px;padding:10px;">
-                    <div style="font-size:9px;color:#6a7282;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;">Product</div>
-                    <div style="font-size:11px;font-weight:600;color:#0e0e0e;margin-bottom:4px;">New product launch</div>
-                    <div style="font-size:10px;color:#6a7282;margin-bottom:7px;">10 days · 3 tactics</div>
-                    <div style="display:flex;gap:3px;">
-                      <div style="width:16px;height:16px;border-radius:3px;background:#fef9c3;font-size:8px;font-weight:700;color:#854d0e;display:flex;align-items:center;justify-content:center;">G</div>
-                      <div style="width:16px;height:16px;border-radius:3px;background:#dbeafe;font-size:8px;font-weight:700;color:#1d4ed8;display:flex;align-items:center;justify-content:center;">f</div>
-                      <div style="width:16px;height:16px;border-radius:3px;background:#f0faf5;font-size:8px;color:#008060;display:flex;align-items:center;justify-content:center;">@</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="phase-visual-frame" data-lightbox-group="shopify-phase-visuals">
+            <div style="background:#f3f4f6;border-bottom:1px solid #e5e7eb;height:34px;display:flex;align-items:center;padding:0 14px;gap:5px;">
+              <div style="width:10px;height:10px;border-radius:50%;background:#f87171;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#fbbf24;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#34d399;"></div>
+              <div style="margin-left:12px;height:20px;flex:1;max-width:280px;background:#e5e7eb;border-radius:4px;display:flex;align-items:center;padding:0 10px;"><span style="font-size:10px;color:#9ca3af;font-family:monospace;">admin.shopify.com/marketing/templates</span></div>
             </div>
-            <!-- Template detail -->
-            <div style="flex:1;min-width:276px;border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
-              <div style="background:#008060;padding:14px 16px;">
-                <div style="font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;">Sale event template</div>
-                <div style="font-size:14px;font-weight:700;color:white;">Black Friday / Cyber Monday</div>
-              </div>
-              <div style="background:white;padding:14px;">
-                <div style="margin-bottom:12px;">
-                  <div style="font-size:10px;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;font-weight:600;">Goal</div>
-                  <div style="font-size:12px;color:#0e0e0e;background:#f0faf5;border-radius:5px;padding:8px 10px;border-left:3px solid #008060;line-height:1.5;">Drive revenue over a 12-day sale window using retargeting, email, and new audience acquisition</div>
-                </div>
-                <div style="margin-bottom:12px;">
-                  <div style="font-size:10px;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:7px;font-weight:600;">Tactics</div>
-                  <div style="display:flex;flex-direction:column;gap:5px;">
-                    <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid #e5e7eb;border-radius:5px;">
-                      <div style="width:20px;height:20px;border-radius:3px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#854d0e;flex-shrink:0;">G</div>
-                      <div><div style="font-size:11px;font-weight:500;color:#0e0e0e;">Google — Audience building</div><div style="font-size:10px;color:#9ca3af;">Start 7 days before · $40–60/day</div></div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid #e5e7eb;border-radius:5px;">
-                      <div style="width:20px;height:20px;border-radius:3px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#1d4ed8;flex-shrink:0;">f</div>
-                      <div><div style="font-size:11px;font-weight:500;color:#0e0e0e;">Facebook — Dynamic retargeting</div><div style="font-size:10px;color:#9ca3af;">Start sale day · $30–50/day</div></div>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid #e5e7eb;border-radius:5px;">
-                      <div style="width:20px;height:20px;border-radius:3px;background:#f0faf5;display:flex;align-items:center;justify-content:center;font-size:10px;color:#008060;flex-shrink:0;">@</div>
-                      <div><div style="font-size:11px;font-weight:500;color:#0e0e0e;">Shopify Email — BFCM announcement</div><div style="font-size:10px;color:#9ca3af;">Day 1 · All subscribers</div></div>
-                    </div>
-                  </div>
-                </div>
-                <div style="background:#008060;color:white;text-align:center;font-size:12px;font-weight:500;padding:9px;border-radius:6px;cursor:pointer;">Use this template →</div>
-              </div>
-            </div>
+            <img src="../images/case-studies/shopify/templates-demo.gif" alt="Demo of browsing the Campaign Templates library and starting a campaign from a pre-configured template" style="display:block;" onerror="this.parentElement.style.background='#e5e7eb';" />
           </div>
           </div>
           </div>
@@ -619,64 +326,14 @@
           <p class="phase-body">The design challenge was sophistication: automations range from single-step to complex multi-branch sequences. We designed <strong>a tiered experience</strong>: pre-built automations for merchants who wanted to start immediately, and a workflow builder for merchants who wanted full control.</p>
           </div>
           <div class="phase-visual">
-          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+          <div class="phase-visual-frame" data-lightbox-group="shopify-phase-visuals">
             <div style="background:#f3f4f6;border-bottom:1px solid #e5e7eb;height:34px;display:flex;align-items:center;padding:0 14px;gap:5px;">
               <div style="width:10px;height:10px;border-radius:50%;background:#f87171;"></div>
               <div style="width:10px;height:10px;border-radius:50%;background:#fbbf24;"></div>
               <div style="width:10px;height:10px;border-radius:50%;background:#34d399;"></div>
               <div style="margin-left:12px;height:20px;flex:1;max-width:300px;background:#e5e7eb;border-radius:4px;display:flex;align-items:center;padding:0 10px;"><span style="font-size:10px;color:#9ca3af;font-family:monospace;">admin.shopify.com/marketing/automations</span></div>
             </div>
-            <div style="background:white;padding:20px 22px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-                <div style="font-size:15px;font-weight:600;color:#0e0e0e;">Pre-built automations</div>
-                <div style="border:1px solid #e5e7eb;color:#0e0e0e;font-size:11px;padding:6px 12px;border-radius:6px;">Build custom</div>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
-                <div style="border:1.5px solid #008060;border-radius:8px;padding:14px;background:#f0faf5;">
-                  <div style="width:30px;height:30px;border-radius:6px;background:#008060;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1.5" y="1.5" width="5" height="5" rx="1" stroke="white" stroke-width="1.2"/><rect x="8.5" y="1.5" width="5" height="5" rx="1" stroke="white" stroke-width="1.2"/><path d="M4 6.5v2h7v-2" stroke="white" stroke-width="1.2" stroke-linecap="round"/><path d="M7.5 8.5v5" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
-                  </div>
-                  <div style="font-size:12px;font-weight:600;color:#0e0e0e;margin-bottom:4px;">Abandoned cart recovery</div>
-                  <div style="font-size:11px;color:#6a7282;line-height:1.4;margin-bottom:8px;">Automatically email customers who left without purchasing</div>
-                  <div style="font-size:10px;color:#008060;font-weight:500;">3 steps · Email</div>
-                </div>
-                <div style="border:1px solid #e5e7eb;border-radius:8px;padding:14px;">
-                  <div style="width:30px;height:30px;border-radius:6px;background:#f9fafb;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1l1.2 3.6H12l-2.8 2 1.1 3.4L7.5 8 4.2 10l1.1-3.4L2.5 4.6h3.3z" stroke="#6a7282" stroke-width="1.1" stroke-linejoin="round"/></svg>
-                  </div>
-                  <div style="font-size:12px;font-weight:600;color:#0e0e0e;margin-bottom:4px;">Welcome new subscribers</div>
-                  <div style="font-size:11px;color:#6a7282;line-height:1.4;margin-bottom:8px;">Send a welcome series to new email subscribers over 7 days</div>
-                  <div style="font-size:10px;color:#6a7282;font-weight:500;">4 steps · Email</div>
-                </div>
-                <div style="border:1px solid #e5e7eb;border-radius:8px;padding:14px;">
-                  <div style="width:30px;height:30px;border-radius:6px;background:#f9fafb;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 13S2 9.5 2 5.5a5.5 5.5 0 0111 0C13 9.5 7.5 13 7.5 13z" stroke="#6a7282" stroke-width="1.1"/></svg>
-                  </div>
-                  <div style="font-size:12px;font-weight:600;color:#0e0e0e;margin-bottom:4px;">Win-back lapsed customers</div>
-                  <div style="font-size:11px;color:#6a7282;line-height:1.4;margin-bottom:8px;">Re-engage customers who haven't purchased in 90 days</div>
-                  <div style="font-size:10px;color:#6a7282;font-weight:500;">2 steps · Email + discount</div>
-                </div>
-                <div style="border:1px solid #e5e7eb;border-radius:8px;padding:14px;">
-                  <div style="width:30px;height:30px;border-radius:6px;background:#f9fafb;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1.5" y="3" width="12" height="9" rx="1.5" stroke="#6a7282" stroke-width="1.1"/><path d="M4 8.5l2-2 2 2 3-3.5" stroke="#6a7282" stroke-width="1.1" stroke-linecap="round"/></svg>
-                  </div>
-                  <div style="font-size:12px;font-weight:600;color:#0e0e0e;margin-bottom:4px;">Post-purchase upsell</div>
-                  <div style="font-size:11px;color:#6a7282;line-height:1.4;margin-bottom:8px;">Follow up after purchase with related product recommendations</div>
-                  <div style="font-size:10px;color:#6a7282;font-weight:500;">2 steps · Email</div>
-                </div>
-                <div style="border:1px solid #e5e7eb;border-radius:8px;padding:14px;">
-                  <div style="width:30px;height:30px;border-radius:6px;background:#f9fafb;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="5" stroke="#6a7282" stroke-width="1.1"/><path d="M7.5 5v2.5l1.5 1.5" stroke="#6a7282" stroke-width="1.1" stroke-linecap="round"/></svg>
-                  </div>
-                  <div style="font-size:12px;font-weight:600;color:#0e0e0e;margin-bottom:4px;">Birthday offer</div>
-                  <div style="font-size:11px;color:#6a7282;line-height:1.4;margin-bottom:8px;">Send a personal discount on customer birthdays automatically</div>
-                  <div style="font-size:10px;color:#6a7282;font-weight:500;">1 step · Email + discount</div>
-                </div>
-                <div style="border:1.5px dashed #e5e7eb;border-radius:8px;padding:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-                  <div style="text-align:center;color:#9ca3af;"><div style="font-size:22px;margin-bottom:4px;">+</div><div style="font-size:11px;font-weight:500;">Build from scratch</div></div>
-                </div>
-              </div>
-            </div>
+            <img src="../images/case-studies/shopify/automations-demo.gif" alt="Demo of pre-built Automations like abandoned cart recovery, win-back flows, and post-purchase upsells" style="display:block;" onerror="this.parentElement.style.background='#e5e7eb';" />
           </div>
           </div>
           </div>
@@ -701,70 +358,16 @@
             <h3 class="fraunces phase-title">Campaign Reports</h3>
           </div>
           <p class="phase-body">Before this, a merchant's only view into performance was scattered: an individual report for each marketing activity (an ad, an email) or a channel-level report (Google, Facebook, and so on). Impressions, clicks, and ROAS existed in isolation inside each one, disconnected from any sense of how the campaign was doing as a whole. Campaign Reports gave merchants a single place to understand what drove results, compare channels, and decide where to invest next: <strong>goals versus actuals, a channel-level breakdown, performance over time, and attribution context</strong>, all in one view.</p>
-          <p class="phase-body">We also gave merchants the ability to link campaigns they ran outside Shopify into that same view, using <strong>UTM parameters</strong>. That mattered most for sophisticated merchants working with agencies or running marketing entirely through external platforms: they could still see everything in one place.</p>
-          <p class="phase-body">The harder design challenge was attribution. Most channels report their numbers using their own model for how a click or a sale gets counted, and those models disagree with each other. We had to settle on <strong>one universal model</strong> for Shopify's view without eroding merchant trust when our numbers didn't match what they were seeing inside the channels themselves. The most important design decision here was <strong>surfacing the attribution model and data source directly alongside the numbers</strong>. Making the methodology transparent gave merchants the context to trust the data and make decisions from it.</p>
           </div>
           <div class="phase-visual">
-          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
-            <div style="background:#1a1a1a;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;">
-              <div>
-                <div style="font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;">Campaign Report · Nov 18–29, 2022</div>
-                <div style="font-size:13px;font-weight:600;color:white;">Black Friday / Cyber Monday 2022</div>
-              </div>
-              <div style="font-size:10px;color:rgba(255,255,255,0.35);text-align:right;">Attribution: Last click<br/>7-day window</div>
+          <div class="phase-visual-frame" data-lightbox-group="shopify-phase-visuals">
+            <div style="background:#f3f4f6;border-bottom:1px solid #e5e7eb;height:34px;display:flex;align-items:center;padding:0 14px;gap:5px;">
+              <div style="width:10px;height:10px;border-radius:50%;background:#f87171;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#fbbf24;"></div>
+              <div style="width:10px;height:10px;border-radius:50%;background:#34d399;"></div>
+              <div style="margin-left:12px;height:20px;flex:1;max-width:320px;background:#e5e7eb;border-radius:4px;display:flex;align-items:center;padding:0 10px;"><span style="font-size:10px;color:#9ca3af;font-family:monospace;">admin.shopify.com/marketing/reports/bfcm-2022</span></div>
             </div>
-            <div style="background:white;padding:20px 22px;">
-              <div style="margin-bottom:20px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                  <div style="font-size:12px;font-weight:600;color:#0e0e0e;">Revenue over time</div>
-                  <div style="font-size:10px;color:#6a7282;">Daily · 12-day window</div>
-                </div>
-                <div style="height:80px;background:#f9fafb;border-radius:6px;padding:8px 12px;overflow:hidden;">
-                  <svg width="100%" height="100%" viewBox="0 0 600 56" preserveAspectRatio="none">
-                    <defs><linearGradient id="areafill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#008060" stop-opacity="0.15"/><stop offset="100%" stop-color="#008060" stop-opacity="0.01"/></linearGradient></defs>
-                    <polygon points="0,50 50,48 100,44 150,36 200,34 250,22 300,11 350,7 400,5 450,14 500,18 550,9 600,7 600,56 0,56" fill="url(#areafill)"/>
-                    <polyline points="0,50 50,48 100,44 150,36 200,34 250,22 300,11 350,7 400,5 450,14 500,18 550,9 600,7" fill="none" stroke="#008060" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <text x="2" y="56" font-size="8" fill="#9ca3af" font-family="sans-serif">Nov 18</text>
-                    <text x="276" y="56" font-size="8" fill="#9ca3af" font-family="sans-serif">Nov 24</text>
-                    <text x="550" y="56" font-size="8" fill="#9ca3af" font-family="sans-serif">Nov 29</text>
-                  </svg>
-                </div>
-              </div>
-              <div>
-                <div style="font-size:12px;font-weight:600;color:#0e0e0e;margin-bottom:10px;">Channel breakdown</div>
-                <div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
-                  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 100px;background:#f9fafb;border-bottom:1px solid #e5e7eb;padding:7px 12px;gap:8px;">
-                    <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Channel</div>
-                    <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Revenue</div>
-                    <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Spend</div>
-                    <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">ROAS</div>
-                    <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Data source</div>
-                  </div>
-                  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 100px;padding:8px 12px;gap:8px;border-bottom:1px solid #e5e7eb;align-items:center;">
-                    <div style="display:flex;align-items:center;gap:7px;"><div style="width:18px;height:18px;border-radius:3px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#854d0e;">G</div><div style="font-size:12px;color:#0e0e0e;">Google Ads</div></div>
-                    <div style="font-size:12px;font-weight:600;color:#0e0e0e;">$6,240</div>
-                    <div style="font-size:12px;color:#6a7282;">$1,120</div>
-                    <div style="font-size:12px;color:#0e0e0e;">5.6×</div>
-                    <div style="font-size:10px;color:#6a7282;background:#f9fafb;padding:2px 7px;border-radius:4px;display:inline-block;">Shopify</div>
-                  </div>
-                  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 100px;padding:8px 12px;gap:8px;border-bottom:1px solid #e5e7eb;align-items:center;">
-                    <div style="display:flex;align-items:center;gap:7px;"><div style="width:18px;height:18px;border-radius:3px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#1d4ed8;">f</div><div style="font-size:12px;color:#0e0e0e;">Facebook</div></div>
-                    <div style="font-size:12px;font-weight:600;color:#0e0e0e;">$4,740</div>
-                    <div style="font-size:12px;color:#6a7282;">$940</div>
-                    <div style="font-size:12px;color:#0e0e0e;">5.0×</div>
-                    <div style="font-size:10px;color:#6a7282;background:#f9fafb;padding:2px 7px;border-radius:4px;display:inline-block;">Shopify</div>
-                  </div>
-                  <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 100px;padding:8px 12px;gap:8px;align-items:center;background:#fafffe;">
-                    <div style="display:flex;align-items:center;gap:7px;"><div style="width:18px;height:18px;border-radius:3px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:white;">A</div><div style="font-size:12px;color:#0e0e0e;">Agency (external)</div></div>
-                    <div style="font-size:12px;font-weight:600;color:#0e0e0e;">$3,840</div>
-                    <div style="font-size:12px;color:#9ca3af;">—</div>
-                    <div style="font-size:12px;color:#9ca3af;">—</div>
-                    <div style="font-size:10px;color:#008060;background:#f0faf5;padding:2px 7px;border-radius:4px;display:inline-block;">↗ Linked</div>
-                  </div>
-                </div>
-                <div style="margin-top:8px;font-size:10px;color:#9ca3af;">Agency campaign linked via UTM parameters, with 5-day click window attribution.</div>
-              </div>
-            </div>
+            <img src="../images/case-studies/shopify/campaign-reports-demo.gif" alt="Demo of a Campaign Report: revenue over time, channel breakdown, and cross-platform attribution for a campaign" style="display:block;" onerror="this.parentElement.style.background='#e5e7eb';" />
           </div>
           </div>
           </div>
@@ -778,82 +381,18 @@
             <p class="phase-label">Phase 7</p>
             <h3 class="fraunces phase-title">Unified Marketing View</h3>
           </div>
-          <p class="phase-body">The Unified Marketing view was the top-level view that pulled everything together. Every campaign (whether run entirely in Shopify, partially in Shopify, or connected from an external platform) appeared in <strong>a single table</strong>. Merchants could see their complete marketing picture at a glance: status, KPI summary, channel mix, and spend.</p>
-          <p class="phase-body">The design challenge was data heterogeneity: different channels have different metrics, different attribution windows, and different definitions of "success." The solution was <strong>a fixed KPI column set with visible data source context</strong>. Instead of pretending all campaigns were measured the same way, we made the channel mix and connected platforms visible in the table itself.</p>
+          <p class="phase-body">The Unified Marketing view pulled everything together: every campaign, whether run entirely in Shopify, partially in Shopify, or linked in from an external platform via <strong>UTM parameters</strong>, appeared in <strong>a single table</strong> with status, KPI summary, channel mix, and spend at a glance.</p>
+          <p class="phase-body">The harder design challenge was attribution. Every channel counted clicks and sales by its own model, and those models disagreed with each other. We settled on <strong>one universal model</strong> for Shopify's view, then <strong>surfaced that attribution model and data source directly alongside the numbers</strong>, giving merchants the context to trust the data even when it didn't match what they saw inside the channels themselves.</p>
           </div>
           <div class="phase-visual">
-          <div style="border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.05);">
+          <div class="phase-visual-frame" data-lightbox-group="shopify-phase-visuals">
             <div style="background:#f3f4f6;border-bottom:1px solid #e5e7eb;height:34px;display:flex;align-items:center;padding:0 14px;gap:5px;">
               <div style="width:10px;height:10px;border-radius:50%;background:#f87171;"></div>
               <div style="width:10px;height:10px;border-radius:50%;background:#fbbf24;"></div>
               <div style="width:10px;height:10px;border-radius:50%;background:#34d399;"></div>
               <div style="margin-left:12px;height:20px;flex:1;max-width:280px;background:#e5e7eb;border-radius:4px;display:flex;align-items:center;padding:0 10px;"><span style="font-size:10px;color:#9ca3af;font-family:monospace;">admin.shopify.com/marketing</span></div>
             </div>
-            <div style="background:white;padding:20px 22px;">
-              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;">
-                <div>
-                  <div style="font-size:16px;font-weight:600;color:#0e0e0e;">All marketing activity</div>
-                  <div style="font-size:11px;color:#6a7282;margin-top:2px;">Shopify campaigns + linked external platforms</div>
-                </div>
-                <div style="background:#008060;color:white;font-size:11px;font-weight:500;padding:6px 12px;border-radius:6px;">Create campaign</div>
-              </div>
-              <div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
-                <div style="display:grid;grid-template-columns:2fr 1fr 90px 1fr 1fr;background:#f9fafb;border-bottom:1px solid #e5e7eb;padding:8px 12px;gap:8px;">
-                  <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Campaign</div>
-                  <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Channels</div>
-                  <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Status</div>
-                  <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Revenue</div>
-                  <div style="font-size:10px;font-weight:600;color:#6a7282;text-transform:uppercase;letter-spacing:0.5px;">Spend</div>
-                </div>
-                <div style="display:grid;grid-template-columns:2fr 1fr 90px 1fr 1fr;padding:10px 12px;gap:8px;border-bottom:1px solid #e5e7eb;align-items:center;">
-                  <div><div style="font-size:12px;font-weight:500;color:#0e0e0e;">BFCM 2022</div><div style="font-size:10px;color:#9ca3af;">Nov 18–29</div></div>
-                  <div style="display:flex;gap:3px;align-items:center;">
-                    <div style="width:18px;height:18px;border-radius:3px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#854d0e;">G</div>
-                    <div style="width:18px;height:18px;border-radius:3px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#1d4ed8;">f</div>
-                    <div style="width:18px;height:18px;border-radius:3px;background:#f0faf5;display:flex;align-items:center;justify-content:center;font-size:9px;color:#008060;">@</div>
-                    <div style="width:18px;height:18px;border-radius:3px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:8px;color:white;font-weight:700;">A</div>
-                    <span style="font-size:9px;color:#008060;background:#f0faf5;padding:1px 4px;border-radius:3px;font-weight:500;">↗</span>
-                  </div>
-                  <div><span style="background:#f0faf5;color:#008060;font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;">Active</span></div>
-                  <div style="font-size:12px;font-weight:600;color:#0e0e0e;">$14,820</div>
-                  <div style="font-size:12px;color:#0e0e0e;">$2,740</div>
-                </div>
-                <div style="display:grid;grid-template-columns:2fr 1fr 90px 1fr 1fr;padding:10px 12px;gap:8px;border-bottom:1px solid #e5e7eb;align-items:center;">
-                  <div><div style="font-size:12px;font-weight:500;color:#0e0e0e;">Back to School 2022</div><div style="font-size:10px;color:#9ca3af;">Aug 1–15</div></div>
-                  <div style="display:flex;gap:3px;">
-                    <div style="width:18px;height:18px;border-radius:3px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#854d0e;">G</div>
-                    <div style="width:18px;height:18px;border-radius:3px;background:#f0faf5;display:flex;align-items:center;justify-content:center;font-size:9px;color:#008060;">@</div>
-                  </div>
-                  <div><span style="background:#f3f4f6;color:#6a7282;font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;">Ended</span></div>
-                  <div style="font-size:12px;font-weight:600;color:#0e0e0e;">$6,180</div>
-                  <div style="font-size:12px;color:#0e0e0e;">$940</div>
-                </div>
-                <div style="display:grid;grid-template-columns:2fr 1fr 90px 1fr 1fr;padding:10px 12px;gap:8px;border-bottom:1px solid #e5e7eb;align-items:center;background:#fafffe;">
-                  <div>
-                    <div style="font-size:12px;font-weight:500;color:#0e0e0e;">Summer newsletter series</div>
-                    <div style="display:flex;align-items:center;gap:4px;margin-top:2px;"><span style="font-size:9px;color:#008060;background:#f0faf5;padding:1px 5px;border-radius:3px;font-weight:500;">↗ Agency</span><span style="font-size:10px;color:#9ca3af;">Jul 2–Aug 31</span></div>
-                  </div>
-                  <div style="display:flex;gap:3px;">
-                    <div style="width:18px;height:18px;border-radius:3px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:8px;color:white;font-weight:700;">A</div>
-                  </div>
-                  <div><span style="background:#f3f4f6;color:#6a7282;font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;">Ended</span></div>
-                  <div style="font-size:12px;font-weight:600;color:#0e0e0e;">$3,840</div>
-                  <div style="font-size:12px;color:#9ca3af;">—</div>
-                </div>
-                <div style="display:grid;grid-template-columns:2fr 1fr 90px 1fr 1fr;padding:10px 12px;gap:8px;align-items:center;opacity:0.65;">
-                  <div><div style="font-size:12px;font-weight:500;color:#0e0e0e;">Holiday 2022</div><div style="font-size:10px;color:#9ca3af;">Dec 1–24 · upcoming</div></div>
-                  <div style="display:flex;gap:3px;">
-                    <div style="width:18px;height:18px;border-radius:3px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#854d0e;">G</div>
-                    <div style="width:18px;height:18px;border-radius:3px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#1d4ed8;">f</div>
-                    <div style="width:18px;height:18px;border-radius:3px;background:#f0faf5;display:flex;align-items:center;justify-content:center;font-size:9px;color:#008060;">@</div>
-                  </div>
-                  <div><span style="background:#fef3c7;color:#92400e;font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;">Draft</span></div>
-                  <div style="font-size:12px;color:#9ca3af;">—</div>
-                  <div style="font-size:12px;color:#9ca3af;">—</div>
-                </div>
-              </div>
-              <div style="margin-top:8px;font-size:10px;color:#9ca3af;">↗ = External platform data linked via UTM parameters. Revenue includes Shopify-attributed and linked platform data.</div>
-            </div>
+            <img src="../images/case-studies/shopify/unified-marketing-view-demo.gif" alt="Demo of the Unified Marketing View: every campaign, Shopify and external, in a single table with status, revenue, and spend" style="display:block;" onerror="this.parentElement.style.background='#e5e7eb';" />
           </div>
           </div>
           </div>
@@ -969,7 +508,7 @@
     <p class="contact-sub">I'm currently open to new opportunities. If you're looking for a Staff Product Designer who brings clarity to complex problems, let's talk.</p>
     <div class="contact-actions">
       <a href="mailto:hello.mandip@gmail.com" class="btn-primary">Email Me</a>
-      <a href="https://www.linkedin.com/in/mandiprandhawa/" target="_blank" class="btn-secondary">LinkedIn ↗</a>
+      <a href="https://www.linkedin.com/in/mandiprandhawa/" target="_blank" class="btn-secondary">LinkedIn <svg style="display:inline-block; vertical-align:middle; margin-left:3px; position:relative; top:-1px;" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <div class="contact-info">
       <span>hello.mandip@gmail.com</span>
@@ -1039,5 +578,7 @@
   </script>
   <script src="../js/reading-progress.js"></script>
   <script src="../js/phase-visual-scale.js"></script>
+  <script src="../js/nav-toggle.js"></script>
+  <script src="../js/lightbox.js"></script>
 </body>
 </html>

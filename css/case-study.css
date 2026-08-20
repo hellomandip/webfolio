@@ -51,6 +51,37 @@ nav { display: flex; gap: 24px; }
 .header-inner nav a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.2s ease; }
 .header-inner nav a:hover::after { width: 100%; }
 
+/* Hamburger toggle — hidden by default (desktop shows the inline nav);
+   switched on in the 640px block below, where nav itself becomes a hidden
+   dropdown that this button opens/closes. */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  /* 44px hit area (WCAG tap-target guidance) even though the visible icon
+     is smaller — fits inside the 53px header with room to spare. */
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav-toggle-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--black);
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+/* Animates the three bars into an X when open. */
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* ── HERO ── */
 .cs-hero {
   background: var(--hero-gradient);
@@ -173,7 +204,7 @@ nav { display: flex; gap: 24px; }
    "automatic minimum size" behavior and stretches to fit its widest descendant — one of
    the hand-built phase mockups — which then forced .phase-visual (and the whole page)
    wider than the viewport even though .phase-visual itself already had min-width: 0. */
-.phase-content { display: flex; gap: 48px; align-items: flex-start; min-width: 0; }
+.phase-content { display: flex; gap: 48px; align-items: center; min-width: 0; }
 .phase-copy { flex: 1; min-width: 0; }
 /* overflow: hidden + the inner wrapper's top-left transform-origin support
    phase-visual-scale.js's shrink-to-fit. These are unconditional (not just
@@ -186,6 +217,18 @@ nav { display: flex; gap: 24px; }
 .phase-visual-scale-inner { transform-origin: top left; }
 .phase:nth-child(even) .phase-copy { order: 2; }
 .phase:nth-child(even) .phase-visual { order: 1; }
+
+/* Phase-visual demo frame — thin grey border + subtle shadow, click to open the gif
+   larger in the lightbox (js/lightbox.js). Shares the .flow-shot hover treatment used
+   elsewhere on the site for click-to-zoom triggers. */
+.phase-visual-frame { border-radius: 16px; overflow: hidden; border: 1px solid #9ca3af; box-shadow: 0 14px 36px rgba(0,0,0,0.18); cursor: zoom-in; transition: box-shadow 0.15s ease, opacity 0.15s ease; }
+.phase-visual-frame:hover { box-shadow: 0 18px 44px rgba(0,0,0,0.24); opacity: 0.96; }
+/* Belt-and-suspenders corner rounding: overflow:hidden + border-radius on the frame
+   should clip every child to all four corners, but animated gifs can sometimes get
+   promoted to their own compositing layer and escape an ancestor's clip in some
+   browsers, leaving square bottom corners. Setting the same radius directly on the
+   img guarantees all four corners round regardless. */
+.phase-visual-frame img { display: block; border-radius: inherit; }
 
 /* Narrative callouts that sit between groups of phases inside "Building the Platform" —
    styled to match .closing-line, the case study's pull-quote treatment */
@@ -427,12 +470,13 @@ footer p { font-size: 14px; color: var(--grey); letter-spacing: -0.15px; }
   .phase-content { flex-direction: column; }
   .phase-copy, .phase:nth-child(even) .phase-copy { order: 0; }
   .phase-visual, .phase:nth-child(even) .phase-visual { order: 0; }
-  /* .phase-content uses align-items: flex-start for the desktop row layout (so the
-     copy/visual columns don't stretch to match each other's height). Stacked in a
-     column here, flex-start instead sizes each child to its own content's max-content
-     width — for .phase-visual that's the mockup's natural (unshrunk) width, which
-     overflows the viewport. align-self: stretch makes them fill the column's full
-     width like every other stacked element on the page. */
+  /* .phase-content uses align-items: center for the desktop row layout (so the
+     copy/visual columns are vertically centered against each other rather than
+     stretched to match height). Stacked in a column here, center instead sizes each
+     child to its own content's max-content width — for .phase-visual that's the
+     mockup's natural (unshrunk) width, which overflows the viewport. align-self:
+     stretch makes them fill the column's full width like every other stacked
+     element on the page. */
   .phase-copy, .phase-visual { align-self: stretch; }
   /* .phase-visual's desktop `flex: 1.1` (flex-basis: 0%, flex-grow: 1.1) is only
      meaningful for the row layout's *width* distribution. Once .phase-content stacks
@@ -449,8 +493,45 @@ footer p { font-size: 14px; color: var(--grey); letter-spacing: -0.15px; }
 @media (max-width: 640px) {
   header { padding: 0 16px; } .header-inner { padding: 0; }
   .logo { font-size: 12px; letter-spacing: 1px; }
-  nav { gap: 11px; }
-  .header-inner nav a { font-size: 13px; }
+  /* Hamburger menu: nav collapses into a toggled dropdown instead of
+     squeezing 4 links + the logo into one row. Fixed-positioned (not
+     absolute) so it isn't clipped by any ancestor's overflow, and
+     top: 53px matches header's fixed height (unchanged at this
+     breakpoint — only its horizontal padding changes above). */
+  .nav-toggle { display: flex; }
+  nav {
+    position: fixed;
+    top: 53px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+    padding: 4px 16px 12px;
+    max-height: calc(100vh - 53px);
+    overflow-y: auto;
+    transform: translateY(-8px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  }
+  nav.nav-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .header-inner nav a {
+    width: 100%;
+    padding: 14px 0;
+    font-size: 15px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner nav a:last-child { border-bottom: none; }
   .cs-hero { padding: 60px 16px; } .cs-title { font-size: 36px; } .cs-subtitle { font-size: 18px; }
   .cs-hero-image-frame { height: auto; }
   .section-white, .section-grey { padding: 60px 16px; } .cs-section-title { font-size: 26px; }
