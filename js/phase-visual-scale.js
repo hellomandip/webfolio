@@ -31,12 +31,22 @@
 
     var naturalWidth = inner.scrollWidth;
     var naturalHeight = inner.scrollHeight;
-    var available = visual.clientWidth;
+
+    // .phase-visual carries its own padding when it wraps a .phase-visual-frame
+    // (see case-study.css), so the padding area isn't actually available for
+    // content. clientWidth includes that padding, so subtract it before computing
+    // the fit-to-width scale factor, and add it back onto the explicit height we
+    // set below (otherwise the padding gets squeezed out of the scaled-down box).
+    // No-op when padding is 0 (course-hero.html's plain hand-built mockups).
+    var style = getComputedStyle(visual);
+    var padX = (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0);
+    var padY = (parseFloat(style.paddingTop) || 0) + (parseFloat(style.paddingBottom) || 0);
+    var available = visual.clientWidth - padX;
 
     if (available > 0 && naturalWidth > available) {
       var scale = available / naturalWidth;
       inner.style.transform = 'scale(' + scale + ')';
-      visual.style.height = Math.ceil(naturalHeight * scale) + 'px';
+      visual.style.height = Math.ceil(naturalHeight * scale + padY) + 'px';
     } else {
       inner.style.width = '';
     }

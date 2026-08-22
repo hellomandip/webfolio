@@ -86,7 +86,7 @@ nav { display: flex; gap: 24px; }
 .cs-hero {
   background: var(--hero-gradient);
   background-attachment: fixed;
-  padding: 100px 24px; display: flex; justify-content: center;
+  padding: 64px 24px 100px; display: flex; justify-content: center;
 }
 .cs-hero-inner { max-width: var(--max-width); width: 100%; display: flex; flex-direction: column; gap: 36px; }
 /* align-items: flex-start on both the row and each link so "Back"/"Next" line up at the
@@ -147,7 +147,7 @@ nav { display: flex; gap: 24px; }
   transform: translateY(-4px);
   box-shadow: 0 6px 16px rgba(0,0,0,0.07), 0 16px 32px rgba(0,0,0,0.07);
 }
-.callout-text-lg { font-size: 21px; line-height: 1.4; font-weight: 500; letter-spacing: -0.3px; }
+.callout-text-lg { font-size: 16px; line-height: 1.7; font-weight: 400; letter-spacing: -0.31px; }
 .context-copy { column-count: 1; max-width: 600px; }
 .context-copy .cs-body { break-inside: avoid-column; }
 
@@ -214,6 +214,13 @@ nav { display: flex; gap: 24px; }
    transform-origin, which shrinks toward the middle instead of the top-left
    and visibly shifts/misaligns the mockup within its column. */
 .phase-visual { flex: 1.1; min-width: 0; overflow: hidden; }
+/* .phase-visual-frame's own border/box-shadow render outside its box, and with zero
+   margin they sit flush against .phase-visual's overflow:hidden edge — clipping the
+   border/shadow off on all 4 sides. Scoped via :has() so only frame-based visuals
+   (shopify-marketing.html's gif demos) get this breathing room; course-hero.html's
+   plain hand-built mockups (no frame) stay at padding: 0. phase-visual-scale.js reads
+   this padding and accounts for it in its fit-to-width math. */
+.phase-visual:has(.phase-visual-frame) { padding: 28px; }
 .phase-visual-scale-inner { transform-origin: top left; }
 .phase:nth-child(even) .phase-copy { order: 2; }
 .phase:nth-child(even) .phase-visual { order: 1; }
@@ -223,12 +230,7 @@ nav { display: flex; gap: 24px; }
    elsewhere on the site for click-to-zoom triggers. */
 .phase-visual-frame { border-radius: 16px; overflow: hidden; border: 1px solid #9ca3af; box-shadow: 0 14px 36px rgba(0,0,0,0.18); cursor: zoom-in; transition: box-shadow 0.15s ease, opacity 0.15s ease; }
 .phase-visual-frame:hover { box-shadow: 0 18px 44px rgba(0,0,0,0.24); opacity: 0.96; }
-/* Belt-and-suspenders corner rounding: overflow:hidden + border-radius on the frame
-   should clip every child to all four corners, but animated gifs can sometimes get
-   promoted to their own compositing layer and escape an ancestor's clip in some
-   browsers, leaving square bottom corners. Setting the same radius directly on the
-   img guarantees all four corners round regardless. */
-.phase-visual-frame img { display: block; border-radius: inherit; }
+.phase-visual-frame img { display: block; border-radius: 0; }
 
 /* Narrative callouts that sit between groups of phases inside "Building the Platform" —
    styled to match .closing-line, the case study's pull-quote treatment */
@@ -532,7 +534,7 @@ footer p { font-size: 14px; color: var(--grey); letter-spacing: -0.15px; }
     border-bottom: 1px solid var(--border);
   }
   .header-inner nav a:last-child { border-bottom: none; }
-  .cs-hero { padding: 60px 16px; } .cs-title { font-size: 36px; } .cs-subtitle { font-size: 18px; }
+  .cs-hero { padding: 34px 16px 60px; } .cs-title { font-size: 36px; } .cs-subtitle { font-size: 18px; }
   .cs-hero-image-frame { height: auto; }
   .section-white, .section-grey { padding: 60px 16px; } .cs-section-title { font-size: 26px; }
   .bottom-nav-section { padding: 32px 16px 40px; }
