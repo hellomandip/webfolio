@@ -231,10 +231,17 @@
     /* ── SECTIONS ────────────────────────────────── */
     section { width: 100%; }
 
+    /* No horizontal padding here — .section-white/.section-grey already pad
+       the section itself (80px/24px desktop, 60px/16px mobile below), and
+       this wrapper's job is just centering within that. It used to also
+       carry `padding: 0 24px`, which double-stacked with the section's own
+       padding (worst on mobile: 16px + 24px = 40px edge inset here vs the
+       clean 16px used everywhere else on the site, including every case
+       study page — case-study.css's .section-inner never had this extra
+       padding). Removed to match. */
     .section-inner {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 24px;
     }
 
     .section-white { background: #fff; padding: 80px 24px; }
