@@ -1,5 +1,5 @@
 // Reading-progress bar — fills as the visitor scrolls through the case study.
-// Shown at every screen size, anchored to the header's bottom edge (see .reading-progress
+// Shown at every screen size, fixed to the bottom edge of the viewport (see .reading-progress
 // in case-study.css). No per-page setup needed: it just needs a .reading-progress-fill
 // element on the page.
 (function () {
