@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Designing an AI-Native Study Companion · Mandip Randhawa</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/case-study.css" />
+  <style>
+    /* ── Page-specific (course-hero-v2.html) ──
+       Draft rework of course-hero.html. Everything below is scoped to this page so
+       the shared case-study.css (and the original course-hero.html) stay untouched. */
+    :root {
+      --hero-gradient: linear-gradient(135deg, #f9fafa 0%, #eeeff1 100%);
+      --hero-placeholder-gradient: linear-gradient(135deg, #e3e6e8 0%, #d4d8dd 100%);
+      --ch-blue: #002de4;
+    }
+    /* Decision loops: muted, looping screen recordings of the prototype */
+    .video-frame { cursor: default; background: #f9fafc; }
+    .video-frame:hover { opacity: 1; }
+    .video-frame video { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 750; object-fit: cover; }
+
+    .hero-links { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 4px; }
+    .hero-link { font-size: 14px; color: var(--black); text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
+    .hero-link:hover { border-bottom-width: 2px; }
+    .cs-hero-image-frame { background: #fff; border: 1px solid var(--border); box-shadow: 0 14px 36px rgba(0,0,0,0.10); }
+
+    #try { scroll-margin-top: 40px; }
+    /* Section intro paragraph */
+    .section-lead { font-size: 17px; line-height: 1.7; color: var(--black); letter-spacing: -0.31px; max-width: 720px; margin: -8px 0 40px; text-wrap: pretty; }
+
+    /* AI-native principles: 4-up cards */
+    .principles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .principle { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 24px 24px 22px; }
+    .principle-num { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 0.5px; margin-bottom: 10px; }
+    .principle-title { font-size: 19px; line-height: 1.35; margin-bottom: 8px; }
+    .principle-body { font-size: 15px; line-height: 1.6; color: var(--grey); letter-spacing: -0.2px; }
+
+    /* ── Try it: the live, guided prototype ── */
+    .try-steps { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .try-step {
+      font: inherit; font-size: 14px; color: var(--black); background: #fff; cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.14); border-radius: 999px; height: 36px; padding: 0 14px 0 6px;
+      display: inline-flex; align-items: center; gap: 8px; transition: border-color .15s, background .15s;
+    }
+    .try-step:hover { border-color: rgba(0,0,0,0.4); }
+    .try-step .n { width: 24px; height: 24px; border-radius: 50%; background: var(--grey-light); display: grid; place-items: center; font-size: 12px; font-weight: 600; }
+    .try-step[aria-pressed="true"] { background: var(--black); color: #fff; border-color: var(--black); }
+    .try-step[aria-pressed="true"] .n { background: rgba(255,255,255,0.18); }
+    .try-step:focus-visible, .see-it:focus-visible { outline: 2px solid var(--ch-blue); outline-offset: 2px; }
+    .try-caption { min-height: 52px; display: flex; gap: 16px; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+    .try-caption p { font-size: 15px; line-height: 1.6; color: var(--grey); letter-spacing: -0.2px; max-width: 720px; }
+    .try-caption p b { color: var(--black); font-weight: 500; }
+    .try-open { font-size: 14px; color: var(--black); white-space: nowrap; text-decoration: none; border-bottom: 1px solid var(--accent); }
+    .proto-stage {
+      position: relative; width: 100%; aspect-ratio: 1280 / 800; overflow: hidden;
+      border-radius: 12px; border: 1px solid #9ca3af; background: #f9fafc;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.14);
+    }
+    .proto-stage iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform-origin: top left; }
+    .proto-loading { position: absolute; inset: 0; display: grid; place-items: center; font-size: 14px; color: var(--grey-mid); }
+    .try-note { font-size: 12px; color: var(--grey-mid); margin-top: 14px; letter-spacing: -0.1px; }
+    .try-mobile { display: none; }
+    @media (max-width: 760px) {
+      .try-steps, .try-caption, .proto-stage, .try-note { display: none; }
+      .try-mobile { display: block; }
+      .try-mobile img { width: 100%; border-radius: 10px; border: 1px solid var(--border); display: block; margin-bottom: 16px; }
+      .try-mobile p { font-size: 15px; color: var(--grey); line-height: 1.6; margin-bottom: 16px; }
+      .principles { grid-template-columns: 1fr; }
+    }
+
+    /* Decisions reuse the shared .phase layout; these add the "why / trade-off" detail */
+    .decision-meta { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+    .decision-meta p { font-size: 14px; line-height: 1.6; color: var(--grey); letter-spacing: -0.15px; }
+    .decision-meta b { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: 2px; }
+    .problem-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto 1fr; column-gap:40px; align-items:start; }
+    .problem-col { display:grid; grid-template-rows:subgrid; grid-row:span 2; row-gap:20px; }
+    .problem-col .callout { margin:0; height:100%; box-sizing:border-box; }
+    @media (max-width: 760px) { .problem-grid { grid-template-columns:1fr; } }
+    .see-it {
+      font: inherit; font-size: 14px; color: var(--black); background: none; border: 0; cursor: pointer; padding: 0;
+      margin-top: 20px; display: inline-flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--accent);
+    }
+    .see-it:hover { border-bottom-width: 2px; }
+    @media (max-width: 760px) { .see-it { display: none; } }
+    .phase-visual-frame img { width: 100%; height: auto; }
+    .cs-hero-image-frame { aspect-ratio: auto; }
+    .cs-hero-image-frame video.hero-loop { display: block; width: 100%; height: auto; border-radius: inherit; object-fit: contain; }
+
+    /* How I built it: version strip */
+    .versions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 8px 0 56px; }
+    .version { cursor: zoom-in; }
+    .version img { width: 100%; aspect-ratio: 1440 / 900; object-fit: cover; object-position: top; border-radius: 8px; border: 1px solid rgba(0,0,0,0.14); display: block; transition: opacity .15s; }
+    .version:hover img { opacity: 0.9; }
+    .version-tag { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin: 12px 0 4px; }
+    .version p { font-size: 14px; line-height: 1.55; color: var(--grey); letter-spacing: -0.15px; }
+    @media (max-width: 860px) { .versions { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 520px) { .versions { grid-template-columns: 1fr; } }
+    .stat-number { color: #8a5a2e; }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+    .split-col { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 24px; }
+    .split-col h3 { font-size: 19px; margin-bottom: 12px; }
+    .split-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .split-col li { font-size: 15px; line-height: 1.55; color: var(--grey); letter-spacing: -0.2px; padding-left: 18px; position: relative; }
+    .split-col li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+    @media (max-width: 760px) { .split { grid-template-columns: 1fr; } }
+    .subhead { font-size: 22px; line-height: 1.4; margin: 56px 0 16px; }
+    /* Outcome */
+    .outcome { display: grid; grid-template-columns: auto 1fr; gap: 56px; align-items: center; margin-top: 8px; }
+    .outcome-num { font-size: clamp(96px, 14vw, 168px); line-height: 1; letter-spacing: -3px; color: var(--accent); }
+    .outcome-lead { font-size: 26px; line-height: 1.3; margin-bottom: 14px; }
+    .outcome-copy .cs-body + .cs-body { margin-top: 12px; }
+    @media (max-width: 760px) { .outcome { grid-template-columns: 1fr; gap: 20px; } }
+    /* Mobile type scale (≤640px) for this page's own styles */
+    @media (max-width: 640px) {
+      .section-lead { font-size: 15px; margin: -4px 0 24px; }
+      .principle { padding: 16px; }
+      .principle-title { font-size: 16px; }
+      .principle-body { font-size: 14px; }
+      .try-mobile p { font-size: 14px; }
+      .decision-meta p { font-size: 13px; }
+      .version p { font-size: 13px; }
+      .version-tag { font-size: 10px; }
+      .split-col { padding: 16px; }
+      .split-col h3 { font-size: 16px; }
+      .split-col li { font-size: 14px; }
+      .subhead { font-size: 19px; margin: 40px 0 12px; }
+      .outcome-lead { font-size: 20px; }
+      .outcome-num { font-size: 96px; letter-spacing: -2px; }
+      .hero-link { font-size: 13px; }
+    }
+  </style>
+  <link rel="stylesheet" href="../css/deck.css" />
+  <script>if (/[?&]deck=1/.test(location.search)) document.documentElement.classList.add('deck-mode');</script>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="../index.html" class="logo">Mandip Randhawa</a>
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav id="site-nav">
+        <a href="../index.html#work">Work</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+        <a href="../assets/mandip-randhawa-resume-2026.pdf" target="_blank" rel="noopener">Resume <svg style="display:inline-block; vertical-align:middle; margin-left:3px; position:relative; top:-1px;" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="reading-progress" aria-hidden="true">
+    <div class="reading-progress-fill"></div>
+  </div>
+
+  <!-- ── SIDE NAV ── -->
+  <nav class="sidenav" aria-label="Page sections">
+    <div class="sidenav-track"></div>
+    <a class="sidenav-item" href="#top">Overview</a>
+    <a class="sidenav-item" href="#context">Context</a>
+    <a class="sidenav-item" href="#patterns">How the AI shows up</a>
+    <a class="sidenav-item" href="#outcome">Outcome</a>
+    <a class="sidenav-item" href="#try">Try the prototype</a>
+  </nav>
+
+
+  <section id="top" class="cs-hero">
+    <div class="cs-hero-inner">
+      <div class="cs-nav">
+        <a href="shopify-marketing.html" class="cs-nav-link">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10L12 16" stroke="#6a7282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="cs-nav-next-stack cs-nav-stack-left">
+            <span class="cs-nav-next-label">Back</span>
+            <span class="cs-nav-next-name">Building Shopify's Merchant Marketing Platform</span>
+          </span>
+        </a>
+        <a href="kinetic.html" class="cs-nav-link">
+          <span class="cs-nav-next-stack">
+            <span class="cs-nav-next-label">Next</span>
+            <span class="cs-nav-next-name">Retail Associate App</span>
+          </span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L14 10L8 16" stroke="#6a7282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="cs-intro">
+        <h1 class="fraunces cs-title">Study Boards: Designing a Home for Studying Across a Semester</h1>
+        <p class="cs-meta"><img src="https://www.google.com/s2/favicons?domain=coursehero.com&amp;sz=32" width="16" height="16" style="border-radius:3px;vertical-align:-3px;margin-right:6px;" alt="" />Course Hero (2024–2025) · Staff Product Designer · Course Experience Team</p>
+        <p class="cs-subtitle">Designed Study Tools and Study Boards, AI products that turned Course Hero from one-off answers into a semester-long study companion. Study Boards drove a 16% increase in weekly active users.</p>
+        <div class="hero-links">
+          <a class="hero-link" href="#try">Try the working prototype ↓</a>
+          <a class="hero-link" href="#patterns">Jump to the features ↓</a>
+        </div>
+      </div>
+
+      <div class="cs-hero-image-frame">
+        <video class="cs-hero-image hero-loop" autoplay muted loop playsinline preload="auto" poster="../images/case-studies/course-hero/sb-loop-hero-d.jpg" aria-label="Screen recording of the Study Boards prototype: a student picks topics, the board names itself, then builds its study guide, flashcards, practice questions, mock test and cram sheet one at a time.">
+          <source src="../images/case-studies/course-hero/sb-loop-hero-d.mp4" type="video/mp4" />
+          <source src="../images/case-studies/course-hero/sb-loop-hero-d.webm" type="video/webm" />
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section id="context" class="section-white">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">The problem</h2>
+      <div class="problem-grid">
+        <div class="problem-col">
+          <div class="callout">
+            <p class="fraunces callout-label">The user problem</p>
+            <p class="fraunces callout-text callout-text-lg">Students struggle to turn their course content into prep material before tests and exams.</p>
+          </div>
+          <p class="cs-body">Preparing for exams was the biggest unmet need, and nothing in Course Hero helped. <strong>57% of students prepared in study groups and 47% turned to other online study tools</strong> like Quizlet and Anki.</p>
+        </div>
+        <div class="problem-col">
+          <div class="callout">
+            <p class="fraunces callout-label">The business problem</p>
+            <p class="fraunces callout-text callout-text-lg">AI chat was draining the search traffic Course Hero was built on.</p>
+          </div>
+          <p class="cs-body"><strong>1.8 million unique visitors a day</strong> came for an answer and left. As students moved to AI chat, the top of that funnel dropped. Study Boards was the stickiness bet: a reason to come back, measured in weekly active users.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALIDATION -->
+  <section id="validation" class="section-grey">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">How we validated</h2>
+      <div class="problem-grid">
+        <div class="problem-col">
+          <div class="callout">
+            <p class="fraunces callout-label">Painted-door tests showed desire</p>
+            <p class="fraunces callout-text callout-text-lg">Students clicked into study material created from their own course.</p>
+          </div>
+          <p class="cs-body">We put real entry points in the live product and measured click-through before building anything. Material tied to the student's own course beat generic library content.</p>
+        </div>
+        <div class="problem-col">
+          <div class="callout">
+            <p class="fraunces callout-label">A KANO survey set priorities</p>
+            <p class="fraunces callout-text callout-text-lg">Practice questions and flashcards were the must-haves.</p>
+          </div>
+          <p class="cs-body">We surveyed students on common study features, from flashcard generation to AI "teach me" explanations, to separate must-haves from delighters. The top two are built into every topic.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section id="solution" class="section-white">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">The solution</h2>
+      <div class="phase">
+        <div class="phase-content">
+          <div class="phase-copy">
+            <div class="phase-header">
+              <h3 class="fraunces phase-title">Study Boards: a study home per course that adapts as the exam gets closer</h3>
+            </div>
+            <p class="phase-body">A course-level workspace that <strong>builds itself from the assignments, labs, tests and exams already on file</strong>. Every board comes with a study guide, flashcards, practice questions, a timed mock test and a cram sheet.</p>
+            <p class="phase-body">It tracks what a student knows and how ready they are, and suggests what to study next. Giving it a home also meant a redesigned course-add flow and a dashboard organized around active courses.</p>
+          </div>
+          <div class="phase-visual">
+            <div class="phase-visual-frame" data-lightbox-group="ch" data-caption="A Study Board midweek: readiness, the next step, and every topic with its flashcards and practice questions.">
+              <img src="../images/case-studies/course-hero/sb-v13-board.png" alt="A Study Board with readiness, topic list and study guide." />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- HOW THE AI SHOWS UP -->
+  <section id="patterns" class="section-grey">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">How the AI shows up</h2>
+      <p class="section-lead">Six design patterns shaped how the AI behaves in Study Boards. Each one traces back to something students told us, and each one cost us something.</p>
+
+      <div class="phases-list">
+
+        <div class="phase">
+          <div class="phase-content">
+            <div class="phase-copy">
+              <div class="phase-header">
+                <p class="phase-label">Pattern 1</p>
+                <h3 class="fraunces phase-title">Start from a course</h3>
+              </div>
+              <p class="phase-body">Setup takes about two minutes. The board suggests topics from the course's peer uploads, each with its source count, and students can add their own material.</p>
+              <div class="decision-meta">
+                <p><b>Why</b>Generic material didn't feel trustworthy. It had to be their school, course and professor.</p>
+                <p><b>Trade-off</b>Less open-ended than a chat box.</p>
+              </div>
+              <button class="see-it" data-step="setup">See it in the prototype ↑</button>
+            </div>
+            <div class="phase-visual">
+              <div class="phase-visual-frame video-frame">
+                <video class="loop" autoplay muted loop playsinline preload="metadata" poster="../images/case-studies/course-hero/sb-loop-setup-v2.jpg" aria-label="Screen recording: choosing suggested topics, showing their sources, then building the board.">
+                  <source src="../images/case-studies/course-hero/sb-loop-setup-v2.mp4" type="video/mp4" />
+                  <source src="../images/case-studies/course-hero/sb-loop-setup-v2.webm" type="video/webm" />
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase phase-reverse">
+          <div class="phase-content">
+            <div class="phase-copy">
+              <div class="phase-header">
+                <p class="phase-label">Pattern 2</p>
+                <h3 class="fraunces phase-title">Show sources</h3>
+              </div>
+              <p class="phase-body">Every study guide section has numbered citations that jump to the peer upload behind it. A sources panel lists everything in use, and students can exclude any document from their own board.</p>
+              <div class="decision-meta">
+                <p><b>Why</b>Visible sourcing gave skeptics a way to check, and the disclaimer reminded over-trusters to.</p>
+                <p><b>Trade-off</b>More on screen, so citations stay small and the panel stays closed until asked.</p>
+              </div>
+              <button class="see-it" data-step="sources">See it in the prototype ↑</button>
+            </div>
+            <div class="phase-visual">
+              <div class="phase-visual-frame video-frame">
+                <video class="loop" autoplay muted loop playsinline preload="metadata" poster="../images/case-studies/course-hero/sb-loop-sources-v2.jpg" aria-label="Screen recording: a citation jumps to its source, then the sources panel is searched and one source is excluded from the board.">
+                  <source src="../images/case-studies/course-hero/sb-loop-sources-v2.mp4" type="video/mp4" />
+                  <source src="../images/case-studies/course-hero/sb-loop-sources-v2.webm" type="video/webm" />
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase">
+          <div class="phase-content">
+            <div class="phase-copy">
+              <div class="phase-header">
+                <p class="phase-label">Pattern 3</p>
+                <h3 class="fraunces phase-title">Measure readiness</h3>
+              </div>
+              <p class="phase-body">The board shows one number, defined in plain words beside it: 100% means every flashcard is marked Know and every practice question is right. Add an exam date and it becomes a daily aim.</p>
+              <div class="decision-meta">
+                <p><b>Why</b>Students care whether they'll pass, not minutes logged. A number that only moves when you know more is harder to game.</p>
+                <p><b>Trade-off</b>It moves slowly at first, so stage labels and the daily aim give early sessions something to show.</p>
+              </div>
+              <button class="see-it" data-step="mid">See it in the prototype ↑</button>
+            </div>
+            <div class="phase-visual">
+              <div class="phase-visual-frame video-frame">
+                <video class="loop" autoplay muted loop playsinline preload="metadata" poster="../images/case-studies/course-hero/sb-loop-readiness-v2.jpg" aria-label="Screen recording: the readiness score climbing from Day 1 to exam day, with the definition of ready shown.">
+                  <source src="../images/case-studies/course-hero/sb-loop-readiness-v2.mp4" type="video/mp4" />
+                  <source src="../images/case-studies/course-hero/sb-loop-readiness-v2.webm" type="video/webm" />
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase phase-reverse">
+          <div class="phase-content">
+            <div class="phase-copy">
+              <div class="phase-header">
+                <p class="phase-label">Pattern 4</p>
+                <h3 class="fraunces phase-title">Know what to do next</h3>
+              </div>
+              <p class="phase-body">The board always offers one primary next step and one alternative: flashcards on day one, later your weakest topic or the questions you missed. Shaky sections get a Revisit tag.</p>
+              <div class="decision-meta">
+                <p><b>Why</b>Deciding what to study is where many students stall, and the board has the data to decide.</p>
+                <p><b>Trade-off</b>A suggestion can feel bossy, so it's one click to ignore.</p>
+              </div>
+              <button class="see-it" data-step="revisit">See it in the prototype ↑</button>
+            </div>
+            <div class="phase-visual">
+              <div class="phase-visual-frame video-frame">
+                <video class="loop" autoplay muted loop playsinline preload="metadata" poster="../images/case-studies/course-hero/sb-loop-nextstep-v2.jpg" aria-label="Screen recording: the suggested next step opens the cards still being learned, then a Revisit tag opens the cards for that section.">
+                  <source src="../images/case-studies/course-hero/sb-loop-nextstep-v2.mp4" type="video/mp4" />
+                  <source src="../images/case-studies/course-hero/sb-loop-nextstep-v2.webm" type="video/webm" />
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase">
+          <div class="phase-content">
+            <div class="phase-copy">
+              <div class="phase-header">
+                <p class="phase-label">Pattern 5</p>
+                <h3 class="fraunces phase-title">Close the loop after every session</h3>
+              </div>
+              <p class="phase-body">After a mock test or session, students see each topic before and after, plus the move in overall readiness, with a button to start on the weakest.</p>
+              <div class="decision-meta">
+                <p><b>Why</b>Effort that doesn't visibly count is easy to quit.</p>
+                <p><b>Trade-off</b>Some sessions show small gains. We show the honest number anyway.</p>
+              </div>
+              <button class="see-it" data-step="changed">See it in the prototype ↑</button>
+            </div>
+            <div class="phase-visual">
+              <div class="phase-visual-frame video-frame">
+                <video class="loop" autoplay muted loop playsinline preload="metadata" poster="../images/case-studies/course-hero/sb-loop-changed-v2.jpg" aria-label="Screen recording: taking a mock test, then seeing what changed in each topic and overall readiness.">
+                  <source src="../images/case-studies/course-hero/sb-loop-changed-v2.mp4" type="video/mp4" />
+                  <source src="../images/case-studies/course-hero/sb-loop-changed-v2.webm" type="video/webm" />
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase phase-reverse">
+          <div class="phase-content">
+            <div class="phase-copy">
+              <p class="phase-body">The study guide is usable the moment the board opens. Flashcards, questions, the mock test and the cram sheet each generate on their own with a live count, and a failure retries just that tool.</p>
+              <div class="decision-meta">
+                <p><b>Why</b>Generation takes seconds. One spinner would make the whole board feel slow and fragile.</p>
+                <p><b>Trade-off</b>More states to design and build for every tool.</p>
+              </div>
+              <button class="see-it" data-step="build">See it in the prototype ↑</button>
+            </div>
+            <div class="phase-visual">
+              <div class="phase-visual-frame video-frame">
+                <video class="loop" autoplay muted loop playsinline preload="metadata" poster="../images/case-studies/course-hero/sb-loop-generating-v2.jpg" aria-label="Screen recording: the board opens and each study tool finishes generating one at a time.">
+                  <source src="../images/case-studies/course-hero/sb-loop-generating-v2.mp4" type="video/mp4" />
+                  <source src="../images/case-studies/course-hero/sb-loop-generating-v2.webm" type="video/webm" />
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- OUTCOME -->
+  <section id="outcome" class="section-white">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">Outcome</h2>
+      <div class="outcome">
+        <p class="fraunces outcome-num">16%</p>
+        <div class="outcome-copy">
+          <p class="fraunces outcome-lead">increase in weekly active users after Study Boards launched</p>
+          <p class="cs-body">Measured as the eight weeks before launch against the eight weeks after, across courses with a Study Board. No other major acquisition launch shipped in that window.</p>
+          <p class="cs-body"><strong>Why that number mattered:</strong> weekly active users show whether students come back on purpose. That was the answer to a funnel losing its search traffic to AI chat: a study habit that doesn't depend on a Google search.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  
+  <!-- TRY IT -->
+  <section id="try" class="section-grey">
+    <div class="section-inner">
+      <h2 class="fraunces cs-section-title">Try the prototype</h2>
+      <p class="section-lead">This is the working prototype, running live. Step through a student's week below, or click around it yourself.</p>
+
+      <div class="try-steps" role="group" aria-label="Prototype walkthrough">
+        <button class="try-step" data-step="setup" aria-pressed="true"><span class="n">1</span>Set up</button>
+        <button class="try-step" data-step="build" aria-pressed="false"><span class="n">2</span>Build</button>
+        <button class="try-step" data-step="day1" aria-pressed="false"><span class="n">3</span>Day 1</button>
+        <button class="try-step" data-step="mid" aria-pressed="false"><span class="n">4</span>Midweek</button>
+        <button class="try-step" data-step="eve" aria-pressed="false"><span class="n">5</span>Exam eve</button>
+        <button class="try-step" data-step="sources" aria-pressed="false"><span class="n">6</span>Sources</button>
+      </div>
+      <div class="try-caption">
+        <p id="try-caption" aria-live="polite"></p>
+        <a class="try-open" href="../prototypes/study-board.html" target="_blank" rel="noopener">Open full screen ↗</a>
+      </div>
+      <div class="proto-stage" id="proto-stage">
+        <div class="proto-loading" id="proto-loading">Loading the prototype…</div>
+        <iframe id="proto" title="Study Boards working prototype" tabindex="0"></iframe>
+      </div>
+      <p class="try-note">Illustrative content: an ECON 101 board built from 200 placeholder peer uploads. Built with Claude from my Figma designs.</p>
+
+      <div class="try-mobile">
+        <img src="../images/case-studies/course-hero/sb-v13-board.png" alt="The Study Boards prototype on desktop." />
+        <p>The prototype is built for a desktop screen. Open it on a laptop for the full experience.</p>
+        <a class="btn-secondary" href="../prototypes/study-board.html" target="_blank" rel="noopener">Open the prototype ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISIONS -->
+  
+  
+
+  
+  
+  <!-- BOTTOM NAV -->
+  <section class="section-white bottom-nav-section">
+    <div class="bottom-nav">
+      <a href="shopify-marketing.html" class="cs-nav-link">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10L12 16" stroke="#6a7282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="cs-nav-next-stack cs-nav-stack-left">
+          <span class="cs-nav-next-label">Back</span>
+          <span class="cs-nav-next-name">Building Shopify's Merchant Marketing Platform</span>
+        </span>
+      </a>
+      <a href="kinetic.html" class="cs-nav-link">
+        <span class="cs-nav-next-stack">
+          <span class="cs-nav-next-label">Next</span>
+          <span class="cs-nav-next-name">Retail Associate App</span>
+        </span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L14 10L8 16" stroke="#6a7282" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <p class="contact-label">Get in Touch</p>
+    <h2 class="fraunces contact-heading">Let's work together</h2>
+    <p class="contact-sub">I'm currently open to new opportunities. If you're looking for a Staff Product Designer who brings clarity to complex problems, let's talk.</p>
+    <div class="contact-actions">
+      <a href="mailto:hello.mandip@gmail.com" class="btn-primary">Email Me</a>
+      <a href="https://www.linkedin.com/in/mandiprandhawa/" target="_blank" class="btn-secondary">LinkedIn <svg style="display:inline-block; vertical-align:middle; margin-left:3px; position:relative; top:-1px;" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="contact-info">
+      <span>hello.mandip@gmail.com</span><span>·</span><span>Toronto, Canada</span>
+    </div>
+  </section>
+
+  <footer><p>© 2026 Mandip Randhawa. Built with care.</p></footer>
+
+  <script>
+    // Align sidenav top with the page h1
+    const sidenav = document.querySelector('.sidenav');
+    const pageTitle = document.querySelector('.cs-title');
+    if (sidenav && pageTitle) {
+      const titleTop = pageTitle.getBoundingClientRect().top + window.scrollY;
+      sidenav.style.top = titleTop + 'px';
+    }
+
+    const sections = document.querySelectorAll('section[id]');
+    const navItems = document.querySelectorAll('.sidenav-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navItems.forEach(item => item.classList.remove('active'));
+          document.querySelectorAll(`.sidenav-item[href="#${entry.target.id}"]`).forEach(item => item.classList.add('active'));
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(section => observer.observe(section));
+
+    /* ── Guided prototype ──
+       The frame loads ../prototypes/study-board.html (v13 plus a small embed hook at
+       the end of the file). Each step just reloads the frame with ?step=<name>, and
+       the prototype jumps to that moment itself. No cross-frame scripting, so it works
+       on the live site, a local server, or straight from file://. */
+    (function () {
+      const SRC = '../prototypes/study-board.html?embed=1&step=';
+      const frame = document.getElementById('proto');
+      const stage = document.getElementById('proto-stage');
+      const loading = document.getElementById('proto-loading');
+      const caption = document.getElementById('try-caption');
+      const chips = [...document.querySelectorAll('.try-step')];
+      const CAPTIONS = {
+        setup: '<b>Set up.</b> Topics are suggested from 200 peer uploads for the course, each with its source count. Add your own material if you have it.',
+        build: '<b>Build.</b> The board opens with the study guide ready, names itself, and generates the other four tools one at a time.',
+        day1: '<b>Day 1.</b> Nothing studied yet. 0% ready, and the board suggests flashcards first.',
+        mid: '<b>Midweek.</b> Exam in 8 days. 51% ready, a daily aim, and the next step points at cards you’re still learning.',
+        eve: '<b>Exam eve.</b> One mock test taken. The board shifts toward review and the cram sheet.',
+        sources: '<b>Sources.</b> Everything the AI used, searchable. Exclude a source and it leaves this board only.',
+        revisit: '<b>Revisit tags.</b> Sections you’re shaky on are flagged inside the study guide, and open exactly those cards.',
+        changed: '<b>What changed.</b> After a mock test: your score, the change in each topic, and where to start next.'
+      };
+      const CHIP_FOR = { revisit: 'mid', changed: 'mid' };
+
+      function fit() { frame.style.transform = 'scale(' + (stage.clientWidth / 1280) + ')'; }
+      addEventListener('resize', fit); fit();
+      frame.addEventListener('load', () => { loading.hidden = true; });
+
+      function run(step) {
+        const chip = CHIP_FOR[step] || step;
+        chips.forEach(c => c.setAttribute('aria-pressed', c.dataset.step === chip));
+        caption.innerHTML = CAPTIONS[step];
+        loading.hidden = false;
+        frame.src = SRC + step + '&t=' + Date.now();
+      }
+      chips.forEach(c => c.addEventListener('click', () => run(c.dataset.step)));
+      document.querySelectorAll('.see-it').forEach(b => b.addEventListener('click', () => {
+        document.getElementById('try').scrollIntoView({ behavior: 'smooth' });
+        run(b.dataset.step);
+      }));
+      caption.innerHTML = CAPTIONS.setup;
+      // Load the prototype only once the section is close to the viewport.
+      const io = new IntersectionObserver(es => {
+        if (es.some(e => e.isIntersecting)) { io.disconnect(); if (!frame.getAttribute('src')) frame.src = SRC + 'setup'; }
+      }, { rootMargin: '600px' });
+      if (getComputedStyle(stage).display !== 'none') io.observe(stage);
+    })();
+
+    /* Decision loops: play only while on screen; respect reduced motion. */
+    (function () {
+      const vids = [...document.querySelectorAll('video.loop')];
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) { vids.forEach(v => { v.removeAttribute('autoplay'); v.controls = true; }); return; }
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (e.isIntersecting) { e.target.play().catch(() => {}); } else { e.target.pause(); }
+      }), { threshold: 0.25 });
+      vids.forEach(v => io.observe(v));
+    })();
+  </script>
+  <script src="../js/reading-progress.js"></script>
+  <script src="../js/phase-visual-scale.js"></script>
+  <script src="../js/nav-toggle.js"></script>
+  <script src="../js/lightbox.js"></script>
+  <script src="../js/deck.js"></script>
+</body>
+</html>

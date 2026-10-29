@@ -561,7 +561,8 @@ footer p { font-size: 14px; color: var(--grey); letter-spacing: -0.15px; }
   .cs-hero-image-frame { height: auto; }
   .section-white, .section-grey { padding: 60px 16px; } .cs-section-title { font-size: 26px; }
   .bottom-nav-section { padding: 32px 16px 40px; }
-  .contact-actions { flex-direction: column; align-items: center; }
+  .contact-actions { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 12px; }
+  .contact-actions .btn-primary, .contact-actions .btn-secondary { font-size: 14px; padding: 11px 16px; }
   .stat-banner { grid-template-columns: 1fr; gap: 16px; }
   .measure-item { flex-direction: column; gap: 8px; }
   .measure-title { flex-basis: auto; }
@@ -688,3 +689,42 @@ footer p { font-size: 14px; color: var(--grey); letter-spacing: -0.15px; }
   .lightbox-counter { top: 16px; padding: 7px 14px; font-size: 12px; }
 }
 
+
+/* ── MOBILE TYPE SCALE (≤640px) ──
+   Smaller type for phones. Desktop sizes stay as they are above. */
+@media (max-width: 640px) {
+  .cs-title { font-size: 30px; line-height: 1.15; }
+  .cs-subtitle { font-size: 16px; line-height: 1.55; }
+  .cs-meta { font-size: 13px; }
+  .cs-section-title { font-size: 22px; line-height: 1.4; margin-bottom: 20px; }
+  .cs-body, .role-intro { font-size: 15px; line-height: 1.6; margin-bottom: 16px; }
+  .callout-label { font-size: 16px; margin-bottom: 10px; }
+  .callout-text, .callout-text-lg { font-size: 15px; line-height: 1.6; }
+  .insight-finding { font-size: 15px; }
+  .insight-change { font-size: 14px; }
+  .phase-title { font-size: 20px; line-height: 1.3; }
+  .phase-label, .phase-transition-label, .outcomes-label { font-size: 10px; letter-spacing: 1.8px; }
+  .phase-body, .impact-item { font-size: 15px; line-height: 1.6; }
+  .phase-transition-text { font-size: 18px; line-height: 1.45; }
+  .measure-title { font-size: 16px; }
+  .measure-body { font-size: 14px; }
+  .stat-number { font-size: 24px; }
+  .stat-label, .stat-source { font-size: 12px; }
+  .problem-layer-num { font-size: 36px; }
+  .problem-layer-title, .role-grid-title, .project-title { font-size: 17px; }
+  .problem-layer-body, .role-grid-body, .project-body { font-size: 14px; line-height: 1.6; }
+  .inline-image-caption { font-size: 13px; }
+  .tag { font-size: 13px; padding: 3px 10px; }
+  .contact-heading { font-size: 28px; line-height: 1.3; margin-bottom: 24px; }
+  .contact-label { margin-bottom: 24px; }
+  .contact-sub { font-size: 15px; margin-bottom: 24px; }
+  .btn-primary, .btn-secondary { font-size: 15px; padding: 12px 20px; }
+  .contact-info { font-size: 13px; flex-wrap: wrap; gap: 12px; }
+  .closing-line p { font-size: 20px; }
+  footer p { font-size: 13px; }
+}
+
+/* Loops and screenshots on phones: drop the inset so the frame is the same width as the text */
+@media (max-width: 640px) {
+  .phase-visual:has(.phase-visual-frame) { padding: 0; }
+}

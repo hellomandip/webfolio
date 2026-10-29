@@ -22,6 +22,8 @@
       --border: rgba(0,0,0,0.08);
       --border-subtle: rgba(0,0,0,0.2);
       --max-width: 1000px;
+      --dot: #d3d7dd;       /* dot-grid colour */
+      --dot-size: 24px;     /* dot-grid spacing */
     }
 
     html { scroll-behavior: smooth; }
@@ -41,92 +43,6 @@
       font-weight: 400;
     }
 
-    /* ── HEADER ─────────────────────────────────── */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255,255,255,0.95);
-      border-bottom: 1px solid var(--border);
-      height: 53px;
-      display: flex;
-      align-items: center;
-      padding: 0 96px;
-    }
-
-    .header-inner {
-      max-width: var(--max-width);
-      width: 100%;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-    }
-
-    .logo {
-      font-size: 14px;
-      letter-spacing: 1.95px;
-      text-transform: uppercase;
-      color: var(--black);
-      text-decoration: none;
-    }
-
-    nav { display: flex; gap: 24px; }
-
-    nav a {
-      font-size: 14px;
-      color: var(--black);
-      text-decoration: none;
-      letter-spacing: -0.15px;
-      position: relative;
-      padding-bottom: 2px;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.2s ease;
-    }
-
-    nav a:hover::after { width: 100%; }
-
-    /* Hamburger toggle — hidden by default (desktop shows the inline nav);
-       switched on in the 640px block below, where nav itself becomes a
-       hidden dropdown that this button opens/closes. */
-    .nav-toggle {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 5px;
-      /* 44px hit area (WCAG tap-target guidance) even though the visible
-         icon is smaller — fits inside the 53px header with room to spare. */
-      width: 44px;
-      height: 44px;
-      padding: 0;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-    .nav-toggle-bar {
-      display: block;
-      width: 20px;
-      height: 2px;
-      border-radius: 1px;
-      background: var(--black);
-      transition: transform 0.25s ease, opacity 0.2s ease;
-    }
-    /* Animates the three bars into an X when open. */
-    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
-    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
     /* ── HERO ────────────────────────────────────── */
     .hero {
       position: relative;
@@ -138,15 +54,20 @@
       overflow: hidden;
     }
 
-    .hero-bg {
+    /* Dot grid, drawn in CSS so it stays crisp at any size / pixel density.
+       Hard colour stops = hard-edged dots. Desktop draws it once behind the
+       whole first screen instead (see .layout::before in the desktop block). */
+    .hero::before,
+    .layout::before {
+      content: '';
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 1;
       pointer-events: none;
+      background-image: radial-gradient(circle at center, var(--dot) 0, var(--dot) 1px, transparent 1px);
+      background-size: var(--dot-size) var(--dot-size);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 70%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 0, #000 70%, transparent 100%);
     }
+    .hero::before { inset: 0; z-index: 0; }
 
     .hero-container {
       max-width: var(--max-width);
@@ -184,10 +105,42 @@
 
     .hero-actions {
       display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
     }
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 2px 0;
+      font-size: 17px;
+      letter-spacing: -0.2px;
+      color: var(--black);
+      text-decoration: none;
+      transition: color 0.2s ease, transform 0.25s ease;
+    }
+    .hero-link::after {
+      content: '→';
+      color: var(--accent);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.2s ease, transform 0.25s ease;
+    }
+    .hero-link:hover, .hero-link:focus-visible { color: var(--accent); transform: translateX(3px); }
+    .hero-link:hover::after, .hero-link:focus-visible::after { opacity: 1; transform: translateX(0); }
+    .hero-link-label {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+      text-decoration-color: rgba(14,14,14,0.35);
+      transition: text-decoration-color 0.2s ease;
+    }
+    .hero-link:hover .hero-link-label, .hero-link:focus-visible .hero-link-label { text-decoration-color: var(--accent); }
+    .hero-link-ext { margin-top: 6px; color: var(--grey); }
+    .hero-link-ext::after { content: none; }
+    .hero-link-ext svg { position: relative; top: -1px; }
 
     .btn-primary {
       background: #0a0a0a;
@@ -221,17 +174,6 @@
     }
     .btn-secondary:hover { background: rgba(0,0,0,0.03); }
 
-    .btn-ghost {
-      color: var(--grey);
-      font-size: 16px;
-      font-family: 'Inter', sans-serif;
-      letter-spacing: -0.31px;
-      text-decoration: none;
-      padding: 13px 0;
-      display: inline-block;
-    }
-    .btn-ghost:hover { color: var(--black); }
-
     /* ── SECTIONS ────────────────────────────────── */
     section { width: 100%; }
 
@@ -252,14 +194,6 @@
     .section-grey  { background: var(--grey-light); padding: 80px 24px; }
     .section-hero-padding { padding: 50px 24px; }
 
-    .section-label {
-      font-size: 11px;
-      letter-spacing: 2.26px;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-bottom: 16px;
-    }
-
     .section-heading {
       font-size: 32px;
       line-height: 1.5;
@@ -274,42 +208,143 @@
       margin-bottom: 60px;
     }
 
-    /* ── FEATURED WORK ───────────────────────────── */
-    .featured-work {
+    /* ── SPLIT LAYOUT ────────────────────────────── */
+    .layout { display: block; }
+    .left-col { min-width: 0; }
+    section[id] { scroll-margin-top: 24px; }
+
+    /* ── PROJECT PANEL ───────────────────────────────
+       Mobile/tablet: the same drifting card wheel, in a shorter stage under the hero.
+       Desktop (≥1024px — see the SPLIT LAYOUT block at the end of this
+       stylesheet): a sticky right-hand panel with a vertical,
+       auto-rotating card carousel. */
+    .work-panel { background: #fff; padding: 48px 24px 24px; }
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      max-width: var(--max-width);
+      margin: 0 auto 24px;
+    }
+    .panel-label {
+      font-size: 11px;
+      letter-spacing: 2.26px;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    .panel-count {
+      display: none;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      color: var(--grey);
+      font-variant-numeric: tabular-nums;
+    }
+    .carousel-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .carousel-dots, .panel-hint { display: none; }
+
+    /* ── Case study "deck": the clicked card expands into a large modal ── */
+    :root { --deck-m: 28px; }
+    @media (max-width: 640px) { :root { --deck-m: 8px; } }
+    .deck-backdrop {
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(14,14,14,0.42);
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+      opacity: 0; transition: opacity 0.45s ease;
+    }
+    .deck-backdrop.is-on { opacity: 1; }
+    .deck-overlay {
+      position: fixed; z-index: 1000;
       background: #fff;
-      padding: 50px 24px;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 30px 100px rgba(0,0,0,0.28);
+      transition: left 0.6s cubic-bezier(0.22,1,0.36,1), top 0.6s cubic-bezier(0.22,1,0.36,1),
+                  width 0.6s cubic-bezier(0.22,1,0.36,1), height 0.6s cubic-bezier(0.22,1,0.36,1),
+                  border-radius 0.6s cubic-bezier(0.22,1,0.36,1);
     }
-
-    .work-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
+    .deck-overlay.is-full { border-radius: 10px; }
+    .deck-frame {
+      position: absolute; left: 0; top: 0; z-index: 1;
+      width: calc(100vw - 2 * var(--deck-m)); height: calc(100vh - 2 * var(--deck-m)); height: calc(100dvh - 2 * var(--deck-m));
+      border: 0; background: #fff;
+      opacity: 0; transition: opacity 0.35s ease;
     }
+    .deck-overlay.is-ready .deck-frame { opacity: 1; }
+    .deck-spinner {
+      position: absolute; left: 50%; top: 50%; width: 26px; height: 26px; margin: -13px 0 0 -13px;
+      border: 2.5px solid rgba(0,0,0,0.12); border-top-color: rgba(0,0,0,0.6); border-radius: 50%;
+      animation: deckSpin 0.8s linear infinite; opacity: 0; transition: opacity 0.25s ease 0.35s;
+    }
+    .deck-overlay.is-full:not(.is-ready) .deck-spinner { opacity: 1; }
+    @keyframes deckSpin { to { transform: rotate(360deg); } }
+    .deck-close {
+      position: fixed; top: calc(var(--deck-m) + 14px); right: calc(var(--deck-m) + 14px); z-index: 1001;
+      width: 42px; height: 42px; padding: 0;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(0,0,0,0.1); border-radius: 50%;
+      background: rgba(255,255,255,0.94); color: #0e0e0e; cursor: pointer;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+      opacity: 0; pointer-events: none; transform: scale(0.8);
+      transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
+    }
+    .deck-close.is-visible { opacity: 1; pointer-events: auto; transform: none; }
+    .deck-close:hover { background: #fff; transform: scale(1.06); }
+    .deck-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-    .work-card {
+    /* Archive card: three earlier projects in one card */
+    .archive-list { display: flex; flex-direction: column; }
+    .archive-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 12px; margin: 0 -12px;
+      border-top: 1px solid var(--border);
+      color: inherit; text-decoration: none;
+      transition: background 0.2s ease;
+    }
+    .archive-row:hover, .archive-row:focus-visible { background: rgba(0,0,0,0.035); }
+    .archive-row .ar-thumb { width: 150px; height: auto; align-self: center; border-radius: 4px; flex-shrink: 0; border: 1px solid var(--border); }
+    @media (max-width: 640px) { .archive-row { padding: 14px 0; } .archive-row .ar-thumb { width: 92px; border-radius: 4px; } .archive-row { gap: 12px; } }
+    .archive-row .ar-logo { width: 20px; height: 20px; border-radius: 5px; object-fit: cover; flex-shrink: 0; }
+    .ar-text { display: flex; flex-direction: column; justify-content: center; gap: 6px; font-size: 14px; line-height: 1.35; min-width: 0; flex: 1; }
+    .ar-meta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--grey); }
+    .archive-row .ar-logo.proj-logo-bordered { border: 1px solid #d4d4d4; border-radius: 5px; box-sizing: border-box; }
+    .ar-desc { font-weight: 500; color: var(--black); font-size: 15px; }
+    .ar-lines { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .ar-lines b { font-weight: 500; color: var(--black); }
+    .ar-lines > span { color: var(--grey); }
+    .ar-arrow { margin-left: auto; color: var(--accent); opacity: 0.5; transition: opacity 0.2s ease, transform 0.2s ease; }
+    
+    .archive-row:hover .ar-arrow, .archive-row:focus-visible .ar-arrow { opacity: 1; transform: translateX(3px); }
+
+    .proj-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 22px;
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 19px;
-      text-decoration: none;
       color: inherit;
-      transition: box-shadow 0.2s;
+      text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
     }
-    .work-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
-    .work-card.work-card-disabled:hover { box-shadow: none; transform: none; }
-
-    .work-card-image {
-      height: 320px;
-      border-radius: 8px;
-      width: 100%;
-      object-fit: cover;
-      display: block;
+    .proj-media {
+      height: 240px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.05);
     }
-
-    .work-card-image-placeholder {
+    .proj-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .proj-media video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+    .proj-media-blue { background: linear-gradient(145deg, #0a2a8f 0%, #061a5c 55%, #040f3a 100%); display: flex; align-items: center; justify-content: center; padding: 18px 22px; box-sizing: border-box; }
+    .proj-media-blue video { width: auto; height: 100%; max-width: 100%; aspect-ratio: 1200 / 750; object-fit: cover; border-radius: 3px; box-shadow: 0 12px 32px rgba(0,5,40,0.55), 0 2px 6px rgba(0,5,40,0.4); }
+    .proj-media-placeholder {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -317,13 +352,24 @@
       gap: 10px;
       background: var(--grey-light);
       border: 1px dashed var(--border-subtle);
-      color: var(--grey);
     }
-    .work-card-image-placeholder .placeholder-title {
+    .proj-media-placeholder .placeholder-title {
       font-size: 16px;
       color: var(--grey);
       letter-spacing: -0.15px;
     }
+    .proj-meta { display: flex; align-items: center; gap: 8px; }
+    .proj-meta img {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+    .proj-meta img.proj-logo-bordered { border: 1px solid var(--border); }
+    .proj-card .card-title { font-size: 24px; margin-bottom: 2px; }
+    .proj-card .card-description { font-size: 15px; line-height: 1.55; }
+    a.proj-card:hover .card-link { text-decoration: underline; }
 
     .card-meta {
       font-size: 14px;
@@ -388,73 +434,27 @@
       background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
     }
 
-    /* ── MORE WORK ───────────────────────────────── */
-    .more-work-section { background: #fff; padding: 0 24px 80px; }
-    .more-work-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-    }
-
-    .mini-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 20px;
-      flex: 1 0 280px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      transition: box-shadow 0.2s;
-    }
-    .mini-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
-
-    .mini-card-image {
-      height: 180px;
-      border-radius: 4px;
-      background: rgba(0,0,0,0.05);
-      background-size: cover;
-      background-position: center;
-      width: 100%;
-    }
-    .mini-card-img-kinetic { background-image: url('images/case-studies/kinetic/ASSOCIATEAPP/hero-img.png'); }
-    .mini-card-img-nascent { background-image: url('images/case-studies/nascent/EHARMONY/hero-img.png'); }
-    .mini-card-img-grocersplus { background-image: url('images/case-studies/grocers-plus/hero-img.png'); }
-
-    .mini-card-meta { font-size: 12px; color: var(--grey); }
-    .mini-card-title { font-size: 18px; color: var(--black); line-height: 1.3; margin-top: 8px; }
-    .mini-card-desc { font-size: 14px; color: var(--grey); line-height: 1.5; letter-spacing: -0.15px; }
-
-    .tag-sm {
-      border: 1px solid var(--border-subtle);
-      border-radius: 999px;
-      padding: 4px 9px;
-      font-size: 12px;
-      color: var(--black);
-    }
-
     /* ── CAREER ──────────────────────────────────── */
     .career-list {
       display: flex;
       flex-direction: column;
-      gap: 36px;
+      gap: 24px;
     }
 
     .career-item {
       border-bottom: 1px solid var(--border);
-      padding-bottom: 36px;
+      padding-bottom: 20px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
     .career-item:last-child { border-bottom: none; padding-bottom: 0; }
 
     .career-header {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: flex-start;
-      gap: 8px;
+      gap: 2px;
     }
 
     .career-eyebrow {
@@ -469,7 +469,6 @@
       font-size: 18px;
       color: var(--black);
       line-height: 1.5;
-      flex: 1 0 280px;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -488,17 +487,47 @@
     .career-date {
       font-size: 14px;
       color: var(--grey);
-      white-space: nowrap;
       letter-spacing: -0.15px;
+      padding-left: 32px;   /* lines up under the title text, past the logo */
     }
 
     .career-desc {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--grey);
-      line-height: 1.6;
-      max-width: 700px;
+      line-height: 1.5;
+      max-width: 732px;
+      padding-left: 32px;   /* lines up with the title text, past the logo */
       letter-spacing: -0.31px;
     }
+
+    .career-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      column-gap: 16px;
+      align-items: start;
+    }
+    .career-item > .career-header { grid-column: 1; grid-row: 1; }
+    .career-item > .career-eyebrow { grid-column: 1 / -1; }
+    .career-link {
+      grid-column: 2;
+      grid-row: 1;
+      margin-top: 4px;
+      font-size: 14px;
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .career-link:hover { text-decoration: underline; }
+    .career-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 40px;
+    }
+
+    /* Where I've worked: full width, tighter vertical padding */
+    #career { padding-top: 48px; padding-bottom: 48px; }
+    #career > .section-inner { max-width: none !important; width: 100%; margin: 0 !important; }
 
     /* ── STRENGTHS ───────────────────────────────── */
     .strength-list {
@@ -576,11 +605,12 @@
     .insight-item { border-bottom: 1px solid var(--border); padding-bottom: 20px; counter-increment: insight; }
     .insight-item:last-child { border-bottom: none; padding-bottom: 0; }
     .insight-finding {
-      position: relative; padding-left: 28px; font-size: 16px; color: var(--black);
-      font-weight: 500; line-height: 1.5; letter-spacing: -0.31px; margin-bottom: 8px;
+      position: relative; padding-left: 28px; font-size: 19px; color: var(--black);
+      font-family: 'Fraunces', serif; font-variation-settings: 'SOFT' 0, 'WONK' 1;
+      font-weight: 400; line-height: 1.4; letter-spacing: -0.2px; margin-bottom: 8px;
     }
     .insight-finding::before {
-      content: "0" counter(insight); position: absolute; left: 0; top: 2px; font-size: 12px; font-weight: 700;
+      content: "0" counter(insight); position: absolute; left: 0; top: 5px; font-family: Inter, system-ui, sans-serif; font-variation-settings: normal; font-size: 12px; font-weight: 700;
       color: var(--accent); letter-spacing: 0.5px;
     }
     .insight-change { padding-left: 28px; font-size: 15px; color: var(--grey); line-height: 1.5; letter-spacing: -0.2px; }
@@ -613,7 +643,7 @@
       border-radius: 50%;
       overflow: hidden;
       border: 1px solid var(--border);
-      margin-bottom: 24px;
+      flex-shrink: 0;
     }
     .about-photo img {
       width: 100%;
@@ -623,35 +653,34 @@
     }
 
     .about-text {
-      font-size: 18px;
-      color: var(--black);
-      line-height: 1.8;
-      letter-spacing: -0.44px;
-      margin-bottom: 32px;
+      font-size: 28px;
+      color: #a3a3a3;
+      line-height: 1.45;
+      letter-spacing: -0.8px;
+      margin-bottom: 40px;
     }
+    .about-text strong { color: var(--black); font-weight: 500; }
+    @media (max-width: 640px) { .about-text { font-size: 20px; letter-spacing: -0.5px; margin-bottom: 28px; } }
 
+    .about-personal-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+    }
     .about-personal {
       font-size: 18px;
       font-style: italic;
-      color: var(--grey);
-      line-height: 1.8;
-      letter-spacing: -0.44px;
-      border-top: 1px solid var(--border);
-      padding-top: 25px;
+      color: #a3a3a3;
+      line-height: 1.7;
+      letter-spacing: -0.3px;
+      margin: 0;
     }
 
     /* ── CONTACT ─────────────────────────────────── */
     .contact-section {
-      border-top: 1px solid var(--border);
       text-align: center;
-    }
-
-    .contact-label {
-      font-size: 11px;
-      letter-spacing: 2.26px;
-      text-transform: uppercase;
-      color: var(--grey);
-      margin-bottom: 40px;
     }
 
     .contact-heading {
@@ -688,7 +717,6 @@
 
     /* ── FOOTER ──────────────────────────────────── */
     footer {
-      border-top: 1px solid var(--border);
       padding: 25px 24px;
       text-align: center;
     }
@@ -701,66 +729,19 @@
 
     /* ── RESPONSIVE ──────────────────────────────── */
     @media (max-width: 900px) {
-      header { padding: 0 24px; }
       .hero-heading { font-size: 40px; }
       .hero-heading .pronunciation { font-size: 22px; }
       .hero-sub { font-size: 20px; }
       .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
       .card-grid { grid-template-columns: 1fr; }
-      .work-cards { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
-      header { padding: 0 16px; }
-      .header-inner { padding: 0; }
-      .logo { font-size: 12px; letter-spacing: 1px; }
-      /* Hamburger menu: nav collapses into a toggled dropdown instead of
-         squeezing 4 links + the logo into one row. Fixed-positioned (not
-         absolute) so it isn't clipped by any ancestor's overflow, and
-         top: 53px matches header's fixed height (unchanged at this
-         breakpoint — only its horizontal padding changes above). */
-      .nav-toggle { display: flex; }
-      nav {
-        position: fixed;
-        top: 53px;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        background: #fff;
-        border-bottom: 1px solid var(--border);
-        box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-        padding: 4px 16px 12px;
-        max-height: calc(100vh - 53px);
-        overflow-y: auto;
-        transform: translateY(-8px);
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
-      }
-      nav.nav-open {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-      }
-      nav a {
-        width: 100%;
-        padding: 14px 0;
-        font-size: 15px;
-        border-bottom: 1px solid var(--border);
-      }
-      nav a:last-child { border-bottom: none; }
       .hero { padding: 80px 16px; }
       .hero-heading { font-size: 32px; }
       .hero-heading .pronunciation { font-size: 18px; }
       .hero-sub { font-size: 18px; }
       .section-white, .section-grey { padding: 60px 16px; }
-      .featured-work { padding: 40px 16px; }
-      .more-work-section { padding: 0 16px 60px; }
-      .work-card-image { height: 260px; }
       .tools-grid { grid-template-columns: 1fr; gap: 28px; }
       .section-heading { font-size: 24px; line-height: 1.25; }
       .section-heading-lg { font-size: 23px; line-height: 1.2; }
@@ -858,7 +839,7 @@
 
     /* Multiplayer cursors */
     .mp-cursor {
-      position: absolute;
+      position: fixed;
       display: flex;
       align-items: flex-start;
       gap: 4px;
@@ -889,7 +870,7 @@
 
     /* Floating heart */
     .cursor-heart {
-      position: absolute;
+      position: fixed;
       width: 20px;
       height: 20px;
       pointer-events: none;
@@ -942,15 +923,6 @@
     .reveal-group > .reveal:nth-child(6) { transition-delay: 0.40s; }
     .reveal-group > .reveal:nth-child(7) { transition-delay: 0.48s; }
 
-    /* Card hover lift (supplement existing shadow) */
-    .work-card  { transition: box-shadow 0.25s ease, transform 0.25s ease; }
-    .work-card:hover  { transform: translateY(-3px); }
-    .mini-card  { transition: box-shadow 0.25s ease, transform 0.25s ease; }
-    .mini-card:hover  { transform: translateY(-3px); }
-
-    /* Accent underline on nav hover — smooth width */
-    nav a { transition: color 0.15s; }
-
     /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .hero-container > *, .reveal {
@@ -961,32 +933,379 @@
       }
     }
 
+    /* ── SPLIT LAYOUT: tablet/mobile ordering ────────
+       The left column "dissolves" so the header, hero, project cards and
+       the remaining sections can be reordered as one flex column. */
+    @media (max-width: 1023.98px) {
+      .layout { display: flex; flex-direction: column; }
+      .left-col { display: contents; }
+      .left-col > .hero { order: 1; }
+      .work-panel { order: 2; }
+      .left-col > section:not(.hero) { order: 3; }
+      .left-col > footer { order: 4; }
+    }
+
+    /* ── SPLIT LAYOUT: desktop ───────────────────────
+       One continuous canvas: the left column scrolls, the right "stage"
+       stays pinned beneath the shared header. No panel background, border
+       or divider — the cards simply float on the same page colour.
+       The carousel is driven by the PROJECT CAROUSEL script. */
+    @media (min-width: 1024px) {
+      .layout {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+        align-items: start;
+      }
+
+      /* Dot grid: one layer behind the whole first screen (hero + cards).
+         It scrolls away with the hero — nothing below has dots. */
+      .hero::before { display: none; }
+      .layout::before {
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100vh;
+        z-index: -1;
+      }
+
+      /* Everything sits on the one white canvas (no white/grey banding) */
+      .hero, .section-white, .section-grey, .contact-section { background: transparent; }
+      /* Left column sizing */
+      /* Left column: a wider left margin (shared by the hero and every section
+         below it so they line up), and a tighter hero stack. */
+      .layout { --left-pad: clamp(64px, 7vw, 112px); }
+      .hero { min-height: 100vh; padding: 72px 48px 72px var(--left-pad); }
+      .hero-container { gap: 22px; }
+      .hero-actions { margin-top: 6px; }
+      .hero-heading { font-size: clamp(34px, 3.4vw, 50px); }
+      .hero-sub { font-size: clamp(19px, 1.7vw, 24px); }
+      .section-white, .section-grey { padding: 80px 48px 80px var(--left-pad); }
+      .contact-section { padding-right: var(--left-pad); }
+
+      /* Each section is its own full-height "slide"; the "one section per scroll" script
+         near the end of the page moves between them. */
+      .left-col > section:not(.hero) {
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      /* the footer sits inside the last screen with Get in touch, so one scroll shows both */
+      .left-col > footer { height: 72px; box-sizing: border-box; padding: 0 24px; display: flex; align-items: center; justify-content: center; }
+      .left-col > section.contact-section { min-height: calc(100vh - 72px); min-height: calc(100dvh - 72px); }
+      .card-grid { grid-template-columns: 1fr; gap: 28px; }
+      .tools-grid { grid-template-columns: repeat(2, 1fr); gap: 36px; }
+      .contact-heading { font-size: 34px; }
+      .contact-actions { flex-wrap: wrap; }
+
+      /* Right stage — pinned to the viewport, no chrome */
+      .work-panel {
+        --h: min(calc(100vh * 0.64), 600px);   /* card height */
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100dvh;
+        padding: 0;
+        overflow: hidden;
+        background: none;
+      }
+      .panel-head { display: none; }
+      .carousel-stage {
+        display: block;
+        position: relative;
+        height: 100%;
+        max-width: none;
+        margin: 0;
+        touch-action: none;
+        /* plates dissolve into the canvas at the top and bottom */
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 12px, rgba(0,0,0,0.75) 26px, #000 40px, #000 calc(100% - 40px), rgba(0,0,0,0.75) calc(100% - 26px), rgba(0,0,0,0.3) calc(100% - 12px), transparent 100%);
+        mask-image: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.3) 12px, rgba(0,0,0,0.75) 26px, #000 40px, #000 calc(100% - 40px), rgba(0,0,0,0.75) calc(100% - 26px), rgba(0,0,0,0.3) calc(100% - 12px), transparent 100%);
+      }
+
+      /* Cards are centred here; the carousel script then moves, tilts, scales
+         and fades each one every frame as the wheel turns.
+         --c = how visible a card's content is: 1 near the front, easing to 0
+         as it tilts away, leaving a blank "plate". */
+      .proj-card {
+        --c: 1;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: min(500px, calc(100% - 128px));
+        height: var(--h);
+        cursor: pointer;
+        will-change: transform, opacity;
+        background-color: #ececec;
+        border-color: transparent;
+        box-shadow: none;
+        isolation: isolate;
+        transform: translate(-50%, -50%);   /* before the script takes over */
+      }
+      /* white face + border + shadow, faded in as the card reaches the front */
+      .proj-card::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        z-index: -1;
+        border-radius: inherit;
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.08);
+        box-shadow: 0 12px 44px rgba(0,0,0,0.07);
+        opacity: var(--c);
+        will-change: opacity;
+      }
+      .proj-card > * { opacity: var(--c); will-change: opacity; }
+
+      .proj-media { flex: 1 1 0; height: auto; min-height: 120px; }
+      .proj-card .card-description {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* Dots + hint */
+      .carousel-dots {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        position: absolute;
+        right: 28px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 6;
+      }
+      .carousel-dot {
+        width: 18px;
+        height: 18px;
+        padding: 0;
+        border: 0;
+        background: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .carousel-dot::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 3px;
+        background: rgba(0,0,0,0.25);
+        transition: height 0.3s ease, background 0.3s ease;
+      }
+      .carousel-dot:hover::before { background: rgba(0,0,0,0.5); }
+      .carousel-dot[aria-current="true"]::before { height: 20px; background: var(--black); }
+      .carousel-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+      .panel-hint {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 30px 0 16px;
+        /* subtle fade behind the hint: a light wash that eases in from nothing */
+        background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.12) 55%, rgba(255,255,255,0.2) 100%);
+        text-align: center;
+        font-size: 12px;
+        letter-spacing: 0.2px;
+        color: var(--grey);
+        z-index: 6;
+        pointer-events: none;
+      }
+      .panel-hint .hint-paused { display: none; }
+      .work-panel.is-paused .hint-auto { display: none; }
+      .work-panel.is-paused .hint-paused { display: inline; }
+    }
+
+    /* Shorter laptop viewports: tighten the cards so the image keeps room */
+    @media (min-width: 1024px) and (max-height: 820px) {
+      .proj-card { padding: 18px; gap: 12px; }
+      .proj-card .card-description { -webkit-line-clamp: 3; }
+    }
+    @media (min-width: 1024px) and (max-height: 680px) {
+      .proj-card .card-description { display: none; }
+    }
+
+    /* Desktop cards: the image runs edge to edge, as on phones and tablets.
+       No overflow clipping here, so the card's soft shadow stays intact. */
+    @media (min-width: 1024px) {
+      .proj-card { padding: 0 0 22px; }
+      .proj-card-archive { padding-top: 22px; }
+      .proj-card > :not(.proj-media) { margin-left: 22px; margin-right: 22px; }
+      .proj-card > .proj-media { border-radius: 15px 15px 0 0; }
+    }
+
+
+
+    /* ── MOBILE / TABLET CAROUSEL (<1024px) ─────────────
+       Same drifting wheel as desktop (the script above runs at every width), in a
+       stage sized for a phone and sitting directly under the hero. */
+    @media (max-width: 1023.98px) {
+      .work-panel {
+        --h: min(74vh, 540px);   /* card height */
+        position: relative;
+        height: calc(var(--h) + 80px);   /* cards sit near the top; room for the dots underneath */
+        padding: 0;
+        overflow: hidden;
+        background: none;
+      }
+      .panel-head { display: none; }
+      .carousel-stage {
+        display: block;
+        position: relative;
+        height: 100%;
+        max-width: none;
+        margin: 0;
+        /* sideways drags move the cards; vertical drags still scroll the page */
+        touch-action: pan-y;
+        -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+      }
+      .proj-card {
+        --c: 1;
+        position: absolute;
+        left: 50%;
+        top: calc(var(--h) / 2 + 8px);   /* less space above the cards */
+        width: min(440px, calc(100% - 40px));
+        height: var(--h);
+        padding: 18px;
+        gap: 12px;
+        cursor: pointer;
+        will-change: transform, opacity;
+        background-color: #ececec;
+        border-color: transparent;
+        box-shadow: none;
+        isolation: isolate;
+        transform: translate(-50%, -50%);
+      }
+      .proj-card::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        z-index: -1;
+        border-radius: inherit;
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.08);
+        box-shadow: 0 12px 44px rgba(0,0,0,0.07);
+        opacity: var(--c);
+        will-change: opacity;
+      }
+      .proj-card > * { opacity: var(--c); will-change: opacity; }
+      .proj-media { flex: 1 1 0; height: auto; min-height: 120px; }
+      /* project images run edge to edge across the card; the text keeps an 18px inset */
+      .proj-card { padding: 0 0 18px; overflow: hidden; }
+      .proj-card-archive { padding-top: 18px; }
+      .proj-card > :not(.proj-media) { margin-left: 18px; margin-right: 18px; }
+      .proj-card > .proj-media { border-radius: 0; min-height: 0; }
+      .proj-card > .proj-media:not(.proj-media-blue) { flex: 1 1 0; height: auto; }
+      /* Course Hero: the navy panel is edge to edge, and the loop floats inside it as before */
+      .proj-card > .proj-media.proj-media-blue { flex: none; height: 232px; padding: 22px 24px; }
+      .proj-card .card-title { font-size: 20px; line-height: 1.25; }
+      .proj-card .card-description {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .proj-card .tags { gap: 6px; }
+      .proj-card-archive { overflow: hidden; }
+      .proj-card-archive .ar-thumb { display: none; }
+      /* rows sit flush with the card's content edge, so their text lines up with the title */
+      .proj-card-archive .archive-row { margin: 0; padding: 9px 0; }
+
+      /* Dots run along the bottom of the stage instead of down the side */
+      .carousel-dots {
+        display: flex;
+        flex-direction: row;
+        gap: 2px;
+        position: absolute;
+        left: 50%;
+        right: auto;
+        top: auto;
+        bottom: 14px;   /* more space below the cards */
+        transform: translateX(-50%);
+        z-index: 6;
+      }
+      .carousel-dot { width: 18px; height: 18px; padding: 0; border: 0; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      .carousel-dot::before { content: ''; width: 6px; height: 6px; border-radius: 3px; background: rgba(0,0,0,0.25); transition: width 0.3s ease, background 0.3s ease; }
+      .carousel-dot[aria-current="true"]::before { width: 18px; background: var(--black); }
+      .panel-hint { display: none; }
+    }
+
+    /* ── PHONE TYPE SCALE (≤640px) ─────────────────────
+       Smaller type so the hero, cards and sections read well on a phone. */
+    @media (max-width: 640px) {
+      .hero { padding: 32px 16px 40px; }   /* sits higher, so more of the carousel shows below */
+      .hero-heading { font-size: 28px; line-height: 1.2; }
+      .hero-heading .pronunciation { font-size: 15px; }
+      .hero-sub { font-size: 16px; line-height: 1.5; }
+      .hero-link { font-size: 15px; }
+      .hero-container { gap: 16px; }
+
+      .section-heading { font-size: 22px; }
+      .section-heading-lg { font-size: 21px; }
+      .about-text { font-size: 18px; line-height: 1.5; margin-bottom: 24px; }
+      .about-personal { font-size: 15px; line-height: 1.6; }
+
+      .card-title { font-size: 22px; }
+      .card-meta { font-size: 13px; }
+      .card-description { font-size: 14px; line-height: 1.55; }
+      .card-link { font-size: 14px; }
+      .tag { font-size: 12px; padding: 3px 10px; }
+
+      .career-title { font-size: 16px; line-height: 1.35; }
+      .career-date { font-size: 12px; }
+      .career-desc { font-size: 14px; }
+      .career-link { font-size: 13px; }
+
+      .strength-item { font-size: 15px; }
+      .callout-label { font-size: 16px; }
+      .callout-text { font-size: 15px; }
+      .ai-intro { font-size: 16px; }
+      .ai-list li { font-size: 15px; }
+      .insight-finding { font-size: 16px; }
+      .insight-change { font-size: 14px; }
+
+      .tool-category-title { font-size: 13px; }
+      .tool-list { font-size: 13px; }
+
+      .ar-desc { font-size: 14px; }
+      .ar-text { font-size: 13px; }
+      .ar-meta { font-size: 11px; }
+
+      .contact-heading { font-size: 26px; line-height: 1.3; }
+      .contact-sub { font-size: 15px; }
+      .btn-primary, .btn-secondary { font-size: 15px; }
+      .contact-info { font-size: 13px; }
+      footer p { font-size: 12px; }
+      /* Get in touch: the two buttons sit side by side */
+      .contact-actions { flex-direction: row; flex-wrap: nowrap; gap: 12px; }
+      .contact-actions .btn-primary, .contact-actions .btn-secondary { font-size: 14px; padding: 11px 16px; }
+    }
   </style>
+  <script>
+    // Refreshing (or coming back to the page) always starts at the top
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    function toTop() { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }
+    toTop();
+    window.addEventListener('load', toTop);
+    window.addEventListener('pageshow', toTop);
+  </script>
 </head>
 <body>
 
-  <!-- ── HEADER ── -->
-  <header>
-    <div class="header-inner">
-      <a href="#" class="logo" id="logo-link">Mandip Randhawa</a>
-      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
-      <nav id="site-nav">
-        <a href="#work">Work</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="assets/mandip-randhawa-resume-2026.pdf" target="_blank" rel="noopener">Resume <svg style="display:inline-block; vertical-align:middle; margin-left:3px; position:relative; top:-1px;" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      </nav>
-    </div>
-  </header>
+  <div class="layout">
+  <div class="left-col">
 
   <!-- ── HERO ── -->
   <section class="hero" id="top">
-    <img class="hero-bg" src="images/hero/dot-grid-hero.png" alt="" />
-
     <div class="hero-container" id="hero-container-el">
 
       <!-- Multiplayer cursors — scoped to full hero -->
@@ -996,11 +1315,11 @@
       </div>
       <div class="mp-cursor" id="cursor-eng">
         <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 2L14 8.5L8.5 10.5L6.5 15.5L3 2Z" fill="#1D9E75" stroke="#fff" stroke-width="0.8"/></svg>
-        <span class="mp-label" style="background:#1D9E75">Eng</span>
+        <span class="mp-label" style="background:#1D9E75">ENG</span>
       </div>
       <div class="mp-cursor" id="cursor-res">
         <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 2L14 8.5L8.5 10.5L6.5 15.5L3 2Z" fill="#D85A30" stroke="#fff" stroke-width="0.8"/></svg>
-        <span class="mp-label" style="background:#D85A30">Research</span>
+        <span class="mp-label" style="background:#D85A30">UX</span>
       </div>
 
       <div style="position:relative;" id="hero-heading-wrapper">
@@ -1019,107 +1338,14 @@
       <p class="hero-sub hero-intro" id="hero-sub-el">
         Product Designer with 13+ years experience working across research, strategy, and execution to get from ambiguous opportunity to high-impact product.
       </p>
-      <div class="hero-actions hero-intro" id="hero-actions-el">
-        <a href="#work" class="btn-primary">View Work</a>
-        <a href="#about" class="btn-secondary">About</a>
-        <a href="assets/mandip-randhawa-resume-2026.pdf" class="btn-ghost" target="_blank" rel="noopener">Resume <svg style="display:inline-block; vertical-align:middle; margin-left:3px; position:relative; top:-1px;" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── FEATURED WORK ── -->
-  <section class="featured-work" id="work">
-    <div class="section-inner" style="max-width: var(--max-width); margin: 0 auto;">
-      <div>
-        <p class="section-label">Featured work</p>
-        <h2 class="fraunces section-heading-lg" style="margin-bottom:0;">My most impactful work</h2>
-      </div>
-
-      <div class="work-cards" style="margin-top: 60px;">
-        <!-- Card 1 -->
-        <a class="work-card" href="case-studies/shopify-marketing.html">
-          <img class="work-card-image" src="images/hero/shopify-marketing-hero-img.png" alt="Shopify Marketing Tab hero" />
-          <p class="card-meta" style="display:flex; align-items:flex-start; gap:7px;"><img src="https://www.google.com/s2/favicons?domain=shopify.com&sz=32" width="16" height="16" style="border-radius:3px; display:block; margin-top:2px;" alt="">Shopify · 2017–2023<br>Staff Product Designer, Merchant Marketing Team</p>
-          <div>
-            <h3 class="fraunces card-title">Building Shopify's Merchant Marketing Platform</h3>
-            <p class="card-role">13 min read</p>
-          </div>
-          <p class="card-description">Took Shopify's Marketing Tab from early ad integrations to a full merchant growth platform, then rebuilt its analytics from the ground up, driving a 52% increase in sales attributed to marketing activity.</p>
-          <div class="tags">
-            <span class="tag">0-1</span>
-            <span class="tag">Systems</span>
-            <span class="tag">Growth</span>
-            <span class="tag">Commerce</span>
-          </div>
-          <span class="card-link">View case study →</span>
-        </a>
-
-        <!-- Card 2 -->
-        <div class="work-card work-card-disabled">
-          <div class="work-card-image work-card-image-placeholder card-img-coursehero"><p class="placeholder-title">Coming soon</p></div>
-          <p class="card-meta" style="display:flex; align-items:flex-start; gap:7px;"><img src="https://www.google.com/s2/favicons?domain=coursehero.com&sz=32" width="16" height="16" style="border-radius:3px; display:block; margin-top:2px;" alt="">Course Hero · 2024–2025<br>Staff Product Designer, Course Experience Pod</p>
-          <div>
-            <h3 class="fraunces card-title">Designing How Students Study Across a Semester</h3>
-            <p class="card-role">8 min read</p>
-          </div>
-          <p class="card-description">Designed two generations of AI-native study products, Study Tools and Study Boards, validated with KANO surveys and painted-door tests, to shift Course Hero from a one-off resource to a semester-long study companion.</p>
-          <div class="tags">
-            <span class="tag">0-1</span>
-            <span class="tag">AI</span>
-            <span class="tag">EdTech</span>
-            <span class="tag">Strategy</span>
-            <span class="tag">Research</span>
-          </div>
-          <span class="card-link card-link-disabled">Coming soon</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── MORE WORK ── -->
-  <section class="more-work-section">
-    <div class="section-inner" style="max-width: var(--max-width); margin: 0 auto;">
-      <p class="section-label">Archive</p>
-      <h2 class="fraunces section-heading">Work from earlier in my career</h2>
-      <div class="more-work-grid">
-        <a class="mini-card" href="case-studies/kinetic.html" style="text-decoration:none; color:inherit; cursor:pointer;">
-          <div class="mini-card-image mini-card-img-kinetic"></div>
-          <div>
-            <p class="mini-card-meta" style="display:flex; align-items:center; gap:6px;"><img src="images/logos/kinetic-logo.jpeg" width="16" height="16" style="border-radius:3px; display:block; object-fit:cover; border:1px solid var(--border);" alt="">Kinetic Commerce · 2015–2016</p>
-            <h3 class="fraunces mini-card-title">Retail Associate App</h3>
-          </div>
-          <p class="mini-card-desc">Product designer for an app used by brands like Kiehl's, Aldo, and Indigo.</p>
-          <div class="tags">
-            <span class="tag-sm">Mobile</span>
-            <span class="tag-sm">B2B</span>
-            <span class="tag-sm">Retail</span>
-          </div>
-        </a>
-        <a class="mini-card" href="case-studies/nascent.html" style="text-decoration:none; color:inherit; cursor:pointer;">
-          <div class="mini-card-image mini-card-img-nascent"></div>
-          <div>
-            <p class="mini-card-meta" style="display:flex; align-items:center; gap:6px;"><img src="images/logos/nascent-digital-logo.jpeg" width="16" height="16" style="border-radius:3px; display:block; object-fit:cover;" alt="">Nascent Digital · 2013–2015</p>
-            <h3 class="fraunces mini-card-title">Enterprise Client Projects</h3>
-          </div>
-          <p class="mini-card-desc">Lead designer for TELUS, eHarmony, and Flickr.</p>
-          <div class="tags">
-            <span class="tag-sm">Enterprise</span>
-            <span class="tag-sm">Social</span>
-          </div>
-        </a>
-        <a class="mini-card" href="case-studies/grocers-plus.html" style="text-decoration:none; color:inherit; cursor:pointer;">
-          <div class="mini-card-image mini-card-img-grocersplus"></div>
-          <div>
-            <p class="mini-card-meta" style="display:flex; align-items:center; gap:6px;"><img src="images/logos/grocersplus-logo.jpeg" width="16" height="16" style="border-radius:3px; display:block; object-fit:cover; border:1px solid var(--border);" alt="">Grocers Plus · 2013–2014</p>
-            <h3 class="fraunces mini-card-title">Personalized Grocery App</h3>
-          </div>
-          <p class="mini-card-desc">Owned design end-to-end, taking a grocery discount app from concept to MVP.</p>
-          <div class="tags">
-            <span class="tag-sm">0-1</span>
-            <span class="tag-sm">Mobile</span>
-            <span class="tag-sm">Consumer</span>
-          </div>
-        </a>
+      <div class="hero-actions hero-intro" id="hero-actions-el" role="navigation" aria-label="Page sections">
+        <a class="hero-link" href="#about"><span class="hero-link-label">About me</span></a>
+        <a class="hero-link" href="#career"><span class="hero-link-label">Where I&#39;ve worked</span></a>
+        <a class="hero-link" href="#strengths"><span class="hero-link-label">What I&#39;m good at</span></a>
+        <a class="hero-link" href="#process"><span class="hero-link-label">How I work</span></a>
+        <a class="hero-link" href="#capabilities"><span class="hero-link-label">What&#39;s in my toolbelt</span></a>
+        <a class="hero-link" href="#contact"><span class="hero-link-label">Get in touch</span></a>
+        <a class="hero-link hero-link-ext" href="assets/mandip-randhawa-resume-2026.pdf" target="_blank" rel="noopener">Resume <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
   </section>
@@ -1127,95 +1353,85 @@
   <!-- ── ABOUT ── -->
   <section class="section-grey" id="about">
     <div class="section-inner" style="max-width: var(--max-width); margin: 0 auto;">
-      <p class="section-label">About me</p>
-      <div class="about-photo">
-        <img src="images/mandip-profile-pic.jpg" alt="Portrait of Mandip Randhawa" />
+      <h2 class="fraunces section-heading">About me</h2>
+      <p class="about-text">Most recently shipping AI study products at <strong>Course Hero</strong>; <strong>lifting WAUs by 16%</strong>. Before that, 6 years building <strong>Shopify’s merchant marketing platform</strong>; driving a <strong>52% increase in sales</strong> attributed to marketing activity.</p>
+      <div class="about-personal-row">
+        <p class="about-personal">Based in the Greater Toronto Area. Outside of work I'm raising a family, scheming up the next home renovation, and trying (with mixed results) to cultivate a green thumb. I love a good book when life slows down enough to allow it.</p>
       </div>
-      <p class="about-text">I'm a product designer who brings clarity to complex, messy product problems. What I care about most is the space between research and execution, where you have a pile of signals, competing priorities, and no obvious answer. That's where I do my best work.</p>
-      <p class="about-personal">Based in the Greater Toronto Area. Outside of work you can find me with my family and kids, scheming up the next home renovation, documenting travel and family life through video, and trying (with mixed results) to cultivate a green thumb. I love a good book when life slows down enough to allow it.</p>
     </div>
   </section>
 
   <!-- ── CAREER ── -->
-  <section class="section-white">
+  <section class="section-white" id="career">
     <div class="section-inner" style="max-width: var(--max-width); margin: 0 auto;">
-      <p class="section-label">Career</p>
       <h2 class="fraunces section-heading">Where I've worked</h2>
       <div class="career-list">
         <div class="career-item">
           <div class="career-header">
             <h3 class="fraunces career-title"><img class="career-logo" src="https://www.google.com/s2/favicons?domain=coursehero.com&sz=64" alt="">Staff Product Designer, Course Hero</h3>
-            <span class="career-date">2024–2025 · San Francisco (Remote)</span>
+            <span class="career-date">2024–2025 · Toronto (Remote)</span>
           </div>
-          <p class="career-desc">Designed Study Tools, Study Boards, and Course Planner (AI-assisted surfaces that shifted Course Hero from a one-off homework resource to a semester-long study companion). Shaped the team's product direction, translating competing priorities into OKRs and a roadmap the team executed on.</p>
+            <a class="career-link" href="case-studies/course-hero-v2.html">View work →</a>
         </div>
         <div class="career-item">
           <div class="career-header">
             <h3 class="fraunces career-title"><img class="career-logo" src="https://www.google.com/s2/favicons?domain=shopify.com&sz=64" alt="">Staff Product Designer, Shopify</h3>
-            <span class="career-date">2017–2023 · Toronto (Hybrid)</span>
+            <span class="career-date">Product Designer → Senior → Staff · 2017–2023 · Toronto (Hybrid)</span>
           </div>
-          <p class="career-desc">Longest-tenured designer on Shopify's Marketing Tab. Shaped the surface across 6 years, from early ad integrations through Campaigns, Automations, and Marketing Analytics, partnering closely on Shopify Email's integration into the tab. Work spanned 0→1 design, research synthesis, and data product design across one of Shopify's most cross-functional surfaces.</p>
+            <a class="career-link" href="case-studies/shopify-marketing.html">View work →</a>
         </div>
         <div class="career-item">
           <div class="career-header">
             <h3 class="fraunces career-title"><img class="career-logo" src="images/logos/kinetic-logo.jpeg" alt="">Product Designer, Kinetic Commerce</h3>
-            <span class="career-date">2015–2016 · Toronto</span>
+            <span class="career-date">2015–2017 · Toronto</span>
           </div>
-          <p class="career-desc">Designer on a retail associate companion app for brands including Kiehl's, Aldo, Indigo, and L'Oreal, helping in-store staff look up products, manage customer profiles, and close sales on the floor.</p>
+            <a class="career-link" href="case-studies/kinetic.html">View work →</a>
         </div>
         <div class="career-item">
           <div class="career-header">
             <h3 class="fraunces career-title"><img class="career-logo" src="images/logos/nascent-digital-logo.jpeg" alt="">UX/UI Designer, Nascent Digital</h3>
             <span class="career-date">2013–2015 · Toronto</span>
           </div>
-          <p class="career-desc">Designer across enterprise and consumer projects for clients including TELUS, Heart &amp; Stroke Foundation, eHarmony, and Flickr, spanning mobile apps, responsive web, and multi-role admin dashboards.</p>
+            <a class="career-link" href="case-studies/nascent.html?project=eharmony">View work →</a>
         </div>
         <div class="career-item">
           <div class="career-header">
             <h3 class="fraunces career-title"><img class="career-logo" src="images/logos/grocersplus-logo.jpeg" alt="">UX/UI Designer, Grocers Plus</h3>
             <span class="career-date">2013–2014 · Toronto</span>
           </div>
-          <p class="career-desc">Owned design end-to-end for a personalized grocery discount app, from concept to MVP.</p>
+            <a class="career-link" href="case-studies/grocers-plus.html">View work →</a>
         </div>
-        <div class="career-item" style="border-bottom:none; padding-bottom:0;">
-          <p class="career-eyebrow">Education</p>
-          <div class="career-header">
-            <h3 class="fraunces career-title"><img class="career-logo" src="https://www.google.com/s2/favicons?domain=yorku.ca&sz=64" alt="">Bachelor of Design (Honours)</h3>
-            <span class="career-date">2008–2012 · Toronto</span>
-          </div>
-          <p class="career-desc">York University / Sheridan College Joint Program in Design</p>
-        </div>
+      </div>
+
+      <div class="career-actions">
+        <a href="assets/mandip-randhawa-resume-2026.pdf" target="_blank" rel="noopener" class="btn-primary">View resume</a>
+        <a href="https://www.linkedin.com/in/mandiprandhawa/" target="_blank" rel="noopener" class="btn-secondary">LinkedIn <svg style="display:inline-block; vertical-align:middle; margin-left:3px; position:relative; top:-1px;" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
   </section>
 
   <!-- ── AREAS OF STRENGTH ── -->
-  <section class="section-grey">
+  <section class="section-grey" id="strengths">
     <div class="section-inner" style="max-width: var(--max-width); margin: 0 auto;">
-      <p class="section-label">Areas of strength</p>
       <h2 class="fraunces section-heading">What I'm good at</h2>
 
       <div class="card-grid">
-        <div class="callout">
-          <p class="fraunces callout-label">TL;DR</p>
-          <p class="fraunces callout-text callout-text-lg">I turn ambiguous opportunities into focused, high-impact products. I connect research to decisions, design across complex multi-surface systems, and bring cross-functional teams into alignment.</p>
-        </div>
         <div class="insights-list">
           <div class="insight-item">
             <p class="insight-finding">0–1 product design and discovery</p>
-            <p class="insight-change">Helped shape Shopify Email from an early build-vs-partner decision into a native feature, then led two AI-native study products at Course Hero (Study Tools and Study Boards).</p>
+            <p class="insight-change">I own the design vision for the team. At Shopify I started new areas like Email and Automations, handed them to others to run, and kept the most important parts moving, like campaigns and reporting. At Course Hero I built something net new: an AI product for stickiness.</p>
           </div>
           <div class="insight-item">
             <p class="insight-finding">Complex, multi-surface systems at scale</p>
-            <p class="insight-change">Evolved Shopify Campaigns from simple grouping to a full workflow builder with Templates and Automations, while feeding reusable patterns back into Shopify's shared design system for millions of merchants.</p>
+            <p class="insight-change">Make deep complexity simple across products. I build from first principles for scale and think through how each decision ripples across the product.</p>
           </div>
           <div class="insight-item">
             <p class="insight-finding">Research synthesis and problem framing</p>
-            <p class="insight-change">Turned a 17-participant, six-month diary study into the Trigger → Goal → Build → Act → Measure → Learn framework that shaped the Marketing Tab's entire strategy.</p>
+            <p class="insight-change">Talking to users is part of my process from the start, through interviews, diary studies and usability testing. I turn that research into frameworks the team can use, and keep sharing them so research keeps shaping the product after discovery.</p>
           </div>
           <div class="insight-item">
             <p class="insight-finding">Cross-functional alignment and facilitation</p>
-            <p class="insight-change">Facilitated the design sprints that shaped product strategy and roadmaps at both companies, partnering closely with PM, engineering, research, and data science.</p>
+            <p class="insight-change">I work closely with PM, engineering, research and data science, and run design sprints that set strategy and roadmaps. I keep the product cohesive across teams, so users see one product, not the org chart.</p>
           </div>
         </div>
       </div>
@@ -1223,58 +1439,36 @@
   </section>
 
   <!-- ── HOW I WORK ── -->
-  <section class="section-white">
+  <section class="section-white" id="process">
     <div class="section-inner" style="max-width: var(--max-width); margin: 0 auto;">
-      <p class="section-label">My process</p>
       <h2 class="fraunces section-heading">How I work</h2>
 
       <div class="card-grid">
-        <div class="callout">
-          <p class="fraunces callout-label">TL;DR</p>
-          <p class="fraunces callout-text callout-text-lg">I validate direction before I build, turn research into shared frameworks, build in regular rituals with users and the team, and document the patterns that outlast any one screen.</p>
-        </div>
         <div class="insights-list">
           <div class="insight-item">
             <p class="insight-finding">I validate direction before I build.</p>
-            <p class="insight-change">Painted-door pages, smoke tests, and structured feature surveys check real intent and prioritize what's worth the team pursuing.</p>
+            <p class="insight-change">Painted-door pages, smoke tests and feature surveys show real intent before the team commits.</p>
           </div>
           <div class="insight-item">
             <p class="insight-finding">I turn raw research into shared frameworks.</p>
-            <p class="insight-change">Interviews and diary studies don't move a team on their own, so I convert them into mental models that PM, engineering, and research can all point back to.</p>
+            <p class="insight-change">Mental models that PM, engineering and research can all point back to, not a pile of interview notes.</p>
           </div>
           <div class="insight-item">
             <p class="insight-finding">I build in regular rituals.</p>
-            <p class="insight-change">Design sprints get cross-functional teams to a decision, monthly lunch-and-learns keep the team in the room with real users, and open "UX roast" critiques keep the work honest between milestones.</p>
+            <p class="insight-change">Design sprints get teams to decisions, and open "UX roast" critiques keep the work honest between milestones.</p>
           </div>
           <div class="insight-item">
-            <p class="insight-finding">I document the pattern.</p>
-            <p class="insight-change">For anything complex or multi-surface, I pull out the reusable components and feed them into a shared design system so the next surface doesn't start from zero.</p>
+            <p class="insight-finding">I use AI to move faster, from research to shipped code.</p>
+            <p class="insight-change">I run interview notes through Claude to spot patterns, then check them against the raw notes myself. I prototype in code so feedback is on something that works, and I ship small, contained changes myself.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── AI IN MY PRACTICE ── -->
-  <section class="section-grey">
-    <div class="section-inner" style="max-width: var(--max-width); margin: 0 auto;">
-      <p class="section-label">AI in My Practice</p>
-      <h2 class="fraunces section-heading">How I use AI in design work</h2>
-      <p class="ai-intro">I use AI in the parts of my process that used to just take longer than they needed to. I'm still working out where it actually helps and where it doesn't.</p>
-      <ul class="ai-list">
-        <li><strong>Research synthesis</strong>: I run interview notes and usability findings through Claude to catch patterns faster than I would by hand, then go back and check them against the raw notes myself.</li>
-        <li><strong>Early concepting</strong>: I'll ask for a handful of rough directions just to have something in the room to react to. They're there to argue with, not to ship.</li>
-        <li><strong>Prototyping</strong>: I build in code now, not just Figma. What people are reviewing actually works, so the feedback I get back is better.</li>
-        <li><strong>Shipping</strong>: For contained changes, I'll take something from Claude Code through to a merged change myself instead of writing up a ticket for someone else to do it.</li>
-        <li><strong>Communication</strong>: I use AI to get a first draft of docs and decks out fast, so the time I'm spending goes into the actual argument and not the formatting.</li>
-      </ul>
-    </div>
-  </section>
-
   <!-- ── TOOLS & SKILLS ── -->
-  <section class="section-white">
+  <section class="section-grey" id="capabilities">
     <div class="section-inner" style="max-width: var(--max-width); margin: 0 auto;">
-      <p class="section-label">Capabilities</p>
       <h2 class="fraunces section-heading">What's in my toolbelt</h2>
       <div class="tools-grid">
         <div>
@@ -1283,11 +1477,7 @@
         </div>
         <div>
           <p class="fraunces tool-category-title">Research &amp; Strategy</p>
-          <p class="tool-list">Design sprints · Value Proposition Design · User Testing (moderated &amp; unmoderated) · Painted-door tests · KANO surveys</p>
-        </div>
-        <div>
-          <p class="fraunces tool-category-title">AI Tools</p>
-          <p class="tool-list">Figma · Claude · ChatGPT · Midjourney · Runway · Always exploring more</p>
+          <p class="tool-list">Design sprints · Value Proposition Design · User Testing (moderated &amp; unmoderated) · KANO surveys</p>
         </div>
         <div>
           <p class="fraunces tool-category-title">Data &amp; Analytics</p>
@@ -1297,20 +1487,15 @@
           <p class="fraunces tool-category-title">Collaboration &amp; Delivery</p>
           <p class="tool-list">Slack · Google Suite · Confluence · JIRA</p>
         </div>
-        <div>
-          <p class="fraunces tool-category-title">Dev handoff &amp; Systems</p>
-          <p class="tool-list">Figma Dev · GitHub · Storybook · Zeplin</p>
-        </div>
       </div>
     </div>
   </section>
 
   <!-- ── CONTACT ── -->
-  <section class="section-white contact-section" id="contact" style="padding: 80px 24px;">
+  <section class="section-white contact-section" id="contact">
     <div style="max-width: var(--max-width); margin: 0 auto; text-align: center;">
-      <p class="contact-label">Get in Touch</p>
-      <h2 class="fraunces contact-heading">Let's work together</h2>
-      <p class="contact-sub">I'm currently open to new opportunities. If you're looking for a Staff Product Designer who brings clarity to complex problems, let's talk.</p>
+      <h2 class="fraunces contact-heading">Get in touch</h2>
+      <p class="contact-sub">I'm currently open to new opportunities. If you're looking for a Product Designer who brings clarity to complex problems, let's talk.</p>
       <div class="contact-actions">
         <a href="mailto:hello.mandip@gmail.com" class="btn-primary">Email Me</a>
         <a href="https://www.linkedin.com/in/mandiprandhawa/" target="_blank" class="btn-secondary">LinkedIn <svg style="display:inline-block; vertical-align:middle; margin-left:3px; position:relative; top:-1px;" width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -1325,67 +1510,100 @@
 
   <!-- ── FOOTER ── -->
   <footer>
-    <p>© 2026 Mandip Randhawa. Built with care.</p>
+    <p>© 2026 Mandip Randhawa. Built with care and claude.</p>
   </footer>
 
+  </div><!-- /.left-col -->
+
+    <!-- ── PROJECTS (right panel on desktop: vertical rotating cards) ── -->
+    <aside class="work-panel" id="work" role="region" aria-roledescription="carousel" aria-label="Selected projects">
+      <div class="panel-head">
+        <p class="panel-label">Selected work</p>
+        <span class="panel-count" id="panel-count" aria-hidden="true">01 / 03</span>
+      </div>
+
+      <div class="carousel-stage" id="carousel-stage" aria-live="off">
+        <!-- 1 · Course Hero -->
+        <a class="proj-card" href="case-studies/course-hero-v2.html">
+          <div class="proj-media proj-media-blue"><video class="hero-loop" autoplay muted loop playsinline preload="auto" poster="images/case-studies/course-hero/sb-loop-hero-d.jpg" aria-label="Screen recording of the Study Boards prototype building a study board"><source src="images/case-studies/course-hero/sb-loop-hero-d.mp4" type="video/mp4"><source src="images/case-studies/course-hero/sb-loop-hero-d.webm" type="video/webm"></video></div>
+          <p class="card-meta proj-meta"><img src="https://www.google.com/s2/favicons?domain=coursehero.com&sz=128" width="20" height="20" alt=""><span>Course Hero · 2024–2025</span></p>
+          <div>
+            <h3 class="fraunces card-title">Study Boards: Designing a Home for Studying Across a Semester</h3>
+            </div>
+          <p class="card-description">Designed Study Tools and Study Boards, AI products that turned Course Hero from one-off answers into a semester-long study companion. Study Boards drove a 16% increase in weekly active users.</p>
+          <div class="tags">
+            <span class="tag">0-1</span>
+            <span class="tag">AI</span>
+            <span class="tag">EdTech</span>
+            <span class="tag">Strategy</span>
+            <span class="tag">Research</span>
+          </div>
+          <span class="card-link">View work →</span>
+        </a>
+
+        <!-- 2 · Shopify -->
+        <a class="proj-card" href="case-studies/shopify-marketing.html">
+          <div class="proj-media"><img src="images/hero/shopify-marketing-hero-img.png" alt="Shopify Marketing Tab hero" /></div>
+          <p class="card-meta proj-meta"><img src="https://www.google.com/s2/favicons?domain=shopify.com&sz=128" width="20" height="20" alt=""><span>Shopify · 2017–2023</span></p>
+          <div>
+            <h3 class="fraunces card-title">Building Shopify's Merchant Marketing Platform</h3>
+            </div>
+          <p class="card-description">Took Shopify's Marketing Tab from early ad integrations to a full merchant growth platform, then rebuilt its analytics from the ground up, driving a 52% increase in sales attributed to marketing activity.</p>
+          <div class="tags">
+            <span class="tag">0-1</span>
+            <span class="tag">Systems</span>
+            <span class="tag">Growth</span>
+            <span class="tag">Commerce</span>
+          </div>
+          <span class="card-link">View work →</span>
+        </a>
+
+        <!-- 3 · Archive: the three earlier projects, as one card -->
+        <div class="proj-card proj-card-archive">
+          <p class="card-meta proj-meta"><span>Archive · 2013–2016</span></p>
+          <div>
+            <h3 class="fraunces card-title">Work from earlier in my career</h3>
+          </div>
+          <div class="archive-list">
+            <a class="archive-row" href="case-studies/kinetic.html">
+              <img class="ar-thumb" src="images/case-studies/kinetic/ASSOCIATEAPP/hero-img.png" alt="">
+              <span class="ar-text"><span class="ar-meta"><img class="ar-logo proj-logo-bordered" src="images/logos/kinetic-logo.jpeg" width="20" height="20" alt=""><span>Kinetic Commerce · 2015–2016</span></span><b class="ar-desc">Retail Associate App</b></span>
+              <span class="ar-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="archive-row" href="case-studies/nascent.html?project=eharmony">
+              <img class="ar-thumb" src="images/case-studies/nascent/EHARMONY/hero-img.png" alt="">
+              <span class="ar-text"><span class="ar-meta"><img class="ar-logo" src="images/logos/nascent-digital-logo.jpeg" width="20" height="20" alt=""><span>Nascent Digital · 2013–2015</span></span><b class="ar-desc">eHarmony Windows Mobile App Redesign</b></span>
+              <span class="ar-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="archive-row" href="case-studies/nascent.html?project=yogaglo">
+              <img class="ar-thumb" src="images/case-studies/nascent/YOGAGLO/hero-img.png" alt="">
+              <span class="ar-text"><span class="ar-meta"><img class="ar-logo" src="images/logos/nascent-digital-logo.jpeg" width="20" height="20" alt=""><span>Nascent Digital · 2013–2015</span></span><b class="ar-desc">YogaGlo Digital Platform</b></span>
+              <span class="ar-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="archive-row" href="case-studies/grocers-plus.html">
+              <img class="ar-thumb" src="images/case-studies/grocers-plus/hero-img.png" alt="">
+              <span class="ar-text"><span class="ar-meta"><img class="ar-logo proj-logo-bordered" src="images/logos/grocersplus-logo.jpeg" width="20" height="20" alt=""><span>Grocers Plus · 2013–2014</span></span><b class="ar-desc">Personalized Grocery App</b></span>
+              <span class="ar-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-dots" role="group" aria-label="Choose a project">
+        <button type="button" class="carousel-dot" aria-label="Show project 1: Course Hero"></button>
+        <button type="button" class="carousel-dot" aria-label="Show project 2: Shopify"></button>
+        <button type="button" class="carousel-dot" aria-label="Show project 3: Archive, work from earlier in my career"></button>
+      </div>
+
+      <p class="panel-hint" aria-hidden="true">
+        <span class="hint-auto">Hover to pause · Scroll to browse</span>
+        <span class="hint-paused">Paused · Scroll to browse</span>
+      </p>
+    </aside>
+
+  </div><!-- /.layout -->
+
   <script>
-    // ── MOBILE NAV TOGGLE (hamburger) ────────────────
-    (function() {
-      var toggle = document.getElementById('nav-toggle');
-      var nav = document.getElementById('site-nav');
-      if (!toggle || !nav) return;
-
-      function isOpen() { return nav.classList.contains('nav-open'); }
-
-      function openMenu() {
-        nav.classList.add('nav-open');
-        toggle.setAttribute('aria-expanded', 'true');
-        toggle.setAttribute('aria-label', 'Close menu');
-      }
-
-      function closeMenu() {
-        nav.classList.remove('nav-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Open menu');
-      }
-
-      toggle.addEventListener('click', function () {
-        if (isOpen()) { closeMenu(); } else { openMenu(); }
-      });
-
-      // Close after choosing a link, so the dropdown doesn't linger over
-      // the destination section/page.
-      nav.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', closeMenu);
-      });
-
-      // Escape closes and returns focus to the toggle button.
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && isOpen()) {
-          closeMenu();
-          toggle.focus();
-        }
-      });
-
-      // Tapping/clicking outside the open menu closes it.
-      document.addEventListener('click', function (e) {
-        if (isOpen() && !nav.contains(e.target) && !toggle.contains(e.target)) {
-          closeMenu();
-        }
-      });
-
-      // If the viewport grows past the mobile breakpoint while open (e.g.
-      // rotating a tablet), reset so nav doesn't get stuck mid-transition
-      // when the media query stops applying the dropdown styles.
-      var resizeTimer;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-          if (window.innerWidth > 640 && isOpen()) closeMenu();
-        }, 150);
-      });
-    })();
-
     // ── HERO ANIMATION ──────────────────────────────
     (function() {
       const typedName      = document.getElementById('typed-name');
@@ -1393,7 +1611,6 @@
       const figmaSel       = document.getElementById('figma-sel');
       const headingWrapper = document.getElementById('hero-heading-wrapper');
       const heroCont       = document.getElementById('hero-container-el');
-      const logoLink       = document.getElementById('logo-link');
       const heroHeading    = document.getElementById('hero-heading-el');
       const heroSub        = document.getElementById('hero-sub-el');
       const heroActions    = document.getElementById('hero-actions-el');
@@ -1500,121 +1717,115 @@
 
       function runIntro(onDone) {
         fadeIn(heroHeading, 150);
-        scheduleT(onDone, 700); // Fire animation just after heading appears
+        scheduleT(onDone, 700);
       }
 
+      // The case-study cards stay hidden until the left side has rendered in
+      var workPanel = document.getElementById('work');
+      if (workPanel) { workPanel.style.opacity = '0'; workPanel.style.transition = 'opacity 0.9s ease'; }
+      function revealPanel() {
+        if (workPanel) {
+          workPanel.style.opacity = '1';
+          scheduleT(function() { workPanel.style.opacity = ''; workPanel.style.transition = ''; }, 1000);
+        }
+      }
+
+      // Order: name types in → subtitle (whole block) → links → cards.
+      // PM / ENG / UX roam the right side while it types, then heart the name and leave.
       function runAnimation(initialDelay) {
         scheduleT(function() {
-          // Show selection box + blinking cursor
+          startWander();
           figmaSel.classList.add('visible');
           textCursor.classList.add('blinking');
           textCursor.style.opacity = '1';
-
           typedName.textContent = '';
 
-          // ── Type "Mandip" ──────────────────────────
-          var name      = 'Mandip';
-          var perLetter = 120;
+          var name      = 'Mandip Randhawa';
+          var perLetter = 85;
           name.split('').forEach(function(ch, idx) {
             scheduleT(function() { typedName.textContent += ch; }, 200 + idx * perLetter);
           });
 
-          // ── Deselect, then paragraph ───────────────
-          var lastMandip = 200 + (name.length - 1) * perLetter;
+          var lastLetter = 200 + (name.length - 1) * perLetter;
           scheduleT(function() {
             figmaSel.classList.remove('visible');
             textCursor.classList.remove('blinking');
             textCursor.style.opacity = '0';
-
-            scheduleT(function() {
-              fadeInLineByLine(heroSub, 0, function() {
-                fadeIn(heroActions, 0);
-                scheduleT(startCursorSequence, 1650);
-              });
-            }, 300);
-          }, lastMandip + 300);
-
+            heartAroundHeading();
+            scheduleT(function() { fadeIn(heroSub, 0); },     800);
+            scheduleT(function() { fadeIn(heroActions, 0); }, 1500);
+            scheduleT(revealPanel,                            3200);   // cursors are off screen by ~3.1s
+            scheduleT(function() { if (window.releaseCarousel) window.releaseCarousel(); }, 4000);
+          }, lastLetter + 300);
         }, initialDelay);
       }
 
-      // ── CURSOR SEQUENCE ──────────────────────────
+      // ── CURSORS ─────────────────────────────────
       const cursorDefs = [
-        { id: 'cursor-pm',  heartColor: '#7F77DD', delay: 0,    edge: 'left'  },
-        { id: 'cursor-eng', heartColor: '#1D9E75', delay: 600,  edge: 'top'   },
-        { id: 'cursor-res', heartColor: '#D85A30', delay: 1150, edge: 'right' },
+        { id: 'cursor-pm',  heartColor: '#7F77DD', delay: 0   },
+        { id: 'cursor-eng', heartColor: '#1D9E75', delay: 500 },
+        { id: 'cursor-res', heartColor: '#D85A30', delay: 1000 },
       ];
-
-      function startCursorSequence() {
-        cursorDefs.forEach(function(def) {
-          scheduleT(function() {
-            doubleTapAndSettle(document.getElementById(def.id), def.heartColor, def.edge);
-          }, def.delay);
-        });
-      }
-
+      var wandering = false;
+      function rnd(a, b) { return a + Math.random() * (b - a); }
       function setTrans(el, duration, easing) {
         el.style.transition = 'left ' + duration + ' ' + easing + ', top ' + duration + ' ' + easing + ', opacity 0.5s ease';
       }
+      function moveTo(el, x, y, duration, easing) {
+        setTrans(el, duration, easing);
+        el.style.left = x + 'px';
+        el.style.top  = y + 'px';
+      }
 
-      function doubleTapAndSettle(el, heartColor, edge) {
-        const cr = heroCont.getBoundingClientRect();
-
-        // Tap anywhere in the hero — bias x range by entry edge so cursors cross the space
-        var xMin, xMax;
-        if      (edge === 'left')  { xMin = 0.05; xMax = 0.60; }
-        else if (edge === 'right') { xMin = 0.40; xMax = 0.95; }
-        else                       { xMin = 0.15; xMax = 0.85; } // top
-        const tapX = cr.width  * (xMin + Math.random() * (xMax - xMin));
-        const tapY = cr.height * (0.15 + Math.random() * 0.65);
-
-        // Place cursor at the screen edge (relative to hero container)
-        var startX, startY;
-        if (edge === 'left') {
-          startX = -cr.left - 80;
-          startY = tapY + (Math.random() - 0.5) * 40;
-        } else if (edge === 'right') {
-          startX = window.innerWidth - cr.left + 60;
-          startY = tapY + (Math.random() - 0.5) * 40;
-        } else { // top
-          startX = tapX + (Math.random() - 0.5) * 80;
-          startY = -cr.top - 80;
-        }
-
-        // Snap to edge instantly, then slide in
-        el.style.transition = 'none';
-        el.style.left = startX + 'px';
-        el.style.top  = startY + 'px';
-        void el.offsetWidth; // force reflow
-        setTrans(el, '1s', 'cubic-bezier(0.25,0.1,0.25,1)');
-        el.classList.add('visible');
-
+      function startWander() {
+        wandering = true;
+        cursorDefs.forEach(function(def) {
+          var el = document.getElementById(def.id);
+          el.style.transition = 'none';
+          el.style.left = (window.innerWidth + 60) + 'px';
+          el.style.top  = rnd(window.innerHeight * 0.2, window.innerHeight * 0.75) + 'px';
+          void el.offsetWidth;
+          scheduleT(function() { el.classList.add('visible'); roam(el); }, def.delay);
+        });
+      }
+      function roam(el) {
+        if (!wandering) return;
+        var dur = rnd(1.1, 1.9);
+        moveTo(el, rnd(window.innerWidth * 0.58, window.innerWidth * 0.9),
+                   rnd(window.innerHeight * 0.12, window.innerHeight * 0.8),
+                   dur.toFixed(2) + 's', 'cubic-bezier(0.45,0,0.25,1)');
         scheduleT(function() {
-          // Slide toward Mandip — 1s travel time
-          el.style.left = tapX + 'px';
-          el.style.top  = tapY + 'px';
+          if (Math.random() < 0.3) tap(el);
+          scheduleT(function() { roam(el); }, rnd(100, 450));
+        }, dur * 1000);
+      }
 
+      // Once the name is written: each cursor visits the first line, hearts it, and leaves
+      function heartAroundHeading() {
+        wandering = false;
+        var r = heroHeading.getBoundingClientRect();
+        var targets = [
+          { x: r.left + r.width * 0.22, y: r.top - 6 },
+          { x: r.left + r.width * 0.58, y: r.bottom - 8 },
+          { x: r.right + 10,            y: r.top + r.height * 0.3 },
+        ];
+        cursorDefs.forEach(function(def, k) {
+          var el = document.getElementById(def.id), t = targets[k];
           scheduleT(function() {
-            tap(el); // tap 1
+            moveTo(el, t.x, t.y, '0.9s', 'cubic-bezier(0.25,0.1,0.25,1)');
             scheduleT(function() {
-              tap(el); // tap 2
-              spawnHeart(tapX, tapY, heartColor);
-
+              tap(el);
               scheduleT(function() {
-                // Exit back off screen toward the edge the cursor came from
-                var wr = heroCont.getBoundingClientRect();
-                setTrans(el, '0.85s', 'cubic-bezier(0.4,0,1,1)');
-                if (edge === 'left') {
-                  el.style.left = (-wr.left - 140) + 'px';
-                } else if (edge === 'right') {
-                  el.style.left = (window.innerWidth - wr.left + 120) + 'px';
-                } else { // top
-                  el.style.top = (-wr.top - 120) + 'px';
-                }
-                scheduleT(function() { el.classList.remove('visible'); }, 900);
-              }, 350);
-            }, 280);
-          }, 1100);  // wait for 1s slide + small buffer
-        }, 50);     // tiny delay so transition renders before moving
+                tap(el);
+                spawnHeart(t.x + 6, t.y - 4, def.heartColor);
+                scheduleT(function() {
+                  moveTo(el, -140, t.y - 60, '0.85s', 'cubic-bezier(0.4,0,1,1)');
+                  scheduleT(function() { el.classList.remove('visible'); }, 900);
+                }, 450);
+              }, 280);
+            }, 1000);
+          }, k * 250);
+        });
       }
 
       function tap(el) {
@@ -1631,19 +1842,11 @@
         h.style.left  = x + 'px';
         h.style.top   = y + 'px';
         h.style.color = color;
-        heroCont.appendChild(h);
+        document.body.appendChild(h);
         scheduleT(function() { h.remove(); }, 1100);
       }
 
 
-
-      // ── Logo click restarts everything
-      logoLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        resetAnimation();
-        scheduleT(function() { runIntro(function() { runAnimation(0); }); }, 50);
-      });
 
       // ── Initial run
       runIntro(function() { runAnimation(0); });
@@ -1652,13 +1855,8 @@
     // Auto-tag elements for scroll-reveal
     const revealSelectors = [
       // Section labels + headings
-      '.section-label',
       '.section-heading',
       '.section-heading-lg',
-      // Featured work cards
-      '.work-card',
-      // Mini cards
-      '.mini-card',
       // Career items
       '.career-item',
       // TL;DR callout cards (Areas of strength, How I work)
@@ -1675,7 +1873,6 @@
       '.about-text',
       '.about-personal',
       // Contact block children
-      '.contact-section .contact-label',
       '.contact-section .contact-heading',
       '.contact-section .contact-sub',
       '.contact-section .contact-actions',
@@ -1689,8 +1886,6 @@
 
     // Mark stagger groups
     const staggerParents = [
-      '.work-cards',           // featured work
-      '.more-work-grid',       // mini cards
       '.career-list',          // career items
       '.insights-list',        // areas of strength, how I work
       '.ai-list',              // AI in my practice
@@ -1711,6 +1906,427 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+  <script>
+    // ── PROJECT CAROUSEL ─────────────────────────────
+    // Desktop (≥1024px): the project cards drift upward on a continuous,
+    // wrapping vertical loop (a "wheel" of cards).
+    //  • never stops on its own — constant, smooth drift
+    //  • hover (or keyboard focus) eases it to a stop wherever it is
+    //  • while hovering, mouse wheel / trackpad scrolls the cards freely
+    //  • moving the pointer away eases it back up to speed
+    //  • also: dots, click a card off-centre to glide it to the front, swipe, ↑/↓ keys
+    // Phones and tablets (below 1024px): the same wheel, drifting sideways in a shorter stage under the hero.
+    (function () {
+      var panel   = document.getElementById('work');
+      var stage   = document.getElementById('carousel-stage');
+      var countEl = document.getElementById('panel-count');
+      if (!panel || !stage) return;
+
+      var cards = Array.prototype.slice.call(stage.querySelectorAll('.proj-card'));
+      var dots  = Array.prototype.slice.call(panel.querySelectorAll('.carousel-dot'));
+      var n = cards.length;
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var narrow       = window.matchMedia('(max-width: 1023.98px)');
+      var horiz        = narrow.matches;   // phones & tablets: the wheel drifts sideways
+
+      var AUTO_SPEED = 1 / 7;     // drift speed, in cards per second (≈ 60px/s)
+
+      var pos = 0;        // continuous position of the wheel, in cards (0 … n)
+      var vel = 0;        // current drift speed (eases between 0 and AUTO_SPEED)
+      var impulse = 0;    // wheel / swipe movement still to be applied, in cards
+      var tween = null;   // glide to a specific card
+      var enabled = false, hovering = false, keyboardFocus = false;
+      var raf = 0, last = 0, H = 0, W = 0, nearest = -1, touchY = null, touchTimer = null;
+
+      // The wheel. A card |o| positions from the centre sits at these values
+      // (linear between anchors). ty is in card-heights (+ px), rx in degrees:
+      // every plate leans back the same way (as in the reference), above and below.
+      var dir = 1;     // drift direction: 1 = towards the last card, -1 = back towards the first
+      var held = true; // stay on the first card until the intro has revealed the panel
+      function holdFor(ms) { held = true; clearTimeout(holdFor.t); holdFor.t = setTimeout(function () { held = false; }, ms); }
+      var deckOpen = false;
+      window.carouselDeckOpen = function (on) { deckOpen = !!on; };
+      window.releaseCarousel = function () { holdFor(500); };   // first card gets a moment in focus
+      holdFor(9000);   // safety: never stay held if the intro doesn't call releaseCarousel
+      var AO  = [0, 1, 2, 2.5];
+      var TYk = [0, 0.725, 0.705, 0.7];
+      var TYp = [0, 30, 78, 120];
+      var XK  = [0, 0.8, 0.8, 0.8];      // sideways: neighbours sit just behind the front card
+      var XP  = [0, 26, 48, 64];
+      var RX  = [0, -60, -62, -62];
+      var SC  = [1, 0.9, 0.82, 0.75];
+      var OP  = [1, 0.9, 0.7, 0];
+
+      // ease = true: the first segment starts gently (t²) so the front card
+      // settles flat instead of snapping through a kink as it passes centre
+      function lerpA(ao, arr, ease) {
+        for (var k = 1; k < AO.length; k++) {
+          if (ao <= AO[k]) {
+            var t = (ao - AO[k - 1]) / (AO[k] - AO[k - 1]);
+            if (k === 1) { if (ease === 1) t = t * t; else if (ease === 2) t = 1 - (1 - t) * (1 - t); }
+            return arr[k - 1] + (arr[k] - arr[k - 1]) * t;
+          }
+        }
+        return arr[arr.length - 1];
+      }
+      function pad(x) { return (x < 10 ? '0' : '') + x; }
+      function wrap(v) { return ((v % n) + n) % n; }
+      // signed distance (in cards) from the centre to card i, wrapped to [-n/2, n/2)
+      function offsetOf(i) { return i - pos; }   // a line, not a loop: first card at 0, last at n-1
+
+      function render() {
+        var best = 9, bi = 0;
+        for (var i = 0; i < n; i++) {
+          var o  = offsetOf(i);
+          var ao = Math.abs(o);
+          var sg = o < 0 ? -1 : 1;
+          var kk = horiz ? XK : TYk, pp = horiz ? XP : TYp, span = horiz ? W : H;
+          var ty = sg * (lerpA(ao, kk, 2) * span + lerpA(ao, pp, 2));
+          var op = lerpA(ao, OP, 1);
+          var c  = cards[i];
+          var move = horiz ? 'translateX(' : 'translateY(';
+          var tilt = horiz ? 'rotateY(' : 'rotateX(';
+          c.style.transform = 'translate(-50%, -50%) ' + move + ty.toFixed(1) + 'px) perspective(1100px) ' + tilt +
+                              lerpA(ao, RX, 1).toFixed(2) + 'deg) scale(' + lerpA(ao, SC, 1).toFixed(4) + ')';
+          c.style.opacity = op.toFixed(3);
+          // closest to the front on top; the far plates sit above the near ones so both show
+          c.style.zIndex = ao < 0.6 ? 6 : (ao > 1.4 ? 4 : 3);
+          c.style.pointerEvents = op > 0.15 ? '' : 'none';
+          c.style.setProperty('--c', Math.max(0, Math.min(1, 0.5 + (0.5 - ao) / 0.1)).toFixed(3));   // content visibility
+          if (ao < best) { best = ao; bi = i; }
+        }
+        if (bi !== nearest) {
+          nearest = bi;
+          cards.forEach(function (c, i) { if (c.tagName === 'A') c.tabIndex = i === bi ? 0 : -1; else if (c.classList.contains('proj-card-archive')) c.inert = i !== bi; });
+          dots.forEach(function (d, i) { d.setAttribute('aria-current', i === bi ? 'true' : 'false'); });
+          if (countEl) countEl.textContent = pad(bi + 1) + ' / ' + pad(n);
+        }
+      }
+
+      function frame(now) {
+        raf = requestAnimationFrame(frame);
+        var dt = Math.min((now - last) / 1000, 0.05);
+        last = now;
+
+        var paused = held || deckOpen || hovering || keyboardFocus || reduceMotion.matches;
+        // ease to a stop quickly on hover, ease back up to speed more gently
+        vel += ((paused ? 0 : AUTO_SPEED) - vel) * (1 - Math.exp(-dt / (paused ? 0.15 : 0.5)));
+
+        if (tween) {
+          var p = Math.min(1, (now - tween.t0) / tween.dur);
+          var e = 1 - Math.pow(1 - p, 3);   // ease out
+          pos = tween.from + (tween.to - tween.from) * e;
+          if (p >= 1) tween = null;
+        } else {
+          // normal drift while a card is in focus, then a fast snap through the changeover
+          var d = Math.abs(pos - Math.round(pos)) * 2;            // 0 = card centred, 1 = halfway between
+          var u = Math.max(0, Math.min(1, (d - 0.3) / 0.5));      // 0 until the card starts to leave
+          var g = 1 + 5 * u * u * (3 - 2 * u);                    // 1× in focus … 6× mid-change
+          pos += dir * vel * g * dt;
+          if (impulse) {
+            var step = impulse * (1 - Math.exp(-dt / 0.12));
+            pos += step;
+            impulse -= step;
+            if (Math.abs(impulse) < 1e-4) impulse = 0;
+          }
+        }
+        pos = Math.max(0, Math.min(n - 1, pos));
+        // Reached either end: ease off and drift back the other way (no jump back to the start)
+        if (!tween && !paused) {
+          if (pos >= n - 1 - 1e-3 && dir > 0) { dir = -1; vel = 0; holdFor(900); }
+          else if (pos <= 1e-3 && dir < 0)    { dir = 1;  vel = 0; holdFor(900); }
+        }
+        render();
+      }
+
+      function glideTo(target) {
+        target = Math.max(0, Math.min(n - 1, target));
+        impulse = 0;
+        tween = { from: pos, to: target, t0: performance.now(), dur: 700 };
+      }
+
+      function setPaused() { panel.classList.toggle('is-paused', enabled && (hovering || keyboardFocus)); }
+
+      function measure() { if (cards[0]) { H = cards[0].offsetHeight; W = cards[0].offsetWidth; } }
+      function axisOf(t) { return horiz ? t.clientX : t.clientY; }
+
+      function clear() {
+        cards.forEach(function (c) {
+          ['transform', 'opacity', 'zIndex', 'pointerEvents'].forEach(function (p) { c.style[p] = ''; });
+          c.style.removeProperty('--c');
+          if (c.tagName === 'A') c.removeAttribute('tabindex');
+        });
+        nearest = -1;
+        vel = 0;
+        impulse = 0;
+        tween = null;
+      }
+
+      function apply() {
+        enabled = true;
+        if (enabled) {
+          measure();
+          if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+        } else {
+          cancelAnimationFrame(raf);
+          raf = 0;
+          hovering = false;
+          keyboardFocus = false;
+          clear();
+        }
+        setPaused();
+      }
+
+      // Hover pauses; leaving resumes
+      panel.addEventListener('mouseenter', function () { hovering = true;  setPaused(); });
+      panel.addEventListener('mouseleave', function () { hovering = false; setPaused(); });
+
+      // Keyboard focus also pauses (but not mouse-click focus on a dot)
+      panel.addEventListener('focusin', function (e) {
+        keyboardFocus = !!(e.target.matches && e.target.matches(':focus-visible'));
+        setPaused();
+      });
+      panel.addEventListener('focusout', function (e) {
+        if (!panel.contains(e.relatedTarget)) { keyboardFocus = false; setPaused(); }
+      });
+
+      // Wheel / trackpad over the panel moves the cards (smoothly, no snapping)
+      panel.addEventListener('wheel', function (e) {
+        if (!enabled || e.ctrlKey) return;      // let pinch-zoom through
+        e.preventDefault();
+        var raw = horiz && Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        var span = horiz ? W : H;
+        var dy = e.deltaMode === 1 ? raw * 16 : (e.deltaMode === 2 ? raw * span : raw);
+        tween = null;
+        impulse = Math.max(-2, Math.min(2, impulse + dy * 0.0028));
+      }, { passive: false });
+
+      // Touch: drag moves the cards; drift resumes shortly after letting go
+      panel.addEventListener('touchstart', function (e) {
+        if (!enabled) return;
+        touchY = axisOf(e.touches[0]);
+        hovering = true; setPaused();
+        clearTimeout(touchTimer);
+        tween = null;
+      }, { passive: true });
+      panel.addEventListener('touchmove', function (e) {
+        if (!enabled || touchY === null) return;
+        var y = axisOf(e.touches[0]);
+        impulse += (touchY - y) / ((horiz ? W : H) * 0.55);
+        touchY = y;
+      }, { passive: true });
+      panel.addEventListener('touchend', function () {
+        touchY = null;
+        touchTimer = setTimeout(function () { hovering = false; setPaused(); }, 1500);
+      }, { passive: true });
+
+      // Arrow keys while focus is inside the panel
+      panel.addEventListener('keydown', function (e) {
+        if (!enabled) return;
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); glideTo(Math.round(pos) + 1); }
+        else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); glideTo(Math.round(pos) - 1); }
+      });
+
+      // Clicking the centred card follows its link; any other card glides to the front
+      cards.forEach(function (card, i) {
+        card.addEventListener('click', function (e) {
+          if (!enabled) return;
+          var o = offsetOf(i);
+          if (Math.abs(o) > 0.45) { e.preventDefault(); glideTo(pos + o); }
+        });
+      });
+      dots.forEach(function (d, i) {
+        d.addEventListener('click', function () { glideTo(pos + offsetOf(i)); });
+      });
+
+      function onAxisChange() { horiz = narrow.matches; clear(); measure(); }
+      if (narrow.addEventListener) narrow.addEventListener('change', onAxisChange);
+
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () { if (enabled) measure(); }, 100);
+      });
+
+      apply();
+    })();
+  </script>
+
+  <script>
+    // ── CASE STUDY DECK ──────────────────────────────
+    // Clicking a case-study card/link expands it to fill the screen and shows that case study
+    // as a one-page slide deck (the page itself is opened with ?deck=1 in an iframe).
+    // ✕ or Esc shrinks it back into the card.
+    (function () {
+      var overlay = null, frame = null, closeBtn = null, origin = null, state = 'closed', readyTimer = null, spinner = null, backdrop = null;
+      var expanded = false, deckReady = false;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      function rectOf(el) {
+        var r = el.getBoundingClientRect();
+        return { left: r.left, top: r.top, width: r.width, height: r.height };
+      }
+      function modalRect() {
+        var m = window.innerWidth <= 640 ? 8 : 28;
+        return { left: m, top: m, width: window.innerWidth - 2 * m, height: window.innerHeight - 2 * m };
+      }
+      function setRect(r) {
+        overlay.style.left = r.left + 'px'; overlay.style.top = r.top + 'px';
+        overlay.style.width = r.width + 'px'; overlay.style.height = r.height + 'px';
+      }
+      function build() {
+        overlay = document.createElement('div');
+        overlay.className = 'deck-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-label', 'Case study');
+        frame = document.createElement('iframe');
+        frame.className = 'deck-frame';
+        frame.title = 'Case study';
+        overlay.appendChild(frame);
+        spinner = document.createElement('div');
+        spinner.className = 'deck-spinner';
+        overlay.appendChild(spinner);
+        frame.addEventListener('load', function () { deckReady = true; tryShow(); });
+        closeBtn = document.createElement('button');
+        closeBtn.type = 'button';
+        closeBtn.className = 'deck-close';
+        closeBtn.setAttribute('aria-label', 'Close case study');
+        closeBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+        closeBtn.addEventListener('click', close);
+        backdrop = document.createElement('div');
+        backdrop.className = 'deck-backdrop';
+        backdrop.style.display = 'none';
+        backdrop.addEventListener('click', close);
+        document.body.appendChild(backdrop);
+        document.body.appendChild(overlay);
+        document.body.appendChild(closeBtn);
+      }
+
+      function open(url, from) {
+        if (state !== 'closed') return;
+        state = 'opening';
+        if (!overlay) build();
+        origin = from;
+        if (window.carouselDeckOpen) window.carouselDeckOpen(true);
+        overlay.classList.remove('is-full', 'is-ready');
+        expanded = false; deckReady = false;
+        overlay.style.transition = 'none';
+        overlay.style.display = 'block';
+        backdrop.style.display = 'block';
+        setRect(rectOf(from));
+        frame.src = url + (url.indexOf('?') < 0 ? '?deck=1' : '&deck=1');
+        void overlay.offsetWidth;
+        overlay.style.transition = '';
+        document.documentElement.style.overflow = 'hidden';
+        requestAnimationFrame(function () {
+          overlay.classList.add('is-full');
+          backdrop.classList.add('is-on');
+          setRect(modalRect());
+        });
+        // show the deck once the expansion has (nearly) finished
+        readyTimer = setTimeout(function () { expanded = true; tryShow(); }, reduce.matches ? 50 : 560);
+        setTimeout(function () { deckReady = true; tryShow(); }, 4000);   // never wait forever
+      }
+
+      // reveal the deck only once the box has finished expanding AND the page has loaded
+      function tryShow() {
+        if (state !== 'opening' || !expanded || !deckReady) return;
+        state = 'open';
+        overlay.classList.add('is-ready');
+        closeBtn.classList.add('is-visible');
+        try { frame.contentWindow.focus(); } catch (e) {}
+      }
+
+      function close() {
+        if (state !== 'open' && state !== 'opening') return;
+        clearTimeout(readyTimer);
+        state = 'closing';
+        closeBtn.classList.remove('is-visible');
+        overlay.classList.remove('is-ready');
+        backdrop.classList.remove('is-on');
+        setTimeout(function () {
+          overlay.classList.remove('is-full');
+          setRect(origin && document.contains(origin) ? rectOf(origin) : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 });
+          setTimeout(function () {
+            overlay.style.display = 'none';
+            backdrop.style.display = 'none';
+            frame.src = 'about:blank';
+            document.documentElement.style.overflow = '';
+            state = 'closed';
+            if (window.carouselDeckOpen) window.carouselDeckOpen(false);
+            if (origin && origin.focus) { try { origin.focus({ preventScroll: true }); } catch (e) {} }
+          }, reduce.matches ? 50 : 620);
+        }, 200);
+      }
+
+      document.addEventListener('click', function (e) {
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        var a = e.target.closest && e.target.closest('a.proj-card[href^="case-studies/"], a.archive-row[href^="case-studies/"], a.career-link[href^="case-studies/"]');
+        if (!a) return;
+        e.preventDefault();
+        open(a.getAttribute('href'), a);
+      });
+
+      window.addEventListener('message', function (e) {
+        if (!frame || e.source !== frame.contentWindow || !e.data) return;
+        if (e.data.deck === 'close') close();
+        else if (e.data.deck === 'ready') { deckReady = true; tryShow(); }
+      });
+      document.addEventListener('keydown', function (e) {
+        if (state === 'closed') return;
+        if (e.key === 'Escape') { e.preventDefault(); close(); }
+      });
+      window.addEventListener('resize', function () {
+        if (state === 'open' && overlay) setRect(modalRect());
+      });
+    })();
+  </script>
+
+  <script>
+    // ── LEFT COLUMN: one section per scroll ──────────
+    // On desktop each scroll gesture over the left side brings the whole next (or previous)
+    // section into view. A section taller than the screen is scrolled through first.
+    (function () {
+      var col = document.querySelector('.left-col');
+      if (!col) return;
+      var desktop = window.matchMedia('(min-width: 1024px)');
+      var secs = Array.prototype.slice.call(col.querySelectorAll(':scope > section'));
+      var lockUntil = 0, lastWheel = 0;
+      function top(el) { return el.getBoundingClientRect().top + window.scrollY; }
+      function goTo(y) { window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' }); }
+
+      col.addEventListener('wheel', function (e) {
+        if (!desktop.matches || e.ctrlKey || e.defaultPrevented) return;
+        var dy = e.deltaMode === 1 ? e.deltaY * 16 : (e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY);
+        if (Math.abs(dy) < 4 || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+        var now = Date.now(), gap = now - lastWheel;
+        lastWheel = now;
+
+        var vh = window.innerHeight, y = window.scrollY, i = 0;
+        secs.forEach(function (s, k) { if (top(s) <= y + 2) i = k; });
+        var s = secs[i], sTop = top(s), sBottom = sTop + s.offsetHeight;
+        var docMax = document.documentElement.scrollHeight - vh;
+
+        // more of this section still to read in that direction → let the page scroll normally
+        if (dy > 0 && y + vh < sBottom - 6) {
+          if (y + vh + dy > sBottom) { e.preventDefault(); goTo(sBottom - vh); }   // stop exactly at the section's end
+          return;
+        }
+        if (dy < 0 && y > sTop + 2) {
+          if (y + dy < sTop) { e.preventDefault(); goTo(sTop); }                    // stop exactly at its start
+          return;
+        }
+
+        e.preventDefault();
+        if (now < lockUntil) { if (gap < 120) lockUntil = Math.max(lockUntil, now + 250); return; }   // same gesture
+        lockUntil = now + 900;
+        if (dy > 0) goTo(i + 1 < secs.length ? top(secs[i + 1]) : docMax);
+        else if (i > 0) goTo(top(secs[i - 1]));
+      }, { passive: false });
+    })();
   </script>
 
 </body>

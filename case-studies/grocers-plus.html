@@ -19,6 +19,8 @@
       --hero-placeholder-gradient: linear-gradient(135deg, #bce6bf 0%, #ebd9a2 100%);
     }
   </style>
+  <link rel="stylesheet" href="../css/deck.css" />
+  <script>if (/[?&]deck=1/.test(location.search)) document.documentElement.classList.add('deck-mode');</script>
 </head>
 <body>
 
@@ -70,7 +72,7 @@
 
       <div class="cs-intro">
         <h1 class="cs-title fraunces">Personalized Grocery App</h1>
-        <p class="cs-meta">2 min read | <img src="../images/logos/grocersplus-logo.jpeg" width="16" height="16" style="border-radius:3px;vertical-align:-3px;margin-right:6px;object-fit:cover;" alt="" />Grocers Plus (2013–2014) · Product Designer</p>
+        <p class="cs-meta"><img src="../images/logos/grocersplus-logo.jpeg" width="16" height="16" style="border-radius:3px;vertical-align:-3px;margin-right:6px;object-fit:cover;" alt="" />Grocers Plus (2013–2014) · Product Designer</p>
         <p class="cs-subtitle">Owned product design for a mobile app that delivered personalized grocery discounts based on users' purchase history and location, taking it from concept to MVP.</p>
       </div>
 
@@ -98,8 +100,6 @@
   <!-- THE FLOW: the 3 real screenshots, full width, one after another -->
   <section class="section-grey">
     <div class="section-inner">
-      <h2 class="cs-section-title fraunces">The flow</h2>
-      <p class="role-intro">Three snapshots of the app end to end: signing in and setting up a profile, subscribing to products, and catching nearby sales.</p>
 
       <div class="inline-image-group">
         <div class="flow-shot" data-lightbox-group="grocers-flow" data-caption="Signing in and setting up a profile · preferred store location, a distance radius for nearby results, and account basics.">
@@ -172,5 +172,6 @@
   <script src="../js/reading-progress.js"></script>
   <script src="../js/nav-toggle.js"></script>
 
+  <script src="../js/deck.js"></script>
 </body>
 </html>

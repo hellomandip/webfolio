@@ -19,6 +19,8 @@
       --hero-placeholder-gradient: linear-gradient(135deg, #ecdec6 0%, #c3dcdf 100%);
     }
   </style>
+  <link rel="stylesheet" href="../css/deck.css" />
+  <script>if (/[?&]deck=1/.test(location.search)) document.documentElement.classList.add('deck-mode');</script>
 </head>
 <body>
 
@@ -66,8 +68,8 @@
 
       <div class="cs-intro">
         <h1 class="cs-title fraunces">Enterprise Client Projects</h1>
-        <p class="cs-meta">4 min read | <img src="../images/logos/nascent-digital-logo.jpeg" width="16" height="16" style="border-radius:3px;vertical-align:-3px;margin-right:6px;object-fit:cover;" alt="" />Nascent Digital (2013–2015) · UX/UI Designer (Lead)</p>
-        <p class="cs-subtitle">Lead designer across a diverse client portfolio at Nascent Digital, covering mobile app redesigns, responsive web products, and complex data dashboards for clients including eHarmony, YogaGlo, and LCAB.</p>
+        <p class="cs-meta"><img src="../images/logos/nascent-digital-logo.jpeg" width="16" height="16" style="border-radius:3px;vertical-align:-3px;margin-right:6px;object-fit:cover;" alt="" />Nascent Digital (2013–2015) · UX/UI Designer (Lead)</p>
+        <p class="cs-subtitle">Lead designer across a diverse client portfolio at Nascent Digital, covering mobile app redesigns, responsive web products, and complex data dashboards for clients including eHarmony and YogaGlo.</p>
       </div>
 
       <div class="cs-hero-image-frame">
@@ -97,14 +99,9 @@
       <div class="project-list">
 
         <!-- eHarmony -->
-        <div class="project-block">
-          <h3 class="project-title fraunces">eHarmony iOS App Redesign</h3>
-          <div class="tags-row">
-            <span class="tag">Mobile</span>
-            <span class="tag">Consumer</span>
-            <span class="tag">Onboarding</span>
-          </div>
-          <p class="project-body">Lead designer on a full mobile redesign of eHarmony's iOS app, covering onboarding, the relationship questionnaire, match browsing, and profile editing. The challenge was mapping a complex, multi-step questionnaire into a mobile-native flow without losing the depth that made eHarmony's matching approach distinct.</p>
+        <div class="project-block" id="eharmony" data-hero="../images/case-studies/nascent/EHARMONY/hero-img.png">
+          <h3 class="project-title fraunces">eHarmony Windows Mobile App Redesign</h3>
+          <p class="project-body">Lead designer on a full redesign of eHarmony's Windows Mobile app, covering onboarding, the relationship questionnaire, match browsing, and profile editing. The challenge was mapping a complex, multi-step questionnaire into a mobile-native flow without losing the depth that made eHarmony's matching approach distinct.</p>
           <div class="inline-image-group">
             <div class="flow-shot" data-lightbox-group="nascent-eharmony" data-caption="Onboarding &amp; questionnaire · sign in, tell us the basics, and the multi-step relationship questionnaire that has to feel quick even though it's genuinely long.">
               <img class="inline-image" src="../images/case-studies/nascent/EHARMONY/1.png" alt="eHarmony onboarding and questionnaire flow" onerror="this.closest('.flow-shot').style.background='#e5e7eb';" />
@@ -130,13 +127,8 @@
         </div>
 
         <!-- YogaGlo -->
-        <div class="project-block">
+        <div class="project-block" id="yogaglo" data-hero="../images/case-studies/nascent/YOGAGLO/hero-img.png">
           <h3 class="project-title fraunces">YogaGlo Digital Platform</h3>
-          <div class="tags-row">
-            <span class="tag">Consumer</span>
-            <span class="tag">Content</span>
-            <span class="tag">Subscription</span>
-          </div>
           <p class="project-body">Lead designer on the digital platform redesign for YogaGlo (an online yoga instruction service). Focused on content discovery, class scheduling, and building a practice-supporting experience that kept users coming back week after week.</p>
           <div class="inline-image-group">
             <div class="flow-shot" data-lightbox-group="nascent-yogaglo" data-caption="Sign in &amp; onboarding · a quick mood-and-level check-in (energized or calm, gentle or vigorous) that personalizes the very first class recommendations.">
@@ -158,39 +150,6 @@
             <div class="flow-shot" data-lightbox-group="nascent-yogaglo" data-caption="Search &amp; filter · full-library search with duration, level, and style filters to get from thousands of classes to the right one.">
               <img class="inline-image" src="../images/case-studies/nascent/YOGAGLO/5.png" alt="YogaGlo search and filter" onerror="this.closest('.flow-shot').style.background='#e5e7eb';" />
               <p class="inline-image-caption">Search &amp; filter (full-library search with duration, level, and style filters to get from thousands of classes to the right one).</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- LCAB -->
-        <div class="project-block">
-          <h3 class="project-title fraunces">LCAB Member Management Dashboard</h3>
-          <div class="tags-row">
-            <span class="tag">Dashboard</span>
-            <span class="tag">Enterprise</span>
-            <span class="tag">B2B</span>
-          </div>
-          <p class="project-body">Designed a multi-user dashboard for LCAB (Local Content Assurance Bureau) to manage government-funded renewable energy projects (solar and wind installations built under Ontario's Feed-in Tariff program). The dashboard needed to support multiple operator organizations, each managing a portfolio of projects, with clear oversight of maintenance obligations, compliance documents, and energy output data across a permission-layered system.</p>
-          <div class="inline-image-group">
-            <div class="flow-shot" data-lightbox-group="nascent-lcab" data-caption="Organizations · the dashboard's entry point: renewable energy operators and their solar and wind project portfolios, plotted by location across Southern Ontario.">
-              <img class="inline-image" src="../images/case-studies/nascent/LCAB/1.png" alt="LCAB organizations and project map" onerror="this.closest('.flow-shot').style.background='#e5e7eb';" />
-              <p class="inline-image-caption">Organizations, the dashboard's entry point: renewable energy operators and their solar and wind project portfolios, plotted by location across Southern Ontario.</p>
-            </div>
-            <div class="flow-shot" data-lightbox-group="nascent-lcab" data-caption="Project overview &amp; details · live output, open issues, and upcoming milestones for a single project, plus an editable facility record for its technical specs.">
-              <img class="inline-image" src="../images/case-studies/nascent/LCAB/2.png" alt="LCAB project overview and details" onerror="this.closest('.flow-shot').style.background='#e5e7eb';" />
-              <p class="inline-image-caption">Project overview &amp; details, live output, open issues, and upcoming milestones for a single project, plus an editable facility record for its technical specs.</p>
-            </div>
-            <div class="flow-shot" data-lightbox-group="nascent-lcab" data-caption="Documents · access rights, leases, and permitting paperwork organized by folder, each file tagged private, semi-private, or public.">
-              <img class="inline-image" src="../images/case-studies/nascent/LCAB/3.png" alt="LCAB documents" onerror="this.closest('.flow-shot').style.background='#e5e7eb';" />
-              <p class="inline-image-caption">Documents, access rights, leases, and permitting paperwork organized by folder, each file tagged private, semi-private, or public.</p>
-            </div>
-            <div class="flow-shot" data-lightbox-group="nascent-lcab" data-caption="Milestones, obligations &amp; issues · recurring maintenance and operations tasks assigned to responsible parties, tracked against due dates with a live activity log.">
-              <img class="inline-image" src="../images/case-studies/nascent/LCAB/4.png" alt="LCAB milestones, obligations and issues" onerror="this.closest('.flow-shot').style.background='#e5e7eb';" />
-              <p class="inline-image-caption">Milestones, obligations &amp; issues, recurring maintenance and operations tasks assigned to responsible parties, tracked against due dates with a live activity log.</p>
-            </div>
-            <div class="flow-shot" data-lightbox-group="nascent-lcab" data-caption="Data · delivered vs. projected output charted over time, with a configurable export for reporting.">
-              <img class="inline-image" src="../images/case-studies/nascent/LCAB/5.png" alt="LCAB data" onerror="this.closest('.flow-shot').style.background='#e5e7eb';" />
-              <p class="inline-image-caption">Data, delivered vs. projected output charted over time, with a configurable export for reporting.</p>
             </div>
           </div>
         </div>
@@ -243,5 +202,6 @@
   <script src="../js/reading-progress.js"></script>
   <script src="../js/nav-toggle.js"></script>
 
+  <script src="../js/deck.js"></script>
 </body>
 </html>
