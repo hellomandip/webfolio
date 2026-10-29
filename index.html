@@ -1226,6 +1226,21 @@
       .carousel-dot { width: 18px; height: 18px; padding: 0; border: 0; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
       .carousel-dot::before { content: ''; width: 6px; height: 6px; border-radius: 3px; background: rgba(0,0,0,0.25); transition: width 0.3s ease, background 0.3s ease; }
       .carousel-dot[aria-current="true"]::before { width: 18px; background: var(--black); }
+
+      /* Phones: the dot grid carries on down behind the cards (no fade at the hero's edge),
+         fading out only at the bottom of the carousel */
+      .hero::before { -webkit-mask-image: none; mask-image: none; }
+      .work-panel::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image: radial-gradient(circle at center, var(--dot) 0, var(--dot) 1px, transparent 1px);
+        background-size: var(--dot-size) var(--dot-size);
+        -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 80%, transparent 100%);
+        mask-image: linear-gradient(to bottom, #000 0, #000 80%, transparent 100%);
+      }
       .panel-hint { display: none; }
     }
 
@@ -1711,12 +1726,16 @@
       }
 
       // The case-study cards stay hidden until the left side has rendered in
+      // The panel's dot grid stays visible from the start; only the cards (the stage) fade in
       var workPanel = document.getElementById('work');
-      if (workPanel) { workPanel.style.opacity = '0'; workPanel.style.transition = 'opacity 0.9s ease'; }
+      var cardStage = document.getElementById('carousel-stage');
+      var phoneLayout = window.matchMedia('(max-width: 1023.98px)').matches;
+      var fadeEl = phoneLayout ? cardStage : workPanel;   // desktop keeps the whole panel fading in
+      if (fadeEl) { fadeEl.style.opacity = '0'; fadeEl.style.transition = 'opacity 0.9s ease'; }
       function revealPanel() {
-        if (workPanel) {
-          workPanel.style.opacity = '1';
-          scheduleT(function() { workPanel.style.opacity = ''; workPanel.style.transition = ''; }, 1000);
+        if (fadeEl) {
+          fadeEl.style.opacity = '1';
+          scheduleT(function() { fadeEl.style.opacity = ''; fadeEl.style.transition = ''; }, 1000);
         }
       }
 
