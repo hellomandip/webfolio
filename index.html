@@ -1059,12 +1059,7 @@
       .proj-card > * { opacity: var(--c); will-change: opacity; }
 
       .proj-media { flex: 1 1 0; height: auto; min-height: 120px; }
-      .proj-card .card-description {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
+      .proj-card .card-description { display: block; overflow: visible; }   /* full description on desktop */
 
       /* Dots + hint */
       .carousel-dots {
@@ -1124,10 +1119,6 @@
     /* Shorter laptop viewports: tighten the cards so the image keeps room */
     @media (min-width: 1024px) and (max-height: 820px) {
       .proj-card { padding: 18px; gap: 12px; }
-      .proj-card .card-description { -webkit-line-clamp: 3; }
-    }
-    @media (min-width: 1024px) and (max-height: 680px) {
-      .proj-card .card-description { display: none; }
     }
 
     /* Desktop cards: the image runs edge to edge, as on phones and tablets.
