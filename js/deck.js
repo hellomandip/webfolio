@@ -176,7 +176,7 @@
       ];
       var sol = document.createElement('h2');
       sol.className = 'fraunces cs-section-title';
-      sol.textContent = 'Solutions: What we built out over time';
+      sol.textContent = 'Solution: Marketing Platform';
       var list = document.createElement('ol');
       list.className = 'deck-phase-list';
       PHASES.forEach(function (p, i) {
