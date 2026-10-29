@@ -203,7 +203,7 @@
           body.className = 'deck-transition';
           var t = tr && tr.querySelector('.phase-transition-text');
           if (t) body.appendChild(t);
-          add(wrap('section-white', 'deck-sub deck-next', '', [h, body]));
+          add(wrap('section-white', 'deck-sub deck-challenge', '', [h, body]));
         }
       });
 
