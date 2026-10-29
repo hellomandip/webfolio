@@ -411,3 +411,20 @@ html.deck-green body { background: #053a2c; }
 .deck-slide .phase-visual-frame .deck-zoom { display: block; width: 100%; max-width: 100%; border-radius: inherit; }
 .deck-slide .phase-visual-frame .deck-zoom .inline-image,
 .deck-slide .phase-visual-frame .deck-zoom img { display: block; width: 100%; height: auto; border-radius: 0; }
+
+/* Phone controls: arrows sit either side of the slide counter along the bottom */
+@media (max-width: 640px) {
+  .deck-bar { width: max-content; bottom: 12px; padding: 7px 12px; gap: 10px; }
+  .deck-count { min-width: 0; }
+  .deck-arrow { top: auto; bottom: 11px; margin-top: 0; width: 36px; height: 36px; }
+  .deck-prev { left: 12px; right: auto; }
+  .deck-next { right: 12px; left: auto; }
+}
+
+/* Course Hero's last slide on phones: the desktop-only note, centred and in white */
+@media (max-width: 760px) {
+  .deck-navy .deck-slide .try-mobile { text-align: center; }
+  .deck-navy .deck-slide .try-mobile p { color: #fff; margin-left: auto; margin-right: auto; }
+  .deck-navy .deck-slide .try-mobile .btn-secondary { color: #fff; border-color: rgba(255,255,255,0.5); background: transparent; }
+  .deck-navy .deck-slide .try-mobile .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+}
