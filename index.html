@@ -1140,7 +1140,7 @@
       .work-panel {
         --h: 514px;   /* fixed card height on phones: fits the tallest card (Shopify) */
         position: relative;
-        height: calc(var(--h) + 80px);   /* cards sit near the top; room for the dots underneath */
+        height: calc(var(--h) + 110px);   /* cards sit near the top; dots sit close under them, with more room before the next section */
         padding: 0;
         overflow: hidden;
         background: none;
@@ -1210,6 +1210,8 @@
       .proj-card-archive .ar-thumb { display: none; }
       /* rows sit flush with the card's content edge, so their text lines up with the title */
       .proj-card-archive .archive-row { margin: 0; padding: 9px 0; }
+      /* title lines up with the company / years text, after the 20px logo and its 8px gap */
+      .proj-card-archive .ar-desc { display: block; padding-left: 28px; }
 
       /* Dots run along the bottom of the stage instead of down the side */
       .carousel-dots {
@@ -1220,7 +1222,7 @@
         left: 50%;
         right: auto;
         top: auto;
-        bottom: 14px;   /* more space below the cards */
+        bottom: 60px;   /* more space between the dots and the next section */
         transform: translateX(-50%);
         z-index: 6;
       }
@@ -1249,6 +1251,11 @@
        Smaller type so the hero, cards and sections read well on a phone. */
     @media (max-width: 640px) {
       .hero { padding: 44px 24px 24px; }   /* sits higher, so more of the carousel shows below */
+      #about { padding-top: 36px; }   /* less space above About on phones */
+      .card-title-lead { display: none; }   /* phones: Course Hero card title without "Study Boards:" */
+      /* phones: zebra the sections, starting white at About (contact ends on grey) */
+      #about, #strengths, #capabilities { background: #fff; }
+      #career, #process, #contact { background: var(--grey-light); }
       .hero-heading { font-size: 26px; line-height: 1.2; }
       .hero-heading .pronunciation { font-size: 15px; }
       .hero-sub { font-size: 15px; line-height: 1.5; }
@@ -1547,7 +1554,7 @@
           <div class="proj-media proj-media-blue"><video class="hero-loop" autoplay muted loop playsinline preload="auto" poster="images/case-studies/course-hero/sb-loop-hero-d.jpg" aria-label="Screen recording of the Study Boards prototype building a study board"><source src="images/case-studies/course-hero/sb-loop-hero-d.mp4" type="video/mp4"><source src="images/case-studies/course-hero/sb-loop-hero-d.webm" type="video/webm"></video></div>
           <p class="card-meta proj-meta"><img src="https://www.google.com/s2/favicons?domain=coursehero.com&sz=128" width="20" height="20" alt=""><span>Course Hero · 2024–2025</span></p>
           <div>
-            <h3 class="fraunces card-title">Study Boards: Designing a Home for Studying Across a Semester</h3>
+            <h3 class="fraunces card-title"><span class="card-title-lead">Study Boards: </span>Designing a Home for Studying Across a Semester</h3>
             </div>
           <p class="card-description">Designed Study Tools and Study Boards, AI products that turned Course Hero from one-off answers into a semester-long study companion. Study Boards drove a 16% increase in weekly active users.</p>
           <span class="card-link">View work →</span>

@@ -94,7 +94,9 @@ html.deck-mode .cs-nav { display: none !important; }
 .deck-count { min-width: 34px; text-align: right; font-variant-numeric: tabular-nums; }
 
 @media (max-width: 640px) {
-  .deck-slide { padding: 64px 18px 140px !important; }   /* room under image loops and lists so they scroll clear of the controls */
+  .deck-slide { padding: 64px 18px 120px !important; }
+  /* Course Hero's title on phones: drop the "Study Boards:" lead-in, keep the rest */
+  html.deck-navy:not(.deck-green) .deck-title-primary { display: none; }   /* room under image loops and lists so they scroll clear of the controls */
   .deck-arrow { width: 40px; height: 40px; margin-top: -20px; }
   .deck-prev { left: 8px; } .deck-next { right: 8px; }
 }

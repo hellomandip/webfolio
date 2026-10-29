@@ -303,7 +303,8 @@
     // Course Hero and Shopify: their gallery images zoom in place too (no full-screen viewer)
     var zoomGalleries = chero || shop;
     var zoomSel = '.deck-slide .flow-shot > .inline-image' + (zoomGalleries ? ', .deck-slide [data-lightbox-group] img' : '');
-    document.querySelectorAll(zoomSel).forEach(function (img) {
+    var ZOOM_ON = false;   // click-to-zoom is off, so images never grab the touch and the slide scrolls
+    (ZOOM_ON ? document.querySelectorAll(zoomSel) : []).forEach(function (img) {
       if (img.closest('.deck-zoom')) return;
       var box = document.createElement('div');
       box.className = 'deck-zoom';
