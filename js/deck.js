@@ -57,6 +57,15 @@
       document.documentElement.classList.add('deck-navy');
       var byId = function (id) { return document.getElementById(id); };
       var ctxSec = byId('context'), patSec = byId('patterns'), outSec = byId('outcome'), trySec = byId('try');
+      // deck-only: on the problem and validation slides, the paragraph under each box moves inside the box
+      [ctxSec, byId('validation')].forEach(function (sec) {
+      if (!sec) return;
+      Array.prototype.slice.call(sec.querySelectorAll('.problem-col')).forEach(function (col) {
+        var box = col.querySelector('.callout');
+        var body = col.querySelector('.callout ~ .cs-body');
+        if (box && body) box.appendChild(body);
+      });
+      });
       var impSec = byId('decisions-impact'), refSec = byId('reflection');
       ['ai-native', 'decisions'].forEach(function (id) { var e = byId(id); if (e) e.remove(); });
       var valSec = byId('validation'), solSec = byId('solution');
@@ -116,6 +125,11 @@
       var d = document.createElement('p');
       d.className = 'cs-subtitle';
       d.textContent = (heroInfo && heroInfo.desc) || text(heroSec.querySelector('.cs-subtitle'));
+      // deck-only: the hero slide uses the same description as the homepage carousel card
+      if (shop) {
+        d.textContent = "Took Shopify's Marketing Tab from early ad integrations to a full merchant growth platform, " +
+          "then rebuilt its analytics from the ground up, driving a 52% increase in sales attributed to marketing activity.";
+      }
       var frame = document.createElement('div');
       var srcFrame = heroSec.querySelector('.cs-hero-image-frame');
       if (chero && srcFrame) {
@@ -176,7 +190,10 @@
       ];
       var sol = document.createElement('h2');
       sol.className = 'fraunces cs-section-title';
-      sol.textContent = 'Solution: Marketing Platform';
+      sol.textContent = "Solution: Shopify's Marketing Platform";
+      var solLead = document.createElement('p');
+      solLead.className = 'deck-phase-lead';
+      solLead.textContent = 'Evolution over time:';
       var list = document.createElement('ol');
       list.className = 'deck-phase-list';
       PHASES.forEach(function (p, i) {
@@ -184,7 +201,7 @@
         li.innerHTML = '<div><p class="deck-phase-name"><span class="deck-phase-n">' + String(i + 1).padStart(2, '0') + '</span>' + p[0] + '</p><p class="deck-phase-desc">' + p[1] + '</p></div>';
         list.appendChild(li);
       });
-      add(wrap('section-white', 'deck-sub', '', [sol, list]));
+      add(wrap('section-white', 'deck-sub', '', [sol, solLead, list]));
 
       // slides 5 onward: each phase on its own slide, with "The next challenge" between the groups
       var phases = Array.prototype.slice.call(how.querySelectorAll('.phase'));
@@ -441,7 +458,7 @@
     go(0);
     window.dispatchEvent(new Event('resize'));   // let page scripts (e.g. the prototype scaler) re-fit to slide sizes
     html.classList.add('deck-ready');
-    if (window.parent !== window) window.parent.postMessage({ deck: 'ready' }, '*');
+    if (window.parent !== window) window.parent.postMessage({ deck: 'ready', theme: html.classList.contains('deck-navy') ? 'dark' : 'light' }, '*');
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);

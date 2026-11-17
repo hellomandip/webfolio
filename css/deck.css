@@ -430,3 +430,15 @@ html.deck-green body { background: #053a2c; }
   .deck-navy .deck-slide .try-mobile .btn-secondary { color: #fff; border-color: rgba(255,255,255,0.5); background: transparent; }
   .deck-navy .deck-slide .try-mobile .btn-secondary:hover { background: rgba(255,255,255,0.12); }
 }
+
+/* Course Hero problem slide: the supporting paragraph now sits inside each box */
+.deck-navy #context .problem-col, .deck-navy #validation .problem-col { display: block; }
+.deck-navy #context .problem-col .callout, .deck-navy #validation .problem-col .callout { height: auto; }
+.deck-navy #context .callout .cs-body, .deck-navy #validation .callout .cs-body { margin: 16px 0 0; font-size: 15px; line-height: 1.6; }
+
+/* problem and validation slides: both boxes match the taller one */
+.deck-navy #context .problem-grid, .deck-navy #validation .problem-grid { align-items: stretch; }
+.deck-navy #context .problem-col .callout, .deck-navy #validation .problem-col .callout { height: 100%; box-sizing: border-box; }
+
+/* solution slide: the line that introduces the timeline */
+.deck-green .deck-phase-lead { margin: -14px 0 22px; font-size: 16px; line-height: 1.5; color: #bfe9d7; }
