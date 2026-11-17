@@ -243,7 +243,13 @@ nav { display: flex; gap: 24px; }
    elsewhere on the site for click-to-zoom triggers. */
 .phase-visual-frame { border-radius: 16px; overflow: hidden; border: 1px solid #9ca3af; box-shadow: 0 14px 36px rgba(0,0,0,0.18); cursor: zoom-in; transition: box-shadow 0.15s ease, opacity 0.15s ease; }
 .phase-visual-frame:hover { box-shadow: 0 18px 44px rgba(0,0,0,0.24); opacity: 0.96; }
-.phase-visual-frame img { display: block; border-radius: 0; }
+.phase-visual-frame img { display: block; border-radius: 0; max-width: 100%; height: auto; }
+.phase-visual-frame video { display: block; width: 100%; height: auto; border-radius: 0; }
+/* looping demos aren't click-to-zoom stills, so they don't get the zoom cursor/hover */
+.video-frame { cursor: default; background: #f9fafc; }
+.video-frame:hover { opacity: 1; box-shadow: 0 14px 36px rgba(0,0,0,0.18); }
+/* keeps a loaded screenshot/gif inside its frame before phase-visual-scale.js runs
+   (that only re-measures on window load, which waits for every gif on the page) */
 
 /* Temporary stand-in for a phase visual before the real screenshot is ready. */
 .phase-visual-placeholder {
